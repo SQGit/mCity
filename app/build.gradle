@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'mcity'
             keyPassword '123456'
-            storeFile file('E:/BACKUP/live backup-mcity 27/MCITY/mcity.jks')
+            storeFile file('E:/mcitykey/mcity.jks')
             storePassword '123456'
         }
     }

@@ -13,5 +13,7 @@
     <color name="bg3">#E51C39</color>
     <color name="bg4">#FF8B02</color>
     <color name="coupon_txt_color">#E16352</color>
+    <color name="shop_text_color">#F38F7B</color>
+    <color name="auto_text_color">#A87979</color>
 
 </resources>
