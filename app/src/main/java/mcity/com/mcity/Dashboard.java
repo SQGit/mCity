@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.text.Spannable;
@@ -34,6 +35,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,9 +72,13 @@ public class Dashboard extends AppCompatActivity {
     String URL = Data_Service.URL_API + "logout";
     String IMAGEUPLOAD = Data_Service.URL_API + "licenceupload";
     String LOGOUT = Data_Service.URL_API + "logout";
+    LinearLayout lin_mcoupon,lin_shop,lin_auto,lin_train,lin_rental,lin_ride,lin_garage;
+    ImageView img_settings_icon,imv_coupon,img_shop,img_auto;
+    TextView txt_coupon,txt_shop,txt_auto,txt_train,txt_rental,txt_ride,txt_garage,txt_desclaimer, txt_site;
 
-    public ImageView img_mRental, img_mRides, img_train_icon, img_mauto, img_mfood, img_morder, img_mshop, img_mcoupon, img_mgarage, img_settings_icon, img_slidingimage;
-    TextView txt_desclaimer, txt_site;
+
+   /* public ImageView img_mRental, img_mRides, img_train_icon, img_mauto, img_mfood, img_morder, img_mshop, img_mcoupon, img_mgarage, img_settings_icon, img_slidingimage;
+    TextView txt_desclaimer, txt_site;*/
     String str_token, str_uid, str_imagepath;
 
     SharedPreferences s_pref;
@@ -86,19 +92,30 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.dashboard);
 
 
-        img_mRental = (ImageView) findViewById(R.id.mrental_id);
-        img_mRides = (ImageView) findViewById(R.id.mrites_id);
-        img_train_icon = (ImageView) findViewById(R.id.mtrain_id);
-        img_slidingimage = (ImageView) findViewById(R.id.iv);
-        img_mauto = (ImageView) findViewById(R.id.mauto);
-        img_mfood = (ImageView) findViewById(R.id.mfood);
-        img_morder = (ImageView) findViewById(R.id.morder);
-        img_mshop = (ImageView) findViewById(R.id.mshop);
-        img_mcoupon = (ImageView) findViewById(R.id.mcoupon);
-        img_mgarage = (ImageView) findViewById(R.id.mgarage);
-        txt_desclaimer = (TextView) findViewById(R.id.desclaimer);
         img_settings_icon = (ImageView) findViewById(R.id.settings_icon);
-        txt_site = (TextView) findViewById(R.id.site);
+        lin_mcoupon=(LinearLayout)findViewById(R.id.lin_mcoupon);
+        lin_shop=(LinearLayout)findViewById(R.id.lin_shop);
+        lin_auto=(LinearLayout)findViewById(R.id.lin_auto);
+        lin_train=(LinearLayout)findViewById(R.id.lin_train);
+        lin_rental=(LinearLayout)findViewById(R.id.lin_rental) ;
+        lin_ride=(LinearLayout)findViewById(R.id.lin_ride) ;
+        lin_garage=(LinearLayout)findViewById(R.id.lin_garage) ;
+
+        imv_coupon=(ImageView)findViewById(R.id.imv_coupon);
+        img_shop=(ImageView)findViewById(R.id.img_shop);
+        img_auto=(ImageView)findViewById(R.id.img_auto);
+
+
+        txt_coupon=(TextView)findViewById(R.id.txt_coupon);
+        txt_shop=(TextView)findViewById(R.id.txt_shop);
+        txt_auto=(TextView)findViewById(R.id.txt_auto);
+        txt_train=(TextView)findViewById(R.id.txt_train);
+        txt_rental=(TextView)findViewById(R.id.txt_rental);
+        txt_ride=(TextView)findViewById(R.id.txt_ride);
+        txt_garage=(TextView)findViewById(R.id.txt_garage);
+
+        txt_desclaimer = (TextView) findViewById(R.id.txt_desclaimer);
+        txt_site = (TextView) findViewById(R.id.txt_site);
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
@@ -109,22 +126,83 @@ public class Dashboard extends AppCompatActivity {
         str_uid = sharedPreferences.getString("id", "");
 
 
-        img_mRental.setOnClickListener(new View.OnClickListener() {
+        lin_mcoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lin_mcoupon.setBackgroundResource(R.drawable.coupon_press_bg);
+                txt_coupon.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.coupon_txt_color));
+                Intent coupon = new Intent(getApplicationContext(), MCoupon.class);
+                startActivity(coupon);
+                finish();
+            }
+        });
+
+
+        lin_shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lin_shop.setBackgroundResource(R.drawable.coupon_press_bg);
+                txt_shop.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.shop_text_color));
+                Intent coupon = new Intent(getApplicationContext(), MShop.class);
+                startActivity(coupon);
+                finish();
+            }
+        });
+
+        lin_auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lin_auto.setBackgroundResource(R.drawable.auto_press_bg);
+                txt_auto.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
+                Intent mauto = new Intent(getApplicationContext(), MAuto.class);
+                startActivity(mauto);
+                finish();
+            }
+        });
+
+
+        lin_train.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lin_train.setBackgroundResource(R.drawable.train_press_bg);
+                txt_train.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.train_text_color));
+                Intent intent = new Intent(getApplicationContext(), TrainSearch.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        lin_rental.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lin_rental.setBackgroundResource(R.drawable.rental_press_bg);
+                txt_rental.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
                 Intent intent = new Intent(getApplicationContext(), RentalHistory.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        txt_site.setOnClickListener(new View.OnClickListener() {
+
+        lin_ride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lin_ride.setBackgroundResource(R.drawable.rental_press_bg);
+                txt_ride.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.rental_text_color));
+                Intent intent = new Intent(getApplicationContext(), RideSearch.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-                Intent browserIntent =
-                        new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sqindia.net/"));
-                startActivity(browserIntent);
+
+        lin_garage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lin_garage.setBackgroundResource(R.drawable.auto_press_bg);
+                txt_garage.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
+                Intent garage = new Intent(getApplicationContext(),  MGarage_History.class);
+                startActivity(garage);
                 finish();
             }
         });
@@ -138,96 +216,16 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        img_mRides.setOnClickListener(new View.OnClickListener() {
+        txt_site.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RideSearch.class);
-                startActivity(intent);
+
+                Intent browserIntent =
+                        new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sqindia.net/"));
+                startActivity(browserIntent);
                 finish();
             }
         });
-
-        img_train_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplicationContext(), TrainSearch.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        img_mauto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mauto = new Intent(getApplicationContext(), MAuto.class);
-                startActivity(mauto);
-                finish();
-            }
-        });
-
-        img_mfood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                TastyToast.makeText(getApplicationContext(), "Comming Soon !", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                Dashboard.this.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#000000")));
-            }
-        });
-
-        img_morder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mauto = new Intent(getApplicationContext(), DummyDashboard.class);
-                startActivity(mauto);
-                finish();
-
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        img_mshop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent coupon = new Intent(getApplicationContext(), MShop.class);
-                startActivity(coupon);
-                finish();
-            }
-        });
-
-        img_mcoupon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent coupon = new Intent(getApplicationContext(), MCoupon.class);
-                startActivity(coupon);
-                finish();
-            }
-        });
-
-        img_mgarage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent garage = new Intent(getApplicationContext(),  MGarage_History.class);
-                startActivity(garage);
-                finish();
-
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
-        img_train_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplicationContext(), TrainSearch.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
 
         img_settings_icon.setOnClickListener(new View.OnClickListener() {
             @Override

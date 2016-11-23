@@ -50,9 +50,9 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@drawable/settings_icon"
                 android:layout_gravity="right"/>
+
+
         </LinearLayout>
-
-
 
 
 
@@ -60,6 +60,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/iv"/>
+
+
 
 
 

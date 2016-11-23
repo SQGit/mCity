@@ -13,7 +13,11 @@
     <color name="bg3">#E51C39</color>
     <color name="bg4">#FF8B02</color>
     <color name="coupon_txt_color">#E16352</color>
-    <color name="shop_text_color">#F38F7B</color>
-    <color name="auto_text_color">#A87979</color>
+    <color name="shop_text_color">#EB390F</color>
+    <color name="auto_text_color">#792A2A</color>
+    <color name="train_text_color">#EB390F</color>
+    <color name="rental_text_color">#E51E3A</color>
+    <color name="ride_text_color">#DD8436</color>
+    <color name="coupon_text_color">#DD4A36</color>
 
 </resources>

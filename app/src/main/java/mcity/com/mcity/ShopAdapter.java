@@ -170,12 +170,11 @@ public class ShopAdapter extends BaseAdapter {
             public void onClick(View v) {
                 resultp = data.get(position);
                 str_phno=resultp.get("mobileno");
+                Log.e("tag","mobile number"+resultp.get("mobileno"));
                 int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                 } else {
-
-
                     Intent phoneIntent = new Intent(Intent.ACTION_CALL);
                     phoneIntent.setData(Uri.parse("tel:" + str_phno));
                     Log.e("tag","number"+str_phno);

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/bg"
     android:orientation="vertical">
-
 
 
     <LinearLayout
@@ -49,7 +48,7 @@
 
 
 
-     <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -68,14 +67,14 @@
                 android:textStyle="bold" />
 
 
-           <!-- <ImageView
-                android:id="@+id/settings_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
-                android:background="@drawable/settings_icon"
-                android:layout_gravity="right"/>-->
+            <!-- <ImageView
+                 android:id="@+id/settings_icon"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="@dimen/_10sdp"
+                 android:padding="@dimen/_10sdp"
+                 android:background="@drawable/settings_icon"
+                 android:layout_gravity="right"/>-->
 
         </LinearLayout>-->
 
@@ -105,161 +104,353 @@
 
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_10sdp">
+
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/mcoupon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/lin_mcoupon"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:src="@drawable/mcoupon"/>
+                    android:background="@drawable/mcoupons_bg"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/mshop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/imv_coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/coupon_img"/>
+
+                    <TextView
+                        android:id="@+id/txt_coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/coupon_text_color"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="mCOUPON"/>
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/lin_shop"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/shoping_bg"
                     android:layout_weight="1"
-                    android:src="@drawable/mshops"/>
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/mauto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/img_shop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shop"/>
+
+                    <TextView
+                        android:id="@+id/txt_shop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/shop_text_color"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="mSHOPPING"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lin_auto"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/auto_bg"
+                    android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:src="@drawable/mautos"/>
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/img_auto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/auto"/>
 
+                    <TextView
+                        android:id="@+id/txt_auto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/auto_text_color"
+                        android:text="mAUTOS"/>
 
+                </LinearLayout>
 
             </LinearLayout>
 
-     <LinearLayout
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-         <ImageView
-             android:id="@+id/mtrain_id"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:src="@drawable/mtrain"/>
+
+                <LinearLayout
+                    android:id="@+id/lin_train"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:background="@drawable/train_bg"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imv_train"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/train"/>
+
+                    <TextView
+                        android:id="@+id/txt_train"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/train_text_color"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="mTRAIN"/>
+
+                </LinearLayout>
 
 
-         <ImageView
-             android:id="@+id/mrental_id"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:src="@drawable/mrental"/>
 
 
+                <LinearLayout
+                    android:id="@+id/lin_rental"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/rentals_bg"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-         <ImageView
-             android:id="@+id/mrites_id"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:src="@drawable/mride"/>
+                    <ImageView
+                        android:id="@+id/img_rental"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/rentals"/>
+
+                    <TextView
+                        android:id="@+id/txt_rental"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/rental_text_color"
+                        android:text="mRENTALS"/>
+
+                </LinearLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/lin_ride"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/ride_bg"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/img_ride"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/rides"/>
 
+                    <TextView
+                        android:id="@+id/txt_ride"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/ride_text_color"
+                        android:text="mRIDE"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
 
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:id="@+id/lin_garage"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/mcoupons_bg"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:id="@+id/img_garage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/garage"/>
+
+
+                    <TextView
+                        android:id="@+id/txt_garage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/auto_text_color"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="mGARAGE"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/mcoupons_bg"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/food"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="mFOOD"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/mcoupons_bg"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/order"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="mORDER"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_10sdp"
+                        android:id="@+id/textView5" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_25sdp">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/new_icon" />
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/_20sdp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/morder"
+
+            <TextView
+                android:id="@+id/cool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/shade_order"/>
+                android:text="Many Cool Features Coming Soon..."
+                android:layout_gravity="center"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="center"
+                android:textColor="#FF5722"/>
 
-            <ImageView
-                android:id="@+id/mfood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/shade_food"/>
-
-
-            <ImageView
-                android:id="@+id/mgarage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/shade_garage"/>
-        </LinearLayout>
         </LinearLayout>
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_25sdp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/new_icon" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_20sdp"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/cool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Many Cool Features Coming Soon..."
-            android:layout_gravity="center"
-            android:textSize="@dimen/_11sdp"
-            android:gravity="center"
-            android:textColor="#FF5722"/>
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_35sdp">
-
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <include
             android:id="@+id/container_header_lyt"
@@ -269,8 +460,5 @@
             android:layout_gravity="center">
         </include>
 
-
     </LinearLayout>
-
-
 </LinearLayout>

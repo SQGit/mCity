@@ -38,7 +38,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAA9haRAZmV1GE1bRooXN3YpIRX2B5_GwM" />
 
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -46,29 +47,35 @@
         </activity>
 
         <activity android:name=".Login"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".OfferRide"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".MapActivity"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".MGarage_History"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".MGarage_PostAds"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".AdvancedSearch"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
@@ -76,34 +83,35 @@
 
 
         <activity android:name=".MCoupon"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".MAuto"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
-        <activity android:name=".DummyDashboard"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-        </activity>
         <activity android:name=".MRental"
             android:theme="@style/AppTheme"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".Dashboard"
             android:theme="@style/AppTheme"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
-
         </activity>
 
         <activity android:name=".Signup"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".PostHouse"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
 
 
@@ -111,100 +119,113 @@
 
 
         <activity android:name=".MShop"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
 
 
         </activity>
 
         <activity android:name=".PostPG"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
+
         <activity android:name=".HouseHistory"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".MRentalPost"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
 
         <activity android:name=".MPostHistory"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
+
         <activity android:name=".SearchHouse"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
 
         </activity>
 
         <activity android:name=".MorePOst"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
         </activity>
+
         <activity android:name=".SearchPg"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".PGHistory"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".SearchResult"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".SearchHouseFilter"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
 
         <activity android:name=".SearchPGFilter"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
         <activity android:name=".RideSearch"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
-
         </activity>
 
 
         <activity android:name=".TrainSearch"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
         </activity>
 
 
 
         <activity android:name=".MyRideHistory"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
         </activity>
-
 
 
         <activity android:name=".RentalHistory"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
         </activity>
 
         <activity android:name=".HistoryHouse"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
         </activity>
 
 
         <activity android:name=".HistoryPg"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
-
         </activity>
 
 
 
 
         <activity android:name=".TrainTime"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
