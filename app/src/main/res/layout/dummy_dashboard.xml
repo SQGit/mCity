@@ -149,13 +149,13 @@
                 android:id="@+id/two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/auto_small"/>
+                android:src="@drawable/shop"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="hdfhbdfhb"/>
+                android:text="mSHOPPING"/>
 
         </LinearLayout>
 
@@ -172,13 +172,13 @@
                 android:id="@+id/thr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/auto_small"/>
+                android:src="@drawable/auto"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="hdfhbdfhb"/>
+                android:text="mAUTOS"/>
 
         </LinearLayout>
 
