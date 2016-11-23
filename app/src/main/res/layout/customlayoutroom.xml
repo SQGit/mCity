@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tabTitleText1"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tab_selectorroom"
+        android:clickable="false"
+        android:drawablePadding="5dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:drawableLeft="@drawable/black_house"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:gravity="start|center"
+        android:paddingLeft="@dimen/_15sdp"
+        android:textStyle="bold" />
+
+</LinearLayout>

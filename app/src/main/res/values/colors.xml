@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#E51C39</color>
+    <color name="colorPrimaryDark">#E51C39</color>
+    <color name="colorAccent">#E51C39</color>
+    <color name="white">#ffffff</color>
+    <color name="yellow">#FFBA02</color>
+    <color name="orange">#FF8B02</color>
+    <color name="brown">#653F33</color>
+    <color name="black">#343434</color>
+    <color name="bg1">#F5E9EA</color>
+    <color name="bg2">#FFF4E6</color>
+    <color name="bg3">#E51C39</color>
+    <color name="bg4">#FF8B02</color>
+    <color name="coupon_txt_color">#E16352</color>
+
+</resources>

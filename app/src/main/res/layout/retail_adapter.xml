@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:gravity="center">
+
+
+        <LinearLayout
+            android:id="@+id/dotlin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/dotted_grey">
+
+
+
+            <LinearLayout
+                android:id="@+id/imagelin"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_110sdp">
+
+                <ImageView
+                    android:id="@+id/img_shop_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_1sdp"
+                android:orientation="vertical"
+                android:background="#EBEBEB">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bakery, Fast Food"
+                    android:layout_gravity="right"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:gravity="right"
+                    android:drawableRight="@drawable/hand"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#E51C39"
+                    android:id="@+id/txt_description" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+
+
+                        <LinearLayout
+                            android:id="@+id/lin2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="left"
+                            android:layout_below="@id/lin1"
+                            android:layout_marginTop="@dimen/_5sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Food Zone"
+                                android:textStyle="bold"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_gravity="left"
+                                android:textSize="@dimen/_13sdp"
+                                android:id="@+id/txt_shopname"/>
+
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mahindra World City, Chengalpattu"
+                                android:textSize="@dimen/_9sdp"
+                                android:layout_marginTop="@dimen/_1sdp"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_gravity="left"
+                                android:id="@+id/txt_address"
+                                android:singleLine="false"
+                                />
+
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10AM to 10PM (Mon-Sun)"
+                                android:drawableLeft="@drawable/timer"
+                                android:textSize="@dimen/_11sdp"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:id="@+id/txt_time"
+                                android:singleLine="false"
+                                android:textColor="#E51C39"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_gravity="left" />
+
+
+
+                            <!--  <LinearLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="View Menu"
+                                android:drawableLeft="@drawable/view"
+                                android:layout_marginTop="@dimen/_6sdp"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:textSize="@dimen/_11sdp"
+                                android:id="@+id/txt_menu"
+                                android:singleLine="false"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_gravity="left" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/back_arrow"
+                        android:layout_width="match_parent"
+                        android:gravity="right"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_height="match_parent">
+
+
+                        <ImageView
+                            android:id="@+id/call"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_icon_black"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

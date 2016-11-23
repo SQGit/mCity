@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:id="@+id/dotlin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/dotted_red"
+            android:layout_margin="@dimen/_5sdp">
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/imagelin"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_gravity="center"
+                android:background="#E51C39">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/shop_logo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_1sdp"
+                android:orientation="horizontal"
+                android:background="#EBEBEB">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:id="@+id/lin1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+
+                            android:layout_marginTop="@dimen/_7sdp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Expiry on:"
+                                android:textSize="@dimen/_10sdp"
+                                android:textColor="#E51C39"
+                                android:id="@+id/txt_expired" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="03-11-2016"
+                                android:textSize="@dimen/_9sdp"
+                                android:textColor="#E51C39"
+                                android:layout_marginLeft="@dimen/_4sdp"
+                                android:id="@+id/txt_expiredval"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/lin2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_below="@id/lin1"
+                            android:layout_marginTop="@dimen/_5sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="LavaCakes"
+                                android:textSize="@dimen/_12sdp"
+                                android:id="@+id/txt_shopname"
+                                android:layout_gravity="right" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/lin3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_below="@id/lin1"
+                            android:layout_marginTop="@dimen/_3sdp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Buy 1 cake for Rs.1000/-and get 2 free."
+                                android:textSize="@dimen/_9sdp"
+                                android:id="@+id/txt_description"
+                                android:singleLine="false"
+                                android:layout_gravity="right" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/lin4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_below="@id/lin1"
+                            android:layout_marginTop="@dimen/_5sdp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tc"
+                                android:textColor="#E51C39"
+                                android:gravity="right"
+                                android:textSize="@dimen/_7sdp"
+                                android:id="@+id/tc"
+                                android:singleLine="true"
+                                android:layout_gravity="right" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+
+                        <LinearLayout
+                            android:id="@+id/back_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center">
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/coupon_arrow"/>
+                        </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+</LinearLayout>
