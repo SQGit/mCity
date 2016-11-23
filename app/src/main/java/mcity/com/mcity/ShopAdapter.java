@@ -188,7 +188,6 @@ public class ShopAdapter extends BaseAdapter {
 
         });
 
-
         return itemView;
     }
 }
