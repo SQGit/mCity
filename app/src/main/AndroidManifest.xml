@@ -40,10 +40,7 @@
 
         <activity android:name=".SplashScreen"
             android:screenOrientation="sensorPortrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity android:name=".Login"
@@ -103,6 +100,11 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".Signup"

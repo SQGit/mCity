@@ -25,7 +25,7 @@ import java.util.HashMap;
  * Created by Admin on 09-11-2016.
  */
 public class HistoryHouse extends Activity {
-    String URL = Data_Service.URL_API + "allrent";
+    String ALL_RENT = Data_Service.URL_API + "allrent";
     String str_uid,str_token;
     ArrayList<HashMap<String, String>> contactList1;
     HouseAdapter houseAdapter;
@@ -71,12 +71,11 @@ public class HistoryHouse extends Activity {
             String id = "";
             try {
 
-                //location,landmark,address,roomtype,monthlyrent,gender,description
+
                 JSONObject jsonObject = new JSONObject();
-                //jsonObject.accumulate("departuretime", time);
                 json = jsonObject.toString();
 
-                return jsonStr = HttpUtils.makeRequest1(URL, json, str_uid, str_token);
+                return jsonStr = HttpUtils.makeRequest1(ALL_RENT, json, str_uid, str_token);
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
             }
@@ -110,45 +109,48 @@ public class HistoryHouse extends Activity {
 
                             JSONObject jsonObject = data.getJSONObject(i1);
 
-                                JSONArray pos_rent_array = jsonObject.getJSONArray("postforrent");
-                                Log.e("tag", "3" + pos_rent_array);
+                            JSONArray pos_rent_array = jsonObject.getJSONArray("postforrent");
+                            Log.e("tag", "3" + pos_rent_array);
 
-                                for (int j = 0; j < pos_rent_array.length(); j++) {
-
-
-                                    map = new HashMap<String, String>();
-                                    JSONObject pos_rent = pos_rent_array.getJSONObject(j);
+                            for (int j = 0; j < pos_rent_array.length(); j++) {
 
 
-                                    map.put("mobileno", jsonObject.getString("mobileno"));
-                                    Log.e("tag","01"+jsonObject.getString("mobileno"));
-                                    map.put("email", jsonObject.getString("email"));
-                                    Log.e("tag","02"+jsonObject.getString("email"));
-                                    map.put("username", jsonObject.getString("username"));
-                                    Log.e("tag","03"+jsonObject.getString("username"));
-                                    map.put("monthlyrent", pos_rent.getString("monthlyrent"));
-                                    Log.e("tag","04"+jsonObject.getString("monthlyrent"));
-                                    map.put("description", pos_rent.getString("description"));
-                                    Log.e("tag","05"+jsonObject.getString("description"));
-                                    map.put("phone", pos_rent.getString("phone"));
-                                    Log.e("tag","06"+jsonObject.getString("phone"));
-                                    map.put("bedroom", pos_rent.getString("bedroom"));
-                                    Log.e("tag","07"+jsonObject.getString("bedroom"));
-                                    map.put("furnishedtype", pos_rent.getString("furnishedtype"));
-                                    Log.e("tag","08"+jsonObject.getString("furnishedtype"));
-                                    map.put("address", pos_rent.getString("address"));
-                                    Log.e("tag","09"+jsonObject.getString("address"));
-                                    map.put("renttype", pos_rent.getString("renttype"));
-                                    Log.e("tag","10"+jsonObject.getString("renttype"));
-                                    map.put("residential", pos_rent.getString("residential"));
-                                    Log.e("tag","11"+jsonObject.getString("residential"));
-                                    map.put("location", pos_rent.getString("location"));
-                                    Log.e("tag","12"+jsonObject.getString("location"));
-                                    contactList1.add(map);
-                                }
+                                map = new HashMap<String, String>();
+                                JSONObject pos_rent = pos_rent_array.getJSONObject(j);
+
+
+                                map.put("mobileno", jsonObject.getString("mobileno"));
+                                Log.e("tag", "01" + jsonObject.getString("mobileno"));
+                                map.put("email", jsonObject.getString("email"));
+                                Log.e("tag", "02" + jsonObject.getString("email"));
+                                map.put("username", jsonObject.getString("username"));
+                                Log.e("tag", "03" + jsonObject.getString("username"));
+                                map.put("monthlyrent", pos_rent.getString("monthlyrent"));
+                                Log.e("tag", "04" + pos_rent.getString("monthlyrent"));
+                                map.put("description", pos_rent.getString("description"));
+                                Log.e("tag", "05" + pos_rent.getString("description"));
+                                map.put("phone", pos_rent.getString("phone"));
+                                Log.e("tag", "06" + pos_rent.getString("phone"));
+                                map.put("bedroom", pos_rent.getString("bedroom"));
+                                Log.e("tag", "07" + pos_rent.getString("bedroom"));
+                                map.put("furnishedtype", pos_rent.getString("furnishedtype"));
+                                Log.e("tag", "08" + pos_rent.getString("furnishedtype"));
+                                map.put("address", pos_rent.getString("address"));
+                                Log.e("tag", "09" + pos_rent.getString("address"));
+                                map.put("renttype", pos_rent.getString("renttype"));
+                                Log.e("tag", "10" + pos_rent.getString("renttype"));
+                                map.put("residential", pos_rent.getString("residential"));
+                                Log.e("tag", "11" + pos_rent.getString("residential"));
+                                map.put("location", pos_rent.getString("location"));
+                                Log.e("tag", "12" + pos_rent.getString("location"));
+                                contactList1.add(map);
+                                Log.e("tag", "CONTACT_LIST"+contactList1);
+
                             }
 
-                        Log.e("tag", "<---adpatrttt---->");
+
+                        }
+
 
                         houseAdapter = new HouseAdapter(HistoryHouse.this, contactList1);
                         listView.setAdapter(houseAdapter);

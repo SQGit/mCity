@@ -15,7 +15,7 @@ import android.view.WindowManager;
 public class SplashScreen extends Activity {
     private static String TAG = SplashScreen.class.getName();
     private static long SLEEP_TIME = 5;	// Sleep for some time
-    String check;
+    String str_check;
     DatabaseHandler db;
 
 
@@ -31,8 +31,7 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.splash_activity);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashScreen.this);
-        check = sharedPreferences.getString("login_status", "");
-
+        str_check = sharedPreferences.getString("login_status", "");
         IntentLauncher launcher = new IntentLauncher();
         launcher.start();
     }
@@ -50,7 +49,7 @@ public class SplashScreen extends Activity {
             }
 
 
-            if(check.equals("true"))
+            if(str_check.equals("true"))
             {
 
                 Log.e("tag","111");
@@ -58,15 +57,13 @@ public class SplashScreen extends Activity {
                 SplashScreen.this.startActivity(intent);
                 SplashScreen.this.finish();
             }
-            else if(check.equals("false"))
+            else if(str_check.equals("false"))
             {
                 Log.e("tag","222");
 
                 Intent intent = new Intent(SplashScreen.this, Login.class);
                 SplashScreen.this.startActivity(intent);
                 SplashScreen.this.finish();
-
-
 
             }
             else

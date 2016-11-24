@@ -79,7 +79,7 @@ import nl.changer.polypicker.utils.ImageInternalFetcher;
 
 public class PostHouse extends Activity implements AdapterView.OnItemSelectedListener {
 
-    String URL = Data_Service.URL_API + "postforrent";
+    String POST_HOUSE = Data_Service.URL_API + "postforrent";
     String id, token, path, landmark, address, rentAmount, depositAmount, description, img, str_pho_enable;
     String root1,root0, root2, root3, str_location, str_landmark, str_address, str_residential, str_residential1,str_bedroom,str_bedroom1,str_bedroom2, str_renttype, str_furnished_type, str_monthrent, str_deposit, str_description, str_city;
     EditText location_et, lanmark_et, address_et, rentamount_et, depositamount_et, description_et;
@@ -711,7 +711,7 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
 
             try {
                 HttpClient client = new DefaultHttpClient();
-                HttpPost postMethod = new HttpPost(URL);
+                HttpPost postMethod = new HttpPost(POST_HOUSE);
                 postMethod.addHeader("x-access-token", token);
                 postMethod.addHeader("id", id);
                 postMethod.addHeader("location", spin_val);

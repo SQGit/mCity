@@ -82,22 +82,6 @@ public class Signup extends AppCompatActivity {
                             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
                             anim_btn_b2t.setDuration(500);
 
-                           /* lt_second.setAnimation(anim_btn_b2t);
-
-                            lt_second.setVisibility(View.VISIBLE);
-
-
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    lt_first.setVisibility(View.GONE);
-                                }
-                            }, 600);
-
-*/
-
-
 
                             username = uname_et.getText().toString().trim();
                             mobileno = phone_et.getText().toString().trim();
@@ -116,10 +100,6 @@ public class Signup extends AppCompatActivity {
                     uname_et.setError("Enter a Name!");
                     uname_et.requestFocus();
                 }
-
-
-
-
             }
         });
 
