@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/ll1"
+        android:paddingLeft="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_10sdp">
+
+
+            <EditText
+                android:id="@+id/editText_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/phone_icon"
+                android:drawablePadding="@dimen/_5sdp"
+                android:hint="Email"
+                android:imeOptions="actionDone"
+                android:textSize="@dimen/_12sdp"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="@dimen/_13sdp"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical">
+
+<!--
+            <LinearLayout
+                android:id="@+id/hide_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_10sdp">
+
+                <EditText
+                    android:id="@+id/pwd_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/pwd_icon"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:hint="@string/password"
+                    android:textSize="@dimen/_12sdp"
+                    android:maxLength="5"
+                    android:paddingBottom="@dimen/_13sdp"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:singleLine="true" />
+            </LinearLayout>
+-->
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
