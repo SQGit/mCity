@@ -23,6 +23,14 @@ public class MGarage_History  extends Activity {
         btn_postAd = (LinearLayout) findViewById(R.id.layout_postads);
         btn_searchAd = (LinearLayout) findViewById(R.id.layout_searchad);
 
+        btn_searchAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent post = new Intent(MGarage_History.this,Test_L.class);
+                startActivity(post);
+            }
+        });
+
         btn_postAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

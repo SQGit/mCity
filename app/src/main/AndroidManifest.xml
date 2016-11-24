@@ -223,6 +223,10 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
+        <activity android:name=".Test_L"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
 
 
 
