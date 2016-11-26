@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="@dimen/_36sdp"
         android:orientation="vertical"
         android:layout_below="@+id/ll1"
         android:paddingLeft="@dimen/_10sdp">
@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5sdp"
             android:paddingLeft="@dimen/_10sdp">
 
 
@@ -24,50 +25,74 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/phone_icon"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Email"
+                android:hint="Mobile No"
                 android:imeOptions="actionDone"
                 android:textSize="@dimen/_12sdp"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:paddingBottom="@dimen/_13sdp"
                 android:singleLine="true" />
 
         </LinearLayout>
 
+
+
         <LinearLayout
+            android:id="@+id/registerlv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:orientation="vertical">
+            android:gravity="end|center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
 
-<!--
-            <LinearLayout
-                android:id="@+id/hide_pwd"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_account"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_10sdp">
+                android:text="Dont Have an Account? "
+                android:textColor="#333333"
+                android:textSize="@dimen/_11sdp" />
+            <LinearLayout
+                android:id="@+id/layout_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/pwd_et"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textView_Register"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/pwd_icon"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:hint="@string/password"
-                    android:textSize="@dimen/_12sdp"
-                    android:maxLength="5"
-                    android:paddingBottom="@dimen/_13sdp"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:enabled="false"
-                    android:singleLine="true" />
+                    android:text="Register!"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/colorAccent" />
+
             </LinearLayout>
--->
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/submit_icon" />
 
+        </LinearLayout>
 
 
     </LinearLayout>

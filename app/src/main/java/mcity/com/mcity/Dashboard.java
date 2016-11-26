@@ -69,10 +69,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class Dashboard extends AppCompatActivity {
-    String URL = Data_Service.URL_API + "logout";
-    String IMAGEUPLOAD = Data_Service.URL_API + "licenceupload";
+
     String LOGOUT = Data_Service.URL_API + "logout";
-    LinearLayout lin_mcoupon,lin_shop,lin_auto,lin_train,lin_rental,lin_ride,lin_garage;
+    LinearLayout lin_mcoupon,lin_shop,lin_auto,lin_train,lin_rental,lin_ride,lin_garage,lin_food,lin_order;
     ImageView img_settings_icon,imv_coupon,img_shop,img_auto;
     TextView txt_coupon,txt_shop,txt_auto,txt_train,txt_rental,txt_ride,txt_garage,txt_desclaimer, txt_site;
 
@@ -100,6 +99,8 @@ public class Dashboard extends AppCompatActivity {
         lin_rental=(LinearLayout)findViewById(R.id.lin_rental) ;
         lin_ride=(LinearLayout)findViewById(R.id.lin_ride) ;
         lin_garage=(LinearLayout)findViewById(R.id.lin_garage) ;
+        lin_food=(LinearLayout)findViewById(R.id.lin_food) ;
+        lin_order=(LinearLayout) findViewById(R.id.lin_order);
 
         imv_coupon=(ImageView)findViewById(R.id.imv_coupon);
         img_shop=(ImageView)findViewById(R.id.img_shop);
@@ -123,8 +124,9 @@ public class Dashboard extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
+        Log.e("tag","check_token"+str_token);
         str_uid = sharedPreferences.getString("id", "");
-
+        Log.e("tag","check_id"+str_uid);
 
         lin_mcoupon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,13 +201,32 @@ public class Dashboard extends AppCompatActivity {
         lin_garage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lin_garage.setBackgroundResource(R.drawable.auto_press_bg);
+                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_LONG, TastyToast.INFO);
+
+                /*lin_garage.setBackgroundResource(R.drawable.auto_press_bg);
                 txt_garage.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
                 Intent garage = new Intent(getApplicationContext(),  MGarage_History.class);
                 startActivity(garage);
-                finish();
+                finish();*/
             }
         });
+
+        lin_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_LONG, TastyToast.INFO);
+
+            }
+        });
+
+        lin_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_LONG, TastyToast.INFO);
+
+            }
+        });
+
 
 
         txt_desclaimer.setOnClickListener(new View.OnClickListener() {
@@ -379,11 +400,10 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(Dashboard.this);
                 SharedPreferences.Editor editor = shared.edit();
-                //editor.putString("check","");
                 editor.putString("login_status", "false");
                 editor.commit();
                 logoutMethod();
-                alertD.dismiss();
+                //alertD.dismiss();
             }
         });
 
@@ -462,13 +482,20 @@ public class Dashboard extends AppCompatActivity {
 
                 if (status.equals("true")) {
 
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                Log.e("tag","first");
+                    TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                    //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    Intent intent_logout=new Intent(Dashboard.this,Test_L.class);
+                    startActivity(intent_logout);
+                    finish();
 
-                } else {
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
+                } else { Log.e("tag","second");
 
+                    TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                   // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 }
+
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

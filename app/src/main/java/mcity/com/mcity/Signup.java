@@ -108,7 +108,7 @@ public class Signup extends AppCompatActivity {
         registerlv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), Test_L.class);
                 startActivity(intent);
                 finish();
 
@@ -170,7 +170,7 @@ public class Signup extends AppCompatActivity {
                 if (status.equals("true"))
                 {
                     Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    Intent intent = new Intent(getApplicationContext(), Test_L.class);
                     startActivity(intent);
                     finish();
                     SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

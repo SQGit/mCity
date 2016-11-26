@@ -30,7 +30,7 @@
             android:singleLine="true"
             android:text="RS. "
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/rent"
@@ -39,7 +39,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/comma"
@@ -49,7 +49,7 @@
             android:singleLine="true"
             android:text=", "
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/bedtypes"
@@ -58,7 +58,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_10sdp" />
 
 
         <TextView
@@ -69,7 +69,7 @@
             android:singleLine="true"
             android:text="  FOR RENT IN MCITY"
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/gap"
@@ -79,7 +79,7 @@
             android:singleLine="true"
             android:text="   "
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_10sdp" />
 
 
 

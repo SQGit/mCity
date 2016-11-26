@@ -2,29 +2,38 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,15 +43,35 @@ import java.util.ArrayList;
  * Created by sqindia on 23-11-2016.
  */
 
-public class Test_L extends Activity {
+public class Test_L extends Activity implements TextWatcher {
+    public static String URL_LOGIN = Data_Service.URL_API + "login";
+    public static String URL_OTP = Data_Service.URL + "otpgenerate";
+    String URL = Data_Service.URL_API + "logout";
+    String LICENCE = Data_Service.URL_API + "licence";
+
     private ViewPager viewPager;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
-    ImageView iv_next;
-    EditText et_email,et_otp;
-    String str_email;
-    TextView tv_otp,tv_register;
-    int i=0,k;
+    ImageView iv_login,iv_otp;
+    EditText et_email, et_otp;
+    String str_email, str_otp, str_otppin;
+    TextView tv_otp, tv_register;
+    SharedPreferences s_pref;
+    SharedPreferences.Editor editor;
+    LinearLayout layout_register;
+    int i = 0, k;
+    String str_mobileno, str_password,str_emailValue,str_token, str_uid,str_get_email,str_check,str_signupstatus;
+
+    static EditText et_otp1, et_otp2, et_otp3, et_otp4, et_otp5;
+    private View view;
+
+    private Test_L(View view) {
+        this.view = view;
+    }
+
+    public Test_L() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +80,16 @@ public class Test_L extends Activity {
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-        iv_next = (ImageView) findViewById(R.id.submittv);
+       // iv_next = (ImageView) findViewById(R.id.submittv);
         tv_otp = (TextView) findViewById(R.id.text_Otp);
-        tv_register = (TextView) findViewById(R.id.textView_Register);
 
-        et_otp = (EditText) findViewById(R.id.pwd_et);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_token = sharedPreferences.getString("token", "");
+        str_uid = sharedPreferences.getString("id", "");
+        str_signupstatus=sharedPreferences.getString("signup", "");
+
+
         layouts = new int[]{
                 R.layout.test_login,
                 R.layout.test_otp,};
@@ -65,35 +99,7 @@ public class Test_L extends Activity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Comming Soon !", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                Test_L.this.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#000000")));
-            }
-        });
 
-        if (i==0) {
-            iv_next.setEnabled(false);
-            tv_otp.setVisibility(View.GONE);
-        }
-        iv_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (i==0) {
-                    i=1;
-
-                    viewPager.setCurrentItem(R.layout.test_otp);
-                    tv_otp.setVisibility(View.VISIBLE);
-                }
-                else if (i==1){
-
-                    i=0;
-                }
-
-            }
-        });
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -101,6 +107,58 @@ public class Test_L extends Activity {
                 return true;
             }
         });
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+        switch (view.getId()) {
+            case R.id.editext_otp1:
+
+                if (editable.length() == 0) {
+                    et_otp1.requestFocus();
+                } else if (editable.length() == 1) {
+                    et_otp2.requestFocus();
+                }
+
+                break;
+            case R.id.editext_otp2:
+
+                if (editable.length() == 0) {
+                    et_otp1.requestFocus();
+                } else if (editable.length() == 1) {
+                    et_otp3.requestFocus();
+                }
+
+                break;
+            case R.id.editext_otp3:
+
+                if (editable.length() == 0) {
+                    et_otp2.requestFocus();
+                } else if (editable.length() == 1) {
+                    et_otp4.requestFocus();
+                }
+                break;
+            case R.id.editext_otp4:
+
+                if (editable.length() == 0) {
+                    et_otp3.requestFocus();
+                }
+                break;
+
+        }
+
 
     }
 
@@ -123,66 +181,119 @@ public class Test_L extends Activity {
             if (position == 0) {
 
                 et_email = (EditText) view.findViewById(R.id.editText_email);
+                iv_login = (ImageView) view.findViewById(R.id.login_btn);
 
-/*
+                layout_register = (LinearLayout) view.findViewById(R.id.layout_register);
+                layout_register.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent_reg = new Intent(Test_L.this, Signup.class);
+                        startActivity(intent_reg);
+                        finish();
+                    }
+                });
+
+
+                iv_login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (et_email.getText().toString().isEmpty()) {
+                            et_email.setError("Please Enter Mobile No");
+                            et_email.requestFocus();
+                           }
+                        else if(et_email.getText().toString().length()<10)
+                        {
+                            et_email.setError("Enter valid phone number");
+                            et_email.requestFocus();
+                        }
+                    }
+                });
                 et_email.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        i=0;
-                        str_email = et_email.getText().toString().trim();
-                        if (!(str_email.isEmpty())) {
-                           */
-/* InputMethodManager inputManager = (InputMethodManager)
-                                    getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                                    InputMethodManager.RESULT_HIDDEN);
-                            //hideSoftKeyboard(Register.this);
+                        Log.e("tag", "11111");
+                      //  iv_next.setEnabled(true);
 
-                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);*//*
+                        iv_login.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                            i=1;
-                            if (i==1){
-                                iv_next.setEnabled(true);
-                                tv_otp.setVisibility(View.VISIBLE);
+                                if (et_email.getText().toString().length() > 0) {
+
+
+                                    str_email = et_email.getText().toString().trim();
+                                   new Otp().execute();
+
+                                }
+
+                                else
+                                {
+                                    TastyToast.makeText(getApplicationContext(), "Please Enter Mobile No", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                                }
                             }
-                        }
+                        });
 
                     }
+
+
                 });
-*/
-
-                et_email.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                        if (actionId == EditorInfo.IME_ACTION_DONE){
-                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                            str_email = et_email.getText().toString().trim();
-
-                            if (!(str_email.isEmpty())) {
-                                InputMethodManager inputManager = (InputMethodManager)
-                                        getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                                        InputMethodManager.RESULT_HIDDEN);
-                                //hideSoftKeyboard(Register.this);
-
-                                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-
-                                    iv_next.setEnabled(true);
-
-
-                            }
-                        }
-                        return true;
-                    }
-                });
-
-
 
             } else if (position == 1) {
+                et_otp1 = (EditText) view.findViewById(R.id.editext_otp1);
+                et_otp2 = (EditText) view.findViewById(R.id.editext_otp2);
+                et_otp3 = (EditText) view.findViewById(R.id.editext_otp3);
+                et_otp4 = (EditText) view.findViewById(R.id.editext_otp4);
+                iv_otp = (ImageView) view.findViewById(R.id.otp_btn);
+                et_otp1.addTextChangedListener(new Test_L(et_otp1));
+                et_otp2.addTextChangedListener(new Test_L(et_otp2));
+                et_otp3.addTextChangedListener(new Test_L(et_otp3));
+                et_otp4.addTextChangedListener(new Test_L(et_otp4));
+
+                iv_otp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                            str_email = et_email.getText().toString().trim();
+                            if (et_otp1.getText().toString().isEmpty()) {
+                                et_otp1.requestFocus();
+                            } else {
+                                if (et_otp2.getText().toString().isEmpty()) {
+                                    et_otp2.requestFocus();
+                                } else {
+                                    if (et_otp3.getText().toString().isEmpty()) {
+                                        et_otp3.requestFocus();
+                                    } else {
+                                        if (et_otp4.getText().toString().isEmpty()) {
+                                            et_otp4.requestFocus();
+                                        }  else {
+                                            str_otppin = et_otp1.getText().toString() + et_otp2.getText().toString() + et_otp3.getText().toString() + et_otp4.getText().toString();
+                                            Log.e("tag", "pin:" + str_otppin);
+
+                                            if(str_otppin.length()>0)
+                                            {
+                                                new AsyncLogin(str_email, str_otppin).execute();
+                                            }
+                                            else
+                                            {
+                                                TastyToast.makeText(getApplicationContext(), "Please Enter Pin No", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
+                                            }
+
+
+
+
+                                        }
+
+                                    }
+                                }
+                            }
+                    }
+                });
+
 
             }
 
@@ -216,11 +327,6 @@ public class Test_L extends Activity {
 
 
             if (position == 0) {
-/*
-
-                FontsManager.initFormAssets(Test_L.this, "fonts/lato.ttf");       //initialization
-                FontsManager.changeFonts(Test_L.this);
-*/
 
 
             } else if (position == 1) {
@@ -242,4 +348,221 @@ public class Test_L extends Activity {
 
     };
 
-}
+    private class Otp extends AsyncTask<String, String, String> {
+        @Override
+
+
+        protected void onPreExecute() {
+            //progressBar.setVisibility(View.VISIBLE);
+
+            super.onPreExecute();
+
+        }
+
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("mobileno", str_email);
+                json = jsonObject.toString();
+
+                return jsonStr = HttpUtils.makeRequest(URL_OTP, json);
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+            return jsonStr;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----result---->" + jsonStr);
+            //progressBar.setVisibility(View.GONE);
+            //img_submit.setVisibility(View.VISIBLE);
+            super.onPostExecute(jsonStr);
+
+            //edt_pwd.setEnabled(true);
+
+            try {
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("status");
+                String msg = jo.getString("message");
+
+
+                if (status.equals("true")) {
+
+                   // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                    viewPager.setCurrentItem(R.layout.test_otp);
+
+
+
+                } else
+                {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    class AsyncLogin extends AsyncTask<String, Void, String> {
+
+        String email, password;
+
+        public AsyncLogin(String email, String password) {
+            String json = "", jsonStr = "";
+            this.email = email;
+            this.password = password;
+
+        }
+
+        protected void onPreExecute() {
+
+
+            super.onPreExecute();
+
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("mobileno", str_email);
+                jsonObject.accumulate("password", str_otppin);
+                json = jsonObject.toString();
+
+                return jsonStr = HttpUtils.makeRequest(URL_LOGIN, json);
+            } catch (Exception e) {
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            super.onPostExecute(jsonStr);
+            try {
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("status");
+                String msg = jo.getString("message");
+                JSONArray ja = jo.getJSONArray("licence");
+
+
+                if (ja.length() > 0) {
+
+                    for (int i = 0; i < ja.length(); i++) {
+
+                        JSONObject img_obj = ja.getJSONObject(i);
+
+                        String pathnew = LICENCE + img_obj.getString("filename");
+                        s_pref = PreferenceManager.getDefaultSharedPreferences(Test_L.this);
+                        editor = s_pref.edit();
+                        editor.putString("file_generate", pathnew);
+                        editor.commit();
+
+
+                    }
+                }
+
+                if (status.equals("true")) {
+
+                    String id = jo.getString("id");
+                    String token = jo.getString("token");
+                    int s = ja.length();
+
+
+                    SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor edit = s_pref.edit();
+                    edit.putString("id", id);
+                    edit.putString("token", token);
+                    edit.putInt("licence_activation", s);
+                    edit.putString("login_status", "true");
+                    edit.commit();
+
+                    //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), msg + "\n      Please generate OTP", Toast.LENGTH_SHORT).show();
+
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        showExit();
+    }
+
+    private void showExit() {
+
+        LayoutInflater layoutInflater = LayoutInflater.from(Test_L.this);
+        View promptView = layoutInflater.inflate(R.layout.exitlogin, null);
+        final android.app.AlertDialog alertD = new android.app.AlertDialog.Builder(Test_L.this).create();
+        alertD.setCancelable(false);
+        Window window = alertD.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final TextView head1 = (TextView) promptView.findViewById(R.id.head1);
+        final TextView head2 = (TextView) promptView.findViewById(R.id.head2);
+        final ImageView no = (ImageView) promptView.findViewById(R.id.no);
+        final ImageView yes = (ImageView) promptView.findViewById(R.id.yes);
+
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
+        head1.setTypeface(tf);
+        head2.setTypeface(tf);
+
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i1 = new Intent(Intent.ACTION_MAIN);
+                i1.setAction(Intent.ACTION_MAIN);
+                i1.addCategory(Intent.CATEGORY_HOME);
+                i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i1);
+                finish();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertD.dismiss();
+            }
+        });
+        alertD.setView(promptView);
+        alertD.show();
+
+    }
+    }
+
+
+

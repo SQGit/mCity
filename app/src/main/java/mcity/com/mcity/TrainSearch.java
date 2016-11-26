@@ -56,21 +56,29 @@ import java.util.HashMap;
 public class TrainSearch extends Activity {
 
     LinearLayout back_arrow;
-    ImageView get_train;
+    ImageView get_train,train_menu;
     String dayOfTheWeek, time;
     ProgressBar progressBar;
-    String token, uid;
+    String token, uid,more_train;
     TextView txt_time;
     String URL_NORMAL = Data_Service.URL_API + "trainsearch";
-    String LOGOUT = Data_Service.URL_API + "logout";
     String URL_SUNDAY = Data_Service.URL_API + "trainsearchsun";
+
+    String URL_NORMAL_REV = Data_Service.URL_API + "revtrainsearch";
+    String URL_SUNDAY_REV = Data_Service.URL_API + "revtrainsearchsun";
+
+    String LOGOUT = Data_Service.URL_API + "logout";
+
     ArrayList<HashMap<String, String>> searchridelist;
     TrainAdapter trainAdapter;
-    String str_token,str_uid;
+    String str_token,str_uid,train_status;
     ListView searchlist;
     java.util.Date noteTS;
     String tt, date;
     ImageView settings_icon;
+    Button getmoretrain;
+    TextView txt_sou_des;
+
 
     static String name = "name";
     static String departuretime = "departuretime";
@@ -86,15 +94,25 @@ public class TrainSearch extends Activity {
 
         back_arrow = (LinearLayout) findViewById(R.id.back_arrow);
         get_train=(ImageView)findViewById(R.id.get_train);
+        getmoretrain=(Button)findViewById(R.id.getmoretrain);
+        train_menu=(ImageView)findViewById(R.id.train_menu);
+        txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
         txt_time=(TextView)findViewById(R.id.txt_time);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         searchlist=(ListView)findViewById(R.id.searchlist);
         settings_icon = (ImageView) findViewById(R.id.settings_icon);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("train_status", "pcb");
+        editor.commit();
+
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
-
+        token = sharedPreferences.getString("token", "");
+        uid = sharedPreferences.getString("id", "");
+        train_status = sharedPreferences.getString("train_status", "");
 
 
         FontsManager.initFormAssets(this, "mont.ttf");
@@ -112,33 +130,70 @@ public class TrainSearch extends Activity {
         txt_time.setText(time);
 
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        token = sharedPreferences.getString("token", "");
-        uid = sharedPreferences.getString("id", "");
-
-        if (dayOfTheWeek.equals("Sunday"))
-
+        if(train_status.equals("pcb"))
         {
-            if (Util.Operations.isOnline(TrainSearch.this)) {
+            txt_sou_des.setText("From Paranur To Chennai Beach");
+            if (dayOfTheWeek.equals("Sunday"))
+
+            {
+                if (Util.Operations.isOnline(TrainSearch.this)) {
 
 
-                new TrainSearchForSunday().execute();
+                    new TrainSearchForSunday().execute();
 
 
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                }
             } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            if (Util.Operations.isOnline(TrainSearch.this)) {
+                if (Util.Operations.isOnline(TrainSearch.this)) {
 
 
-                new TrainSearchForAllday().execute();
+                    new TrainSearchForAllday().execute();
 
 
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                }
             }
         }
+
+        else
+        {
+            txt_sou_des.setText("From  Chennai Beach To Paranur");
+
+
+            if (dayOfTheWeek.equals("Sunday"))
+
+            {
+                if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                    new TrainSearchForSundayRev().execute();
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                    new TrainSearchForAlldayRev().execute();
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+        }
+
+
+
+
+
 
 
         back_arrow.setOnClickListener(new View.OnClickListener() {
@@ -155,9 +210,129 @@ public class TrainSearch extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getApplicationContext(), TrainTime.class);
+          Intent i = new Intent(getApplicationContext(), TrainTime.class);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        getmoretrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("more_train", "true");
+                editor.commit();
+
+                if (dayOfTheWeek.equals("Sunday"))
+
+                {
+                    if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                        new TrainSearchForSunday().execute();
+
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                        new TrainSearchForAllday().execute();
+
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
+        train_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TrainSearch.this);
+                train_status = sharedPreferences.getString("train_status", "");
+
+                if(train_status.equals("pcb"))
+                {
+
+                    txt_sou_des.setText("From  Chennai Beach To Paranur");
+
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("train_status", "cbp");
+                editor.commit();
+                    searchridelist.clear();
+                    if (dayOfTheWeek.equals("Sunday"))
+
+                    {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                            new TrainSearchForSundayRev().execute();
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                            new TrainSearchForAlldayRev().execute();
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                }
+
+                else
+                {
+                    txt_sou_des.setText("From Paranur To Chennai Beach");
+
+                    searchridelist.clear();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("train_status", "pcb");
+                    editor.commit();
+
+                    if (dayOfTheWeek.equals("Sunday"))
+
+                    {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                            new TrainSearchForSunday().execute();
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+
+
+                            new TrainSearchForAllday().execute();
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+
+                }
+
+
+
+
             }
         });
 
@@ -360,30 +535,51 @@ public class TrainSearch extends Activity {
 
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
-                    //   String msg = jo.getString("message");
-                    //    Log.e("tag","123...."+msg);
-
                     JSONArray data1 = jo.getJSONArray("message");
                     Log.e("tag", "...#...1" + data1);
                     Log.e("tag","ss"+data1.length());
                     HashMap<String, String> map = new HashMap<String, String>();
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TrainSearch.this);
+                    more_train = sharedPreferences.getString("more_train", "");
+
+                    if(more_train.equals("true"))
+                    {
 
 
-                    for (int j = 0; j < data1.length(); j++) {
-                        JSONObject dataObj = data1.getJSONObject(j);
-                        {
-                            HashMap<String, String> map1 = new HashMap<String, String>();
-                            map1.put("name", dataObj.getString("name"));
-                            map1.put("departuretime", dataObj.getString("departuretime"));
-                            map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("more_train", "false");
+                        editor.commit();
 
 
-
-                            searchridelist.add(map1);
+                        for (int j = 0; j < data1.length(); j++) {
+                            Log.e("tag","check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
                         }
                     }
+                    else {
 
-                    Log.e("tag", "searchridelist" + searchridelist);
+                        for (int j = 0; j < 4; j++) {
+                            Log.e("tag", "check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
+                        }
+
+                    }
 
                     trainAdapter = new TrainAdapter(TrainSearch.this, searchridelist);
                     searchlist.setAdapter(trainAdapter);
@@ -449,16 +645,260 @@ public class TrainSearch extends Activity {
                     HashMap<String, String> map = new HashMap<String, String>();
 
 
-                    for (int j = 0; j < data1.length(); j++) {
-                        JSONObject dataObj = data1.getJSONObject(j);
-                        {
-                            HashMap<String, String> map1 = new HashMap<String, String>();
-                            map1.put("name", dataObj.getString("name"));
-                            map1.put("departuretime", dataObj.getString("departuretime"));
-                            map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TrainSearch.this);
+                    more_train = sharedPreferences.getString("more_train", "");
 
-                            searchridelist.add(map1);
+                    if(more_train.equals("true"))
+                    {
+
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("more_train", "false");
+                        editor.commit();
+
+
+                        for (int j = 0; j < data1.length(); j++) {
+                            Log.e("tag","check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
                         }
+                    }
+                    else {
+
+                        for (int j = 0; j < 4; j++) {
+                            Log.e("tag", "check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
+                        }
+
+                    }
+
+                    trainAdapter = new TrainAdapter(TrainSearch.this, searchridelist);
+                    searchlist.setAdapter(trainAdapter);
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
+
+    private class TrainSearchForSundayRev extends AsyncTask<String, String, String> {
+        @Override
+
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+            String id = "";
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("departuretime", time);
+                json = jsonObject.toString();
+
+                return jsonStr = HttpUtils.makeRequest1(URL_SUNDAY_REV, json, uid, token);
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonstr) {
+            Log.e("tag", "<-----111111111--------->" + jsonstr);
+            super.onPostExecute(jsonstr);
+            progressBar.setVisibility(View.GONE);
+
+            if (jsonstr.equals("")) {
+
+                Toast.makeText(getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
+
+            } else {
+                try {
+
+                    JSONObject jo = new JSONObject(jsonstr);
+                    String status = jo.getString("status");
+                    JSONArray data1 = jo.getJSONArray("message");
+                    Log.e("tag", "...#...1" + data1);
+                    Log.e("tag","ss"+data1.length());
+                    HashMap<String, String> map = new HashMap<String, String>();
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TrainSearch.this);
+                    more_train = sharedPreferences.getString("more_train", "");
+
+                    if(more_train.equals("true"))
+                    {
+
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("more_train", "false");
+                        editor.commit();
+
+
+                        for (int j = 0; j < data1.length(); j++) {
+                            Log.e("tag","check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
+                        }
+                    }
+                    else {
+
+                        for (int j = 0; j < 4; j++) {
+                            Log.e("tag", "check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
+                        }
+
+                    }
+
+
+
+                    trainAdapter = new TrainAdapter(TrainSearch.this, searchridelist);
+                    searchlist.setAdapter(trainAdapter);
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    private class TrainSearchForAlldayRev extends AsyncTask<String, String, String> {
+
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+            String id = "";
+            try {
+
+                //location,landmark,address,roomtype,monthlyrent,gender,description
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("departuretime", time);
+                json = jsonObject.toString();
+
+                return jsonStr = HttpUtils.makeRequest1(URL_NORMAL_REV, json, uid, token);
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String jsonstr) {
+            Log.e("tag", "<-----111111111--------->" + jsonstr);
+            super.onPostExecute(jsonstr);
+            progressBar.setVisibility(View.GONE);
+
+            if (jsonstr.equals("")) {
+
+                Toast.makeText(getApplicationContext(), "Check Network Connection", Toast.LENGTH_LONG).show();
+
+            } else {
+                try {
+
+                    JSONObject jo = new JSONObject(jsonstr);
+                    String status = jo.getString("status");
+                    //   String msg = jo.getString("message");
+                    //    Log.e("tag","123...."+msg);
+
+                    JSONArray data1 = jo.getJSONArray("message");
+                    Log.e("tag", "...#...1" + data1);
+                    Log.e("tag","ss"+data1.length());
+                    HashMap<String, String> map = new HashMap<String, String>();
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(TrainSearch.this);
+                    more_train = sharedPreferences.getString("more_train", "");
+
+                    if(more_train.equals("true"))
+                    {
+
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("more_train", "false");
+                        editor.commit();
+
+
+                        for (int j = 0; j < data1.length(); j++) {
+                            Log.e("tag","check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
+                        }
+                    }
+                    else {
+
+                        for (int j = 0; j < 4; j++) {
+                            Log.e("tag", "check");
+                            JSONObject dataObj = data1.getJSONObject(j);
+                            {
+                                HashMap<String, String> map1 = new HashMap<String, String>();
+                                map1.put("name", dataObj.getString("name"));
+                                map1.put("departuretime", dataObj.getString("departuretime"));
+                                map1.put("arrivaltime", dataObj.getString("arrivaltime"));
+                                searchridelist.add(map1);
+                                Log.e("tag", "searchridelist" + searchridelist);
+                            }
+                        }
+
                     }
 
                     Log.e("tag", "searchridelist" + searchridelist);
@@ -540,7 +980,7 @@ public class TrainSearch extends Activity {
                 {
 
                     Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
-                    Intent exit=new Intent(getApplicationContext(),Login.class);
+                    Intent exit=new Intent(getApplicationContext(),Test_L.class);
                     startActivity(exit);
                     finish();
 

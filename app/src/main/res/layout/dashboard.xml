@@ -353,6 +353,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/lin_food"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="@dimen/_90sdp"
                     android:background="@drawable/mcoupons_bg"
@@ -379,6 +380,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/lin_order"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="@dimen/_90sdp"
                     android:background="@drawable/mcoupons_bg"

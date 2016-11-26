@@ -35,7 +35,7 @@ import org.json.JSONObject;
  */
 
 public class Login extends AppCompatActivity {
-    public static String URL_REGISTER = Data_Service.URL_API+"login";
+    public static String URL_LOGIN = Data_Service.URL_API+"login";
     public static String URL_OTP = Data_Service.URL+"otpgenerate";
     String URL = Data_Service.URL_API + "logout";
 
@@ -189,7 +189,7 @@ public class Login extends AppCompatActivity {
                 jsonObject.accumulate("password", password);
                 json = jsonObject.toString();
 
-                return jsonStr = HttpUtils.makeRequest(URL_REGISTER, json);
+                return jsonStr = HttpUtils.makeRequest(URL_LOGIN, json);
             } catch (Exception e) {
             }
             return null;

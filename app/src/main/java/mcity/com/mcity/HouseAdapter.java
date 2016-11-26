@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.entity.mime.content.FileBody;
@@ -51,7 +52,7 @@ public class HouseAdapter extends BaseAdapter {
     Bitmap b;
     HashMap<String, String> resultp = new HashMap<String, String>();
 
-    String img1, img2, img3, img4;
+    String enable_status,img1, img2, img3, img4;
     ArrayList<String> loading ;
     String str_cusno, str_owner_no,str_owner_mail,str_username;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
@@ -77,7 +78,7 @@ public class HouseAdapter extends BaseAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        TextView txt_description, txt_bedroom, txt_rentType, txt_furnishedType, txt_address, txt_subtype, txt_bedtv, txt_renttv, txt_subtv, txt_furnishedtv, txt_make_call,
+        TextView txt_description, txt_bedroom, txt_rentType, txt_furnishedType, txt_monthrent, txt_subtype, txt_bedtv, txt_renttv, txt_subtv, txt_furnishedtv, txt_make_call,
                 txt_send_mail, txt_bedtypes, txt_loc, txt_rs, txt_mcity, txt_city;
 
         SharedPreferences sharedPreferences;
@@ -102,7 +103,7 @@ public class HouseAdapter extends BaseAdapter {
         loading.add(img3);
         loading.add(img4);
 
-        txt_address = (TextView) itemView.findViewById(R.id.rent);
+        txt_monthrent = (TextView) itemView.findViewById(R.id.rent);
         txt_subtype = (TextView) itemView.findViewById(R.id.subtype);
         txt_rentType = (TextView) itemView.findViewById(R.id.renttype);
         txt_furnishedType = (TextView) itemView.findViewById(R.id.furnishedtype);
@@ -124,7 +125,7 @@ public class HouseAdapter extends BaseAdapter {
 
         Log.e("tag","1222222"+resultp.get("address"));
         Log.e("tag","333333"+resultp.get("bedroom"));
-        txt_address.setText(resultp.get("address"));
+        txt_monthrent.setText(resultp.get("monthlyrent"));
         txt_bedtypes.setText(resultp.get("bedroom"));
         txt_loc.setText(resultp.get("location"));
         txt_bedroom.setText(resultp.get("bedroom"));
@@ -138,7 +139,7 @@ public class HouseAdapter extends BaseAdapter {
         str_username=resultp.get("username");
 
 
-        String enable_status=resultp.get("phone");
+         enable_status=resultp.get("phone");
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         str_cusno = sharedPreferences.getString("mobileno", "");
@@ -150,7 +151,7 @@ public class HouseAdapter extends BaseAdapter {
         Log.e("tag","image_checking"+resultp.get("path0"));
 
 
-        txt_address.setTypeface(tf);
+        txt_monthrent.setTypeface(tf);
         txt_rentType.setTypeface(tf);
         txt_description.setTypeface(tf);
         txt_bedtypes.setTypeface(tf);
@@ -169,15 +170,15 @@ public class HouseAdapter extends BaseAdapter {
         txt_subtv.setTypeface(tf);
 
 
-        if(enable_status.equals("enabled"))
-        {
-            txt_make_call.setText(resultp.get("mobileno"));
-
-            txt_make_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        txt_make_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(enable_status.equals("enabled"))
+                {
                     resultp = data.get(position);
                     str_owner_no = resultp.get("mobileno");
+                    Log.e("tag","check_phoneno"+str_owner_no);
+                    Log.e("tag","check_enable"+enable_status);
                     int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
                     if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
@@ -196,19 +197,15 @@ public class HouseAdapter extends BaseAdapter {
                         }
                     }
                 }
-            });
-
-
-        }else
-        {
-            txt_make_call.setText("hidden");
-            txt_make_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(),"You cant able to make call. Please contact through mail...",Toast.LENGTH_SHORT).show();
+                else
+                {
+                    TastyToast.makeText(v.getContext(), "You cant able to make call. Please contact through mail...", TastyToast.LENGTH_LONG, TastyToast.INFO);
                 }
-            });
-        }
+            }
+        });
+
+
+
 
 
         txt_send_mail.setOnClickListener(new View.OnClickListener() {

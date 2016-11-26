@@ -28,6 +28,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name="android.support.multidex.MultiDexApplication"
         tools:replace="android:icon">
 
         <meta-data
@@ -40,7 +41,10 @@
 
         <activity android:name=".SplashScreen"
             android:screenOrientation="sensorPortrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".Login"
@@ -101,10 +105,7 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity android:name=".Signup"
@@ -235,8 +236,6 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
-
-
         <activity
             android:name="nl.changer.polypicker.ImagePickerActivity" />
         <activity android:name=".MapsActivity"></activity>
@@ -249,6 +248,9 @@
         <service
             android:name="mcity.com.mcity.FetchAddressIntentService"
             android:exported="false" />
+
+
+
     </application>
 
 </manifest>

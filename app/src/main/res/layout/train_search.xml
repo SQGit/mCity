@@ -145,12 +145,12 @@
 
 
             <ImageView
-                android:id="@+id/get_train"
+                android:id="@+id/train_menu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_25sdp"
-                android:background="@drawable/train"/>
+                android:background="@drawable/repeat_icon"/>
 
         </LinearLayout>
 
@@ -167,6 +167,7 @@
 
 
         <TextView
+            android:id="@+id/txt_sou_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
@@ -269,39 +270,27 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            >
-
-            <ListView
+        <ListView
                 android:id="@+id/searchlist"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@+id/l2"
+                android:layout_height="match_parent"
+
                 android:layout_marginTop="@dimen/_10sdp">
             </ListView>
 
 
-        </LinearLayout>
-    </ScrollView>
-
+</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center">
-
-
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -314,6 +303,40 @@
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/getmoretrain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/autodriver_bc"
+            android:textColor="#FFF"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_80sdp"
+            android:textAllCaps="false"
+            android:text="Get more trains"/>
+
+
+        <ImageView
+            android:id="@+id/get_train"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:background="@drawable/train"/>
+    </LinearLayout>
+
+
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"

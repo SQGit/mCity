@@ -306,7 +306,7 @@ public class MAuto extends AppCompatActivity {
                 {
 
                     Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-                    Intent exit=new Intent(getApplicationContext(),Login.class);
+                    Intent exit=new Intent(getApplicationContext(),Test_L.class);
                     startActivity(exit);
                     finish();
 

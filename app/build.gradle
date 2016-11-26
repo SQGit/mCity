@@ -10,17 +10,18 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.2"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "mcity.com.mcity"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 3
-        versionName "2.1"
+        versionCode 4
+        versionName "2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -46,6 +47,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     compile 'com.github.GcsSloop:FontsManager:v1.0.0'
@@ -58,4 +60,5 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.4+'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.sdsmdg.tastytoast:tastytoast:0.1.0'
+
 }

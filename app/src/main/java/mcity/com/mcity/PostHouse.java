@@ -41,6 +41,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.HttpEntity;
@@ -777,7 +779,7 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
                 if (status.equals("true"))
                 {
 
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                     lanmark_et.setText("");
                     address_et.setText("");
                     rentamount_et.setText("");

@@ -844,7 +844,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                     {
 
                         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
-                        Intent exit=new Intent(getApplicationContext(),Login.class);
+                        Intent exit=new Intent(getApplicationContext(),Test_L.class);
                         startActivity(exit);
                         finish();
 

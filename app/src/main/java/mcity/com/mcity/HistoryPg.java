@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -142,7 +144,7 @@ public class HistoryPg extends Activity {
 
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getApplicationContext(), "Sorry no one can POST PROPERTY", TastyToast.LENGTH_LONG, TastyToast.INFO);
                     }
                 }
             } catch (JSONException e) {

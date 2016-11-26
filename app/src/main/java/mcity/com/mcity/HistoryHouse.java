@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,7 +103,8 @@ public class HistoryHouse extends Activity {
                     Log.e("tag", "<-----data_length----->" + data.length());
 
 
-                    if (data.length() > 0) {
+                    if (data.length() > 0)
+                    {
                         Log.e("tag","1");
                         for (int i1 = 0; i1 < data.length(); i1++) {
                             Log.e("tag", "2");
@@ -147,8 +150,6 @@ public class HistoryHouse extends Activity {
                                 Log.e("tag", "CONTACT_LIST"+contactList1);
 
                             }
-
-
                         }
 
 
@@ -157,7 +158,8 @@ public class HistoryHouse extends Activity {
 
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getApplicationContext(), "Sorry no one can POST PROPERTY", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        //Toast.makeText(getApplicationContext(),"Sorry no one can POST PROPERTY",Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (JSONException e) {

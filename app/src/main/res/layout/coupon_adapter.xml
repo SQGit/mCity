@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/dotted_red"
+
         android:layout_margin="@dimen/_5sdp">
 
 
@@ -35,13 +36,13 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_1sdp"
             android:orientation="horizontal"
+
             android:background="#EBEBEB">
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingRight="@dimen/_30sdp"
                     android:orientation="vertical">
 
 
@@ -51,6 +52,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginRight="@dimen/_30sdp"
                         android:orientation="horizontal">
 
 
@@ -98,17 +100,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_below="@id/lin1"
                         android:layout_marginTop="@dimen/_3sdp">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="@dimen/_200sdp"
                             android:layout_height="wrap_content"
                             android:text="Buy 1 cake for Rs.1000/-and get 2 free."
                             android:textSize="@dimen/_9sdp"
                             android:id="@+id/txt_description"
-                            android:singleLine="false"
-                            android:layout_gravity="right" />
+                             />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_10sdp"
+
+                            android:background="@drawable/coupon_arrow"/>
                     </LinearLayout>
 
 
@@ -119,6 +126,7 @@
                         android:orientation="horizontal"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@id/lin1"
+                        android:layout_marginRight="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_5sdp">
 
                         <TextView
@@ -137,12 +145,13 @@
 
 
 
-
+<!--
                     <LinearLayout
                         android:id="@+id/back_arrow"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:layout_weight="0.3"
                         android:orientation="vertical">
 
 
@@ -150,16 +159,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_5sdp"
                             android:background="@drawable/coupon_arrow"/>
-                    </LinearLayout>
+                    </LinearLayout>-->
 
             </LinearLayout>
-
-
-
-
-
 
     </LinearLayout>
 

@@ -66,7 +66,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     MapView mMapView;
-    private GoogleMap googleMap;
+    private GoogleMap googleMap,map;
     MarkerOptions marker;
     private static final LatLng MAHINDRA_WORLD_CITY = new LatLng(12.7308, 79.9839);
     private static final LatLng VANDALUR = new LatLng(12.8928, 80.0808);
@@ -81,7 +81,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
     String str_img1,str_img2,str_img3;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION=2;
-
+    private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION=3;
 
     TextView txt_drivername1,txt_drivername2,txt_drivername3,txt_driverno1,txt_driverno2,txt_driverno3;
     ImageView btn_call_driver1,btn_call_driver2,btn_call_driver3;
@@ -142,8 +142,8 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                 String driver_phone2 = sharedPreferences.getString("ph2", "");
                 String driver_phone3 = sharedPreferences.getString("ph3", "");
 
-                final ImageView img_cross = (ImageView) dialog.findViewById(R.id.img_cross);
-                final LinearLayout lin_cross=(LinearLayout)dialog.findViewById(R.id.lin_cross);
+                //final ImageView img_cross = (ImageView) dialog.findViewById(R.id.img_cross);
+                final ImageView img_cross=(ImageView) dialog.findViewById(R.id.img_cross);
 
 
                 txt_drivername1 = (TextView) dialog.findViewById(R.id.txt_drivername1);
@@ -179,7 +179,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                 txt_driverno3.setText(driver_phone3);
 
 
-                lin_cross.setOnClickListener(new View.OnClickListener() {
+                img_cross.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
@@ -271,7 +271,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                             } catch (android.content.ActivityNotFoundException ex) {
                                 Toast.makeText(v.getContext(), "yourActivity is not founded", Toast.LENGTH_SHORT).show();
                             }
-                        }//
+                        }
                     }
                 });
 
@@ -313,9 +313,8 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
             Log.d("tag", "TYPE" + cn.getPlaceName());
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
-            markerOptions.snippet("" + i);
-
-            //markerOptions.snippet(cn.getType());
+           markerOptions.snippet(""+i);
+            //markerOptions.
             markerOptions.title(cn.getPlaceName());
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.auto_small));
 
@@ -375,50 +374,25 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
         }
 
 
-
-
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String bestProvider = locationManager.getBestProvider(criteria, true);
-       /* if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-
-
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return TODO;
-        }
-        Location location = locationManager.getLastKnownLocation(bestProvider);
-        if (location != null) {
-            onLocationChanged(location);
-        }
-        else
+       if(checkPermission())
         {
-           // showGPSDisabledAlertToUser();
-        }*/
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
 
 
-        //**********************************MARSHMALLOW PERMISSION******************************************
-        if (ContextCompat.checkSelfPermission(this.getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this.getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_FINE_LOCATION);
-
-
-        } else {
-            //Permission is granted
+            String bestProvider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(bestProvider);
+            if (location != null) {
+                onLocationChanged(location);
+            }
+            else
+            {
+                // showGPSDisabledAlertToUser();
+            }
+            locationManager.requestLocationUpdates(bestProvider, 20000, 0,this);
         }
-        //******************************************************************************************
 
-        locationManager.requestLocationUpdates(bestProvider, 20000, 0,this);
+
 
         return view;
     }
@@ -442,9 +416,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
             LatLng latLng = new LatLng(latitude, longitude);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng).zoom(13f).build();
-        //googleMap.clear();
-        //googleMap.setMyLocationEnabled(false);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
         googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_icon)));
@@ -479,5 +451,27 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
 
     }
+
+
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        int result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
+
+
+        if ((result == PackageManager.PERMISSION_GRANTED) && (result1 == PackageManager.PERMISSION_GRANTED)) {
+            Log.e("tag", "Permission is granted");
+          //  DashboardTest.invokeCameraVideoPicker();
+            return true;
+
+
+        } else {
+            Log.e("tag", "Permission is revoked");
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            return false;
+
+        }
+    }
+
 }
 
