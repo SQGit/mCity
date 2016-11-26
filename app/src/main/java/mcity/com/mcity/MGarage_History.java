@@ -34,7 +34,7 @@ public class MGarage_History  extends Activity {
         btn_postAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent post = new Intent(MGarage_History.this,Loader.class);
+                Intent post = new Intent(MGarage_History.this,MGarage_PostAds.class);
                 startActivity(post);
                 finish();
             }
