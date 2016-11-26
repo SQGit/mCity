@@ -343,7 +343,7 @@ public class Dashboard extends AppCompatActivity {
         btn_ok2.setTypeface(tt);
         txt_msg2.setTypeface(tt);
 
-        txt_msg.setText("\n" +
+        txt_msg.setText(
                 "This mCity App has no direct or indirect connection with Mahindra Group in any sort or form." +
                 "It is completely self funded and wants to provide an Independent medium of Communication. Future growth may depend on Ad revenues." +
                 "The purpose of mCity App is to help the locals for the locals." +
