@@ -229,6 +229,10 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
+        <activity android:name=".Loader"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
 
 
         <activity android:name=".TrainTime"

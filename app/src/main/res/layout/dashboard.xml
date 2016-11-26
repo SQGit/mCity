@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="start|center"
             android:orientation="horizontal">
 
@@ -111,8 +111,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:orientation="vertical">
 
 
 
@@ -120,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:paddingTop="@dimen/_5sdp">
 
 
                 <LinearLayout
@@ -410,12 +409,13 @@
             </LinearLayout>
 
         </LinearLayout>
+<!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_25sdp">
 
 
@@ -424,8 +424,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/new_icon" />
         </LinearLayout>
+-->
 
 
+<!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
@@ -440,26 +442,41 @@
                 android:layout_gravity="center"
                 android:textSize="@dimen/_11sdp"
                 android:gravity="center"
+                android:drawableRight="@drawable/new_icon"
+                android:drawablePadding="@dimen/_5sdp"
                 android:textColor="#FF5722"/>
 
         </LinearLayout>
+-->
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        android:orientation="horizontal">
+        android:paddingBottom="@dimen/_5sdp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/cool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Many Cool Features Coming Soon..."
+            android:layout_gravity="center"
+            android:textSize="@dimen/_11sdp"
+            android:gravity="center"
+            android:drawableRight="@drawable/new_icon"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textColor="#FF5722"/>
 
         <include
             android:id="@+id/container_header_lyt"
             layout="@layout/footer_privacyplolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="bottom">
         </include>
 
     </LinearLayout>
