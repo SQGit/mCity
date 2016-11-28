@@ -158,7 +158,7 @@ public class HistoryHouse extends Activity {
 
                     } else
                     {
-                        TastyToast.makeText(getApplicationContext(), "Sorry no one can POST PROPERTY", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        TastyToast.makeText(getApplicationContext(), "Sorry, No House/Apt are available Now", TastyToast.LENGTH_LONG, TastyToast.INFO);
                         //Toast.makeText(getApplicationContext(),"Sorry no one can POST PROPERTY",Toast.LENGTH_SHORT).show();
                     }
                 }

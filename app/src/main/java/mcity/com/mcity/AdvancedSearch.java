@@ -308,23 +308,20 @@ public class AdvancedSearch extends Activity implements AdapterView.OnItemSelect
         btn_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String gg=edt_weight.getText().toString();
-                if(gg.equals("0"))
-                {
+                String gg = edt_weight.getText().toString();
+
+                if (gg.equals("0")) {
                     btn_sub.setClickable(false);
-                }
-                else
-                {
+                } else {
                     btn_sub.setClickable(true);
                     num--;
                     edt_weight.setText(Integer.toString(num));
                 }
 
+
             }
         });
-
-
-        chk_midway_drop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        chk_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -333,29 +330,23 @@ public class AdvancedSearch extends Activity implements AdapterView.OnItemSelect
                 } else {
                     lnr_triplayout.setVisibility(View.GONE);
 
-
                 }
             }
         });
-
 
         chk_luggage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     lnr_luggage_layout.setVisibility(View.VISIBLE);
-
                 } else {
                     lnr_luggage_layout.setVisibility(View.GONE);
-
-
-
                 }
             }
         });
 
 
-        chk_luggage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        chk_round_trip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -364,10 +355,16 @@ public class AdvancedSearch extends Activity implements AdapterView.OnItemSelect
                 } else {
                     lnr_date_layout.setVisibility(View.GONE);
 
-
                 }
             }
         });
+
+
+
+
+
+
+
 
         chk_midway_drop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

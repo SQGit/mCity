@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="mCOUPONS"
+                android:text="mCOUPON"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />

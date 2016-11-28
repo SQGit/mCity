@@ -125,8 +125,10 @@ public class TrainSearch extends Activity {
 
         DateFormat df = new SimpleDateFormat("HH:mm");
         time = df.format(Calendar.getInstance().getTime());
-        Log.e("tag", "date2" + time);
-
+       /* SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+        String formattedDate = dateFormat.format(new Date()).toString();
+        Log.e("tag", "time2" + formattedDate);
+        */
         txt_time.setText(time);
 
 

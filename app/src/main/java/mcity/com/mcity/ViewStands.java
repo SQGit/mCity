@@ -416,10 +416,9 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
             LatLng latLng = new LatLng(latitude, longitude);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng).zoom(13f).build();
-
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_icon)));
+
 
 
     }

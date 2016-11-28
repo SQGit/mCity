@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="MTRAIN"
+                android:text="mTRAIN"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
@@ -281,7 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_marginTop="@dimen/_2sdp">
             </ListView>
 
 

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.json.JSONArray;
@@ -175,7 +176,8 @@ public class SearchPGFilter extends Activity {
                         listView.setAdapter(hotelAdapter);
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getApplicationContext(), "your desired Room/PG is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        //Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (JSONException e) {

@@ -199,9 +199,6 @@ public class RideHistoryAdapter extends BaseAdapter{
 
         protected void onPreExecute() {
             super.onPreExecute();
-            //progress.setVisibility(View.VISIBLE);
-            Log.e("tag", "two");
-
 
         }
 
@@ -210,7 +207,6 @@ public class RideHistoryAdapter extends BaseAdapter{
             String json = "", jsonStr = "";
             String id = "";
             try {
-
                 HttpClient client = new DefaultHttpClient();
                 HttpPost postMethod = new HttpPost();
                 postMethod.addHeader("x-access-token", token);
@@ -234,8 +230,6 @@ public class RideHistoryAdapter extends BaseAdapter{
 
         @Override
         protected void onPostExecute(String jsonstr) {
-            Log.e("tag", "<-----result---->" + jsonstr);
-            //progress.setVisibility(View.GONE);
             super.onPostExecute(jsonstr);
 
             try {
@@ -251,12 +245,12 @@ public class RideHistoryAdapter extends BaseAdapter{
 
                     Intent i=new Intent(context,RideSearch.class);
 
-                    Log.e("tag", "success");
+
 
 
                 } else {
                     Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
-                    Log.e("tag", "error");
+
 
 
                 }

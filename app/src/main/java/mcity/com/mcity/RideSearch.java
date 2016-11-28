@@ -38,6 +38,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.HttpEntity;
@@ -93,6 +94,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
     List<String> fromadd;
     List<String> toadd;
     ImageView settings_icon;
+    LinearLayout lin_offer_ride;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         settings_icon = (ImageView) findViewById(R.id.settings_icon);
         back_arrow = (LinearLayout) findViewById(R.id.back_arrow);
         morepost = (TextView) findViewById(R.id.morepost);
+        lin_offer_ride=(LinearLayout)findViewById(R.id.lin_offer_ride);
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
 
         FontsManager.initFormAssets(this, "mont.ttf");
@@ -259,7 +262,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                 edit.commit();
 
                 if (Util.Operations.isOnline(RideSearch.this)) {
-                    if (!str_from.isEmpty() && !str_to.isEmpty() )
+                    if (!str_from.equals("Start Location") && !str_to.equals("Destination Location") )
                     {
                         searchridelist.clear();
                         new filterAsync(str_from,str_to).execute();
@@ -292,9 +295,18 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         morepost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MorePOst.class);
-                startActivity(i);
-                finish();
+
+                if (searchlist != null) {
+                    Intent i = new Intent(getApplicationContext(), MorePOst.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                {
+                    TastyToast.makeText(getApplicationContext(), "Sorry, No Rides are Available", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                }
+
+
             }
         });
 
@@ -317,7 +329,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
             }
         });
 
-        offer.setOnClickListener(new View.OnClickListener() {
+        lin_offer_ride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), OfferRide.class);

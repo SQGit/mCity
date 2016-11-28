@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.client.HttpClient;
@@ -168,7 +169,8 @@ public class PGHistory extends Activity {
 
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No PG are Available in this Location..", Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getApplicationContext(), "You did't Post any Room/PG", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        //Toast.makeText(getApplicationContext(), "You did't Post any Room/PG", Toast.LENGTH_SHORT).show();
                     }
 
 

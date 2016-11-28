@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.json.JSONArray;
@@ -217,7 +218,8 @@ public class SearchHouseFilter extends Activity {
 
                 } else
                 {
-                    Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getApplicationContext(), "your desired House/Apt is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                    //Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (JSONException e) {

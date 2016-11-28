@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.HttpEntity;
@@ -396,7 +397,8 @@ public class MyRideHistory extends Activity{
 
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getApplicationContext(), "No Rides are Available in this Location..", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        //Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_SHORT).show();
                     }
 
                     ridehistoryAdapter = new RideHistoryAdapter(MyRideHistory.this, rideHistory);

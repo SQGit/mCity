@@ -69,12 +69,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Persons"
-            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+         android:paddingRight="@dimen/_5sdp"
             android:textSize="@dimen/_13sdp"
             android:id="@+id/txt_person"
             android:textColor="#FFF"
             android:layout_weight="1"
-
             android:layout_gravity="center"/>
     </LinearLayout>
 

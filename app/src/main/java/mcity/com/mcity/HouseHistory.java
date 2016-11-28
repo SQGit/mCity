@@ -29,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.client.HttpClient;
@@ -88,43 +89,7 @@ public class HouseHistory extends Activity {
     }
 
 
-   /* private void aboutUs() {
 
-        LayoutInflater layoutInflater = LayoutInflater.from(HouseHistory.this);
-        View promptView = layoutInflater.inflate(R.layout.aboutus, null);
-        final AlertDialog alertD = new AlertDialog.Builder(HouseHistory.this).create();
-        alertD.setCancelable(false);
-        Window window = alertD.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final TextView head1 = (TextView) promptView.findViewById(R.id.txt_head2);
-        final TextView txt_msg = (TextView) promptView.findViewById(R.id.txt_msg);
-        final Button yes = (Button) promptView.findViewById(R.id.btn_ok2);
-
-
-        txt_msg.setText("\n" +
-                "This mCity App has no direct or indirect connection with Mahindra Group in any sort or form." +
-                "It is completely self funded and wants to provide an Independent medium of Communication.Future growth may depend on Ad revenues." +
-                "The purpose of mCity App is to help the locals for the locals." +
-                "The data collected with this app will NOT be shared or forwarded.We respect privacy.\n \n         There are many more ideas and concepts that will be coming in the near future.\n" +
-                "Please send your valuable feedback,concerns and suggestions to info@sqindia.net");
-
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
-        head1.setTypeface(tf);
-        txt_msg.setTypeface(tf);
-
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertD.dismiss();
-            }
-        });
-
-
-        alertD.setView(promptView);
-        alertD.show();
-
-    }
-*/
     //************* change option menu typeface settings page.
     private void applyFontToMenuItem(MenuItem mi)
     {
@@ -223,7 +188,8 @@ public class HouseHistory extends Activity {
 
                     else
                     {
-                        Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getApplicationContext(), "You did't Post any House/Apt", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        //Toast.makeText(getApplicationContext(),"You did't Post any House/Apt",Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (JSONException e) {
