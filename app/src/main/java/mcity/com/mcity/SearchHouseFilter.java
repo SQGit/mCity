@@ -218,7 +218,7 @@ public class SearchHouseFilter extends Activity {
 
                 } else
                 {
-                    TastyToast.makeText(getApplicationContext(), "your desired House/Apt is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                    TastyToast.makeText(getApplicationContext(), "Your desired House/Apt is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
                     //Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
                 }
             }

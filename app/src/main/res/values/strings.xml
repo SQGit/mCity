@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">mCity</string>
     <string name="username">Username</string>
-    <string name="Phonenumber">Phone Number</string>
+    <string name="Phonenumber">Mobile Number</string>
     <string name="password">Enter 5 digit Email Passcode</string>
     <string name="Submit">Submit</string>
     <string name="conpassword">Retype Password</string>

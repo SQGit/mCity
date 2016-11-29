@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:text="mCOUPON"
+                        android:text="mCOUPONS"
                         android:textColor="@color/coupon_text_color"
                         android:textSize="@dimen/_10sdp" />
 

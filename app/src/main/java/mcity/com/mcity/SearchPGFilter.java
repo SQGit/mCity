@@ -176,7 +176,7 @@ public class SearchPGFilter extends Activity {
                         listView.setAdapter(hotelAdapter);
                     } else
                     {
-                        TastyToast.makeText(getApplicationContext(), "your desired Room/PG is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                        TastyToast.makeText(getApplicationContext(), "Your desired Room/PG is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
                         //Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -144,6 +144,32 @@
         </LinearLayout>
 
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_centerVertical="true"
+                style="?android:attr/progressBarStyle"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/submittv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/submit_icon" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/registerlv"
             android:layout_width="wrap_content"
@@ -166,32 +192,6 @@
                 android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:layout_centerVertical="true"
-                style="?android:attr/progressBarStyle"
-                android:layout_centerHorizontal="true" />
-
-            <ImageView
-                android:id="@+id/submittv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/submit_icon" />
-
-        </LinearLayout>
-
 
 
 
