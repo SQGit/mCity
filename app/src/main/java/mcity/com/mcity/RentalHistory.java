@@ -287,8 +287,8 @@ public class RentalHistory extends TabActivity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
         head1.setTypeface(tf);
 
-        head1.setText("Exit");
-        head2.setText("Do You want to Logout?");
+        head1.setText("mCity");
+        head2.setText("Do You want to Sign Out?");
 
         yes.setOnClickListener(new View.OnClickListener() {
 
