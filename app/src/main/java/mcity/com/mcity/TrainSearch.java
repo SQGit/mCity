@@ -96,7 +96,7 @@ public class TrainSearch extends Activity {
         get_train=(ImageView)findViewById(R.id.get_train);
         getmoretrain=(Button)findViewById(R.id.getmoretrain);
         train_menu=(ImageView)findViewById(R.id.train_menu);
-        //txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
+        txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
         txt_time=(TextView)findViewById(R.id.txt_time);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         searchlist=(ListView)findViewById(R.id.searchlist);
