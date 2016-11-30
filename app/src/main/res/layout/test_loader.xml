@@ -7,12 +7,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-         android:layout_gravity="center">
+        android:layout_gravity="center">
 
     <ProgressBar
         android:id="@+id/loading_spinner"
-        android:layout_width="@dimen/_65sdp"
-        android:layout_height="@dimen/_65sdp"
+        android:layout_width="@dimen/_63sdp"
+        android:layout_height="@dimen/_63sdp"
         android:indeterminateDrawable="@drawable/loader_tes"
         android:layout_gravity="center"/>
 
