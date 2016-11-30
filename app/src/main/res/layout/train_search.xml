@@ -113,12 +113,82 @@
     </LinearLayout>
 
 
-
-
-
-
-
     <LinearLayout
+        android:id="@+id/l2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll1">
+
+
+        <LinearLayout
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_sou_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From Paranur To Chennai Beach"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:textColor="#F44336"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:gravity="left"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="#d8d8d8"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trains After  "
+                    android:textSize="@dimen/_13sdp"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+
+
+                <TextView
+                    android:id="@+id/txt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    android:textColor="#FF9800"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    <!--<LinearLayout
         android:id="@+id/l2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -207,20 +277,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_25sdp"
                 android:background="@drawable/repeat_icon"/>
-
         </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -267,7 +324,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -278,7 +335,6 @@
                 android:id="@+id/searchlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_marginTop="@dimen/_2sdp">
             </ListView>
 
