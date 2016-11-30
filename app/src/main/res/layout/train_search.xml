@@ -116,13 +116,13 @@
     <LinearLayout
         android:id="@+id/l2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/ll1">
 
 
         <LinearLayout
-            android:layout_width="@dimen/_250sdp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -183,152 +183,72 @@
 
             </LinearLayout>
 
+        <ImageView
+            android:id="@+id/train_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:background="@drawable/repeat_icon"/>
+
         </LinearLayout>
 
 
 
 
-    <!--<LinearLayout
-        android:id="@+id/l2"
+
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:orientation="horizontal"
-        android:layout_below="@+id/ll1">
+        android:background="#E0E0E0">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/scheduled"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/txt_sou_des"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="From Paranur To Chennai Beach"
-                    android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold"
-                    android:textColor="#F44336"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:gravity="left"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="#d8d8d8"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+            android:text="Train No"
+            android:ems="3"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_gravity="center"/>
 
 
-                    <TextView
-                        android:id="@+id/txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Trains After  "
-                        android:textSize="@dimen/_13sdp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Departure Time"
+            android:layout_weight="1"
+            android:ems="5"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_gravity="center"/>
 
 
-                    <TextView
-                        android:id="@+id/txt_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:textSize="@dimen/_13sdp"
-                        android:textStyle="bold"
-                        android:textColor="#FF9800"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-            </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrival Time"
+            android:layout_weight="1"
+            android:ems="4"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_gravity="center"/>
 
 
 
-
-            <ImageView
-                android:id="@+id/train_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_25sdp"
-                android:background="@drawable/repeat_icon"/>
-        </LinearLayout>
+    </LinearLayout>
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="horizontal"
-            android:background="#E0E0E0">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Train No"
-                android:ems="3"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
-                android:layout_gravity="center"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Departure Time"
-                android:layout_weight="1"
-                android:ems="5"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
-                android:layout_gravity="center"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Arrival Time"
-                android:layout_weight="1"
-                android:ems="4"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
-                android:layout_gravity="center"/>
-
-
-
-        </LinearLayout>
-
-    </LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginTop="@dimen/_15sdp"
         android:orientation="vertical">
 
         <ListView
@@ -339,7 +259,7 @@
             </ListView>
 
 
-</LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -362,7 +282,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/getmoretrain"
@@ -374,7 +295,8 @@
             android:paddingLeft="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_80sdp"
             android:textAllCaps="false"
-            android:text="Get more trains"/>
+            android:text="Get more trains"
+            android:layout_weight="0.62" />
 
 
         <ImageView
@@ -382,7 +304,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:layout_marginLeft="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:background="@drawable/train_small"/>
     </LinearLayout>

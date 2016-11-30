@@ -201,7 +201,7 @@ public class Dashboard extends AppCompatActivity {
         lin_garage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_SHORT, TastyToast.INFO);
 
                 /*lin_garage.setBackgroundResource(R.drawable.auto_press_bg);
                 txt_garage.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
@@ -214,7 +214,7 @@ public class Dashboard extends AppCompatActivity {
         lin_food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_SHORT, TastyToast.INFO);
 
             }
         });
@@ -222,7 +222,7 @@ public class Dashboard extends AppCompatActivity {
         lin_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_SHORT, TastyToast.INFO);
 
             }
         });
