@@ -66,7 +66,7 @@ public class MCoupon extends Activity {
     static String _id="_id";
 
     private int[] IMAGE_IDS = {
-            R.drawable.ad1};
+            R.drawable.ad1,R.drawable.ad2};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

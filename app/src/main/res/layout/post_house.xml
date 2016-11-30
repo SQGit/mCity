@@ -155,7 +155,6 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:text="Apartment"
@@ -219,7 +218,7 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
+
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:text="Apartment"

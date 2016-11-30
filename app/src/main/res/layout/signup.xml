@@ -177,7 +177,6 @@
             android:layout_gravity="right"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="right"
-
             android:orientation="horizontal">
 
 
@@ -189,7 +188,7 @@
                 android:gravity="right"
                 android:paddingRight="@dimen/_20sdp"
                 android:text="Have an Account? Click to login!"
-                android:textSize="@dimen/_11sdp" />
+                android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
 
@@ -217,9 +216,6 @@
             android:text="@string/termsreg"
             android:textSize="@dimen/_10sdp" />
     </RelativeLayout>
-
-
-
 
 
 </RelativeLayout>

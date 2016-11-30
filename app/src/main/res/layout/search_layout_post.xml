@@ -56,11 +56,10 @@
 
 
 
-
-
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:scaleType="fitXY"
             android:id="@+id/iv"/>
 
 
@@ -74,7 +73,7 @@
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_120sdp"
+        android:layout_marginTop="@dimen/_100sdp"
         android:orientation="vertical">
 
      <!--  <LinearLayout

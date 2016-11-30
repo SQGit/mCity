@@ -228,7 +228,7 @@
                         android:id="@+id/imv_train"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/train" />
+                        android:src="@drawable/trains" />
 
                     <TextView
                         android:id="@+id/txt_train"
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:text="mTRAIN"
+                        android:text="mTRAINS"
                         android:textColor="@color/train_text_color"
                         android:textSize="@dimen/_10sdp" />
 
@@ -294,10 +294,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:text="mRIDE"
+                        android:text="mRIDES"
                         android:textColor="@color/ride_text_color"
-                        android:textSize="@dimen/_10sdp" />
-
+                        android:textSize="@dimen/_10sdp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -315,7 +314,7 @@
                     android:layout_height="@dimen/_90sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/mcoupons_bg"
+                    android:background="@drawable/coming_soon"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="vertical">
 
@@ -324,7 +323,7 @@
                         android:id="@+id/img_garage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/garage" />
+                        android:src="@drawable/grey_order" />
 
 
                     <TextView
@@ -334,7 +333,6 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:singleLine="true"
                         android:text="mGARAGE"
-                        android:textColor="@color/auto_text_color"
                         android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>
@@ -346,7 +344,7 @@
                     android:layout_height="@dimen/_90sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/mcoupons_bg"
+                    android:background="@drawable/coming_soon"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="vertical">
 
@@ -354,14 +352,14 @@
                         android:id="@+id/img_food"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/food" />
+                        android:src="@drawable/beauty" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:text="mFOOD"
+                        android:text="mBEAUTY"
                         android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>
@@ -373,7 +371,7 @@
                     android:layout_height="@dimen/_90sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/mcoupons_bg"
+                    android:background="@drawable/coming_soon"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="vertical">
 
@@ -381,7 +379,7 @@
                         android:id="@+id/img_order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/order" />
+                        android:src="@drawable/grey_sell" />
 
 
                     <TextView

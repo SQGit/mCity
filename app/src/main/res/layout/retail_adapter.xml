@@ -101,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Mahindra World City, Chengalpattu"
                                 android:textSize="@dimen/_9sdp"
-                                android:layout_marginTop="@dimen/_1sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_gravity="left"
                                 android:id="@+id/txt_address"
@@ -132,7 +132,7 @@
                                   android:layout_height="wrap_content"
                                   android:orientation="horizontal">
 -->
-                            <TextView
+                        <!--    <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="View Menu"
@@ -143,7 +143,7 @@
                                 android:id="@+id/txt_menu"
                                 android:singleLine="false"
                                 android:layout_marginLeft="@dimen/_10sdp"
-                                android:layout_gravity="left" />
+                                android:layout_gravity="left" />-->
 
                         </LinearLayout>
 

@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -55,8 +56,10 @@ import com.sloop.fonts.FontsManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.location.Location;
 import android.location.LocationListener;
+
 import static android.content.Context.LOCATION_SERVICE;
 
 /**
@@ -66,9 +69,9 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     MapView mMapView;
-    private GoogleMap googleMap,map;
+    private GoogleMap googleMap, map;
     MarkerOptions marker;
-    private static final LatLng MAHINDRA_WORLD_CITY = new LatLng(12.7308, 79.9839);
+    private static final LatLng MAHINDRA_WORLD_CITY = new LatLng(12.7369, 80.0144);
     private static final LatLng VANDALUR = new LatLng(12.8928, 80.0808);
     private static final LatLng TAMBARAM = new LatLng(12.9229, 80.1275);
     private static final LatLng INFOSYS = new LatLng(13.0604, 80.2496);
@@ -78,13 +81,13 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
     TextView txt_no1, txt_no2;
     DatabaseHandler db;
     LinearLayout lin_hide;
-    String str_img1,str_img2,str_img3;
+    String str_img1, str_img2, str_img3;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
-    private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION=2;
-    private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION=3;
+    private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 2;
+    private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 3;
 
-    TextView txt_drivername1,txt_drivername2,txt_drivername3,txt_driverno1,txt_driverno2,txt_driverno3;
-    ImageView btn_call_driver1,btn_call_driver2,btn_call_driver3;
+    TextView txt_drivername1, txt_drivername2, txt_drivername3, txt_driverno1, txt_driverno2, txt_driverno3;
+    ImageView btn_call_driver1, btn_call_driver2, btn_call_driver3, close;
 
     public ViewStands() {
         // Required empty public constructor
@@ -107,13 +110,20 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
         t1 = (TextView) view.findViewById(R.id.txt_station);
         t2 = (TextView) view.findViewById(R.id.txt_description);
         t3 = (TextView) view.findViewById(R.id.txt_time);
-        lin_call=(LinearLayout) view.findViewById(R.id.lin_call);
-        lin_hide=(LinearLayout) view.findViewById(R.id.lin_hide);
+        close = (ImageView) view.findViewById(R.id.close_iv);
+        lin_call = (LinearLayout) view.findViewById(R.id.lin_call);
+        lin_hide = (LinearLayout) view.findViewById(R.id.lin_hide);
         lin_hide.setVisibility(View.GONE);
 
         txt_no1 = (TextView) view.findViewById(R.id.txt_no1);
         //txt_no2=(TextView) view.findViewById(R.id.txt_no2);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lin_hide.setVisibility(View.GONE);
 
+            }
+        });
 
         db = new DatabaseHandler(getActivity());
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "mont.ttf");
@@ -143,7 +153,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                 String driver_phone3 = sharedPreferences.getString("ph3", "");
 
                 //final ImageView img_cross = (ImageView) dialog.findViewById(R.id.img_cross);
-                final ImageView img_cross=(ImageView) dialog.findViewById(R.id.img_cross);
+                final ImageView img_cross = (ImageView) dialog.findViewById(R.id.img_cross);
 
 
                 txt_drivername1 = (TextView) dialog.findViewById(R.id.txt_drivername1);
@@ -152,14 +162,14 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
                 txt_drivername2 = (TextView) dialog.findViewById(R.id.txt_drivername2);
                 txt_driverno2 = (TextView) dialog.findViewById(R.id.txt_driverno2);
-                 btn_call_driver2 = (ImageView) dialog.findViewById(R.id.btn_call_driver2);
+                btn_call_driver2 = (ImageView) dialog.findViewById(R.id.btn_call_driver2);
 
                 txt_drivername3 = (TextView) dialog.findViewById(R.id.txt_drivername3);
                 txt_driverno3 = (TextView) dialog.findViewById(R.id.txt_driverno3);
                 btn_call_driver3 = (ImageView) dialog.findViewById(R.id.btn_call_driver3);
 
 
-               Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "mont.ttf");
+                Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "mont.ttf");
                 txt_drivername1.setTypeface(tf);
                 txt_driverno1.setTypeface(tf);
 
@@ -192,16 +202,16 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                     @Override
                     public void onClick(View v) {
 
-                        str_img1=txt_driverno1.getText().toString();
+                        str_img1 = txt_driverno1.getText().toString();
 
                         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
                         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions((Activity) getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                         } else {
 
-                            Log.e("tag","we"+str_img1);
+                            Log.e("tag", "we" + str_img1);
                             Intent phoneIntent = new Intent(Intent.ACTION_CALL);
-                            phoneIntent.setData(Uri.parse("tel:"+str_img1));
+                            phoneIntent.setData(Uri.parse("tel:" + str_img1));
                             phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                             try {
@@ -212,7 +222,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                             }
                         }
 
-                        //
+
                     }
                 });
 
@@ -223,16 +233,16 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                     public void onClick(View v) {
 
 
-                        str_img2=txt_driverno2.getText().toString();
+                        str_img2 = txt_driverno2.getText().toString();
 
                         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
                         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions((Activity) getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                         } else {
 
-                            Log.e("tag","we"+str_img2);
+                            Log.e("tag", "we" + str_img2);
                             Intent phoneIntent = new Intent(Intent.ACTION_CALL);
-                            phoneIntent.setData(Uri.parse("tel:"+str_img2));
+                            phoneIntent.setData(Uri.parse("tel:" + str_img2));
                             phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                             try {
@@ -242,7 +252,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                                 Toast.makeText(v.getContext(), "yourActivity is not founded", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        //
+
                     }
                 });
 
@@ -253,16 +263,16 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                     public void onClick(View v) {
 
 
-                        str_img3=txt_driverno3.getText().toString();
+                        str_img3 = txt_driverno3.getText().toString();
 
                         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
                         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions((Activity) getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                         } else {
 
-                            Log.e("tag","we"+str_img3);
+                            Log.e("tag", "we" + str_img3);
                             Intent phoneIntent = new Intent(Intent.ACTION_CALL);
-                            phoneIntent.setData(Uri.parse("tel:"+str_img3));
+                            phoneIntent.setData(Uri.parse("tel:" + str_img3));
                             phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                             try {
@@ -276,7 +286,6 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                 });
 
 
-
                 dialog.show();
 
             }
@@ -285,7 +294,6 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
         mMapView = (MapView) view.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
-
         mMapView.onResume();
 
         try {
@@ -297,6 +305,8 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
         placedet = db.getAllContacts();
         googleMap = mMapView.getMap();
+        googleMap.setMyLocationEnabled(true);
+        //googleMap.getUiSettings().set
         int i = 0;
         Log.e("tag", "placedetails" + placedet);
 
@@ -313,24 +323,24 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
             Log.d("tag", "TYPE" + cn.getPlaceName());
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
-           markerOptions.snippet(""+i);
-            //markerOptions.
+
+            markerOptions.snippet("" + i);
             markerOptions.title(cn.getPlaceName());
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.auto_small));
 
             googleMap.addMarker(markerOptions);
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(12.730045, 79.9815063)));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(13));
             ++i;
 
-          googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     try {
 
                         lin_hide.setVisibility(View.VISIBLE);
+
                         PlaceDetails cn = placedet.get(Integer.parseInt(marker.getSnippet()));
-                        Log.e("tag","123"+cn);
+                        Log.e("tag", "123" + cn);
                         String str_phn1 = cn.getPhone1();
                         String str_phn2 = cn.getPhone2();
                         String str_phn3 = cn.getPhone3();
@@ -339,8 +349,8 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                         String str_driver2 = cn.getname2();
                         String str_driver3 = cn.getname3();
 
-                        Log.e("tag","phone"+str_phn1+str_phn2+str_phn3);
-                        Log.e("tag","driver"+str_driver1+str_driver2+str_driver3);
+                        Log.e("tag", "phone" + str_phn1 + str_phn2 + str_phn3);
+                        Log.e("tag", "driver" + str_driver1 + str_driver2 + str_driver3);
 
                         LatLng a = marker.getPosition();
                         String pname = cn.getPlaceName();
@@ -351,31 +361,35 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                         t2.setText(desc);
                         t3.setText(time);
 
-
-
-                      SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         SharedPreferences.Editor edit = s_pref.edit();
                         edit.putString("d1", str_driver1);
                         edit.putString("d2", str_driver2);
                         edit.putString("d3", str_driver3);
-
-                        edit.putString("ph1",str_phn1);
-                        edit.putString("ph2",str_phn2);
-                        edit.putString("ph3",str_phn3);
+                        edit.putString("ph1", str_phn1);
+                        edit.putString("ph2", str_phn2);
+                        edit.putString("ph3", str_phn3);
                         edit.commit();
 
 
                     } catch (Exception e) {
 
                     }
-                    return false;
+                    return true;
                 }
             });
         }
 
 
-       if(checkPermission())
-        {
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(MAHINDRA_WORLD_CITY).zoom(13).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+
+        googleMap.addMarker(new MarkerOptions().position(MAHINDRA_WORLD_CITY).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_icon)));
+
+        if (checkPermission()) {
             LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
             Criteria criteria = new Criteria();
 
@@ -383,20 +397,16 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
             String bestProvider = locationManager.getBestProvider(criteria, true);
             Location location = locationManager.getLastKnownLocation(bestProvider);
             if (location != null) {
-                onLocationChanged(location);
-            }
-            else
-            {
+                //  onLocationChanged(location);
+            } else {
                 // showGPSDisabledAlertToUser();
             }
-            locationManager.requestLocationUpdates(bestProvider, 20000, 0,this);
+            locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
         }
-
 
 
         return view;
     }
-
 
 
     @Override
@@ -411,14 +421,13 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
     @Override
     public void onLocationChanged(Location location) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            LatLng latLng = new LatLng(latitude, longitude);
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        LatLng latLng = new LatLng(latitude, longitude);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng).zoom(13f).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_icon)));
-
+        // googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        // googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_icon)));
 
 
     }
@@ -448,9 +457,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
     public void onMapReady(GoogleMap googleMap) {
 
 
-
     }
-
 
 
     private boolean checkPermission() {
@@ -460,7 +467,7 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
         if ((result == PackageManager.PERMISSION_GRANTED) && (result1 == PackageManager.PERMISSION_GRANTED)) {
             Log.e("tag", "Permission is granted");
-          //  DashboardTest.invokeCameraVideoPicker();
+            //  DashboardTest.invokeCameraVideoPicker();
             return true;
 
 

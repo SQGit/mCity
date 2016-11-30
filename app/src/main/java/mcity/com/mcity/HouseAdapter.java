@@ -130,8 +130,8 @@ public class HouseAdapter extends BaseAdapter {
         txt_loc.setText(resultp.get("location"));
         txt_bedroom.setText(resultp.get("bedroom"));
         txt_rentType.setText(resultp.get("renttype"));
-        txt_subtype.setText(resultp.get("furnishedtype"));
-        txt_furnishedType.setText(resultp.get("residential"));
+        txt_subtype.setText(resultp.get("residential"));
+        txt_furnishedType.setText(resultp.get("furnishedtype"));
         txt_description.setText(resultp.get("description"));
 
         str_owner_no = resultp.get("mobileno");

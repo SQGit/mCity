@@ -59,7 +59,7 @@ public class Signup extends AppCompatActivity {
         phone_et = (EditText) findViewById(R.id.phone_et);
         email_et = (EditText) findViewById(R.id.email_et);
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
-        String textsignup = "<font color=#000000>Have an Account?</font><font color=#E51C39> Click to login!</font>";
+        String textsignup = "<font color=#333333>Have an Account?</font><font color=#E51C39> Click to login!</font>";
         reg.setText(Html.fromHtml(textsignup));
         progressBar.setVisibility(View.GONE);
 

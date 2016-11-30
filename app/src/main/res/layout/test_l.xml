@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg"
+    tools:context="mcity.com.mcity.Test_L"
     android:orientation="vertical">
 
     <LinearLayout
@@ -63,6 +65,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll1"
         android:layout_marginLeft="@dimen/_2sdp" />
+
+
+
+  <!-- <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_360sdp"
+        android:layout_gravity="center">
+
+        <ProgressBar
+            android:id="@+id/spinner"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:indeterminateDrawable="@drawable/loader_tes"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/loader_ic"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>-->
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

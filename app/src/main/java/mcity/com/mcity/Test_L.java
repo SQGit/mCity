@@ -1,6 +1,7 @@
 package mcity.com.mcity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +46,7 @@ import java.util.ArrayList;
  * Created by sqindia on 23-11-2016.
  */
 
-public class Test_L extends Activity implements TextWatcher {
+public class Test_L extends AppCompatActivity implements TextWatcher {
     public static String URL_LOGIN = Data_Service.URL_API + "login";
     public static String URL_OTP = Data_Service.URL + "otpgenerate";
     String URL = Data_Service.URL_API + "logout";
@@ -59,6 +62,8 @@ public class Test_L extends Activity implements TextWatcher {
     SharedPreferences s_pref;
     SharedPreferences.Editor editor;
     LinearLayout layout_register;
+    ProgressBar progressBar;
+    Dialog dialog2;
     int i = 0, k;
     String str_mobileno, str_password,str_emailValue,str_token, str_uid,str_get_email,str_check,str_signupstatus;
 
@@ -82,12 +87,15 @@ public class Test_L extends Activity implements TextWatcher {
 
        // iv_next = (ImageView) findViewById(R.id.submittv);
         tv_otp = (TextView) findViewById(R.id.text_Otp);
+        //progressBar=(ProgressBar)findViewById(R.id.spinner);
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
         str_signupstatus=sharedPreferences.getString("signup", "");
+
+
 
 
         layouts = new int[]{
@@ -107,6 +115,13 @@ public class Test_L extends Activity implements TextWatcher {
                 return true;
             }
         });
+
+        dialog2 = new Dialog(Test_L.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
     }
 
@@ -220,13 +235,18 @@ public class Test_L extends Activity implements TextWatcher {
                         iv_login.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                Log.e("tag", "454545");
 
                                 if (et_email.getText().toString().length() > 0) {
 
 
                                     str_email = et_email.getText().toString().trim();
-                                   new Otp().execute();
-
+                                    if (Util.Operations.isOnline(Test_L.this)) {
+                                    new Otp().execute();
+                                    } else
+                                    {
+                                        Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 else
@@ -252,6 +272,12 @@ public class Test_L extends Activity implements TextWatcher {
                 et_otp3.addTextChangedListener(new Test_L(et_otp3));
                 et_otp4.addTextChangedListener(new Test_L(et_otp4));
 
+
+
+
+
+
+
                 iv_otp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -273,14 +299,17 @@ public class Test_L extends Activity implements TextWatcher {
                                             str_otppin = et_otp1.getText().toString() + et_otp2.getText().toString() + et_otp3.getText().toString() + et_otp4.getText().toString();
                                             Log.e("tag", "pin:" + str_otppin);
 
-                                            if(str_otppin.length()>0)
-                                            {
-                                                new AsyncLogin(str_email, str_otppin).execute();
-                                            }
-                                            else
-                                            {
-                                                TastyToast.makeText(getApplicationContext(), "Please Enter Pin No", TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
+                                            if (Util.Operations.isOnline(Test_L.this)) {
+                                                if (str_otppin.length() > 0) {
+                                                    new AsyncLogin(str_email, str_otppin).execute();
+                                                } else {
+                                                    TastyToast.makeText(getApplicationContext(), "Please Enter OTP code", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
+                                                }
+
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_SHORT).show();
                                             }
 
 
@@ -354,9 +383,9 @@ public class Test_L extends Activity implements TextWatcher {
 
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-
+            dialog2.show();
+            iv_login.setVisibility(View.GONE);
             super.onPreExecute();
-
         }
 
 
@@ -380,8 +409,7 @@ public class Test_L extends Activity implements TextWatcher {
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----result---->" + jsonStr);
-            //progressBar.setVisibility(View.GONE);
-            //img_submit.setVisibility(View.VISIBLE);
+
             super.onPostExecute(jsonStr);
 
             //edt_pwd.setEnabled(true);
@@ -398,7 +426,8 @@ public class Test_L extends Activity implements TextWatcher {
 
                     viewPager.setCurrentItem(R.layout.test_otp);
 
-
+                    dialog2.dismiss();
+                    iv_login.setVisibility(View.VISIBLE);
 
                 } else
                 {
@@ -435,7 +464,8 @@ public class Test_L extends Activity implements TextWatcher {
 
         protected void onPreExecute() {
 
-
+            dialog2.show();
+            iv_otp.setVisibility(View.GONE);
             super.onPreExecute();
 
         }
@@ -459,6 +489,8 @@ public class Test_L extends Activity implements TextWatcher {
         @Override
         protected void onPostExecute(String jsonStr) {
             super.onPostExecute(jsonStr);
+
+
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
@@ -484,6 +516,9 @@ public class Test_L extends Activity implements TextWatcher {
 
                 if (status.equals("true")) {
 
+
+                    dialog2.dismiss();
+                    iv_otp.setVisibility(View.VISIBLE);
                     String id = jo.getString("id");
                     String token = jo.getString("token");
                     int s = ja.length();

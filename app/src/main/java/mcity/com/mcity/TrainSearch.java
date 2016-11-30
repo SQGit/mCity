@@ -96,7 +96,7 @@ public class TrainSearch extends Activity {
         get_train=(ImageView)findViewById(R.id.get_train);
         getmoretrain=(Button)findViewById(R.id.getmoretrain);
         train_menu=(ImageView)findViewById(R.id.train_menu);
-        txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
+        //txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
         txt_time=(TextView)findViewById(R.id.txt_time);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         searchlist=(ListView)findViewById(R.id.searchlist);
@@ -221,36 +221,58 @@ public class TrainSearch extends Activity {
         getmoretrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                searchridelist.clear();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("more_train", "true");
                 editor.commit();
+                train_status = sharedPreferences.getString("train_status", "");
 
-                if (dayOfTheWeek.equals("Sunday"))
 
+
+                if(train_status.equals("pcb"))
                 {
-                    if (Util.Operations.isOnline(TrainSearch.this)) {
-
-
-                        new TrainSearchForSunday().execute();
-
-
+                    if (dayOfTheWeek.equals("Sunday"))
+                    {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+                            new TrainSearchForSunday().execute();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    if (Util.Operations.isOnline(TrainSearch.this)) {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+                            new TrainSearchForAllday().execute();
 
 
-                        new TrainSearchForAllday().execute();
-
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
+
+                else
+                {
+
+
+                    if (dayOfTheWeek.equals("Sunday"))
+                    {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+                            new TrainSearchForSundayRev().execute();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        if (Util.Operations.isOnline(TrainSearch.this)) {
+                            new TrainSearchForAlldayRev().execute();
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                }
+
             }
         });
 
@@ -652,8 +674,6 @@ public class TrainSearch extends Activity {
 
                     if(more_train.equals("true"))
                     {
-
-
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("more_train", "false");
                         editor.commit();
@@ -866,8 +886,6 @@ public class TrainSearch extends Activity {
 
                     if(more_train.equals("true"))
                     {
-
-
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("more_train", "false");
                         editor.commit();
@@ -877,6 +895,7 @@ public class TrainSearch extends Activity {
                             Log.e("tag","check");
                             JSONObject dataObj = data1.getJSONObject(j);
                             {
+
                                 HashMap<String, String> map1 = new HashMap<String, String>();
                                 map1.put("name", dataObj.getString("name"));
                                 map1.put("departuretime", dataObj.getString("departuretime"));

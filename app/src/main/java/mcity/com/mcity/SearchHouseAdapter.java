@@ -69,7 +69,7 @@ public class SearchHouseAdapter extends BaseAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         TextView txt_description, txt_bedroom, txt_rentType, txt_furnishedType, txt_address, txt_subtype, txt_bedtv, txt_renttv, txt_subtv, txt_furnishedtv, txt_make_call,
-                txt_send_mail, txt_bedtypes, txt_loc, txt_rs, txt_mcity, txt_city;
+                txt_send_mail, txt_bedtypes, txt_loc, txt_rs, txt_mcity, txt_city,txt_rent;
 
         SharedPreferences sharedPreferences;
         SmsManager smsManager = SmsManager.getDefault();
@@ -91,7 +91,7 @@ public class SearchHouseAdapter extends BaseAdapter {
         loading.add(img3);
         loading.add(img4);
 
-        txt_address = (TextView) itemView.findViewById(R.id.rent);
+        txt_rent = (TextView) itemView.findViewById(R.id.rent);
         txt_subtype = (TextView) itemView.findViewById(R.id.subtype);
         txt_rentType = (TextView) itemView.findViewById(R.id.renttype);
         txt_furnishedType = (TextView) itemView.findViewById(R.id.furnishedtype);
@@ -112,7 +112,7 @@ public class SearchHouseAdapter extends BaseAdapter {
         final ImageView loadimage = (ImageView) itemView.findViewById(R.id.loadimg);
 
 
-        txt_address.setText(resultp.get("address"));
+        txt_rent.setText(resultp.get("monthlyrent"));
         txt_bedtypes.setText(resultp.get("bedroom"));
         txt_loc.setText(resultp.get("location"));
         txt_bedroom.setText(resultp.get("bedroom"));
@@ -138,7 +138,7 @@ public class SearchHouseAdapter extends BaseAdapter {
         Log.e("tag","image_checking"+resultp.get("path0"));
 
 
-        txt_address.setTypeface(tf);
+        txt_rent.setTypeface(tf);
         txt_rentType.setTypeface(tf);
         txt_description.setTypeface(tf);
         txt_bedtypes.setTypeface(tf);

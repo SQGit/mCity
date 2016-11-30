@@ -67,7 +67,7 @@ public class RentalHistory extends TabActivity {
     String token, uid,imagepath;
 
     private int[] IMAGE_IDS = {
-            R.drawable.ad1};
+            R.drawable.ad1,R.drawable.ad2};
 
 
     @Override
@@ -96,7 +96,7 @@ public class RentalHistory extends TabActivity {
             }
         };
 
-        int delay = 100; // delay for 1 sec.
+        int delay = 30; // delay for 1 sec.
 
         int period = 5000; // repeat every 4 sec.
 
@@ -112,11 +112,6 @@ public class RentalHistory extends TabActivity {
 
         }, delay, period);
 
-
-
-
-
-        //new RentalHistoryAsync().execute();
 
         txt_post.setOnClickListener(new View.OnClickListener() {
             @Override

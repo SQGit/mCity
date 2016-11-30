@@ -42,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
@@ -75,6 +76,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 import nl.changer.polypicker.Config;
 import nl.changer.polypicker.ImagePickerActivity;
 import nl.changer.polypicker.utils.ImageInternalFetcher;
@@ -173,7 +175,14 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
             @Override
             public void onClick(View v) {
 
-                getImagesView();
+                //getImagesView();
+
+                PhotoPickerIntent intent = new PhotoPickerIntent(PostHouse.this);
+                intent.setPhotoCount(1);
+                intent.setColumn(4);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+
             }
         });
 
@@ -625,6 +634,9 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
                 }
             }
         }
+
+
+
     }
 
 

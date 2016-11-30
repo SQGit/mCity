@@ -206,7 +206,7 @@
                         android:layout_height="wrap_content"
                         android:text="Gender:"
                         android:drawablePadding="@dimen/_5sdp"
-                        android:drawableLeft="@drawable/house_icon"
+                        android:drawableLeft="@drawable/gender"
                         android:textColor="@color/black"
                         />
 
@@ -261,7 +261,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/sms_icon"
+                android:drawableLeft="@drawable/email"
                 android:drawablePadding="@dimen/_5sdp"
                 android:padding="@dimen/_5sdp"
                 android:background="@drawable/red_stroke_bg"
@@ -274,7 +274,7 @@
                 android:id="@+id/make_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/view_contact_icon"
+                android:drawableLeft="@drawable/call_icon"
                 android:drawablePadding="@dimen/_5sdp"
                 android:padding="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_20sdp"
