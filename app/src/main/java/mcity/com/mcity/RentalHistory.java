@@ -66,6 +66,7 @@ public class RentalHistory extends TabActivity {
     //ListView listview;
     String token, uid,imagepath;
 
+    LinearLayout lt_postproperty,lt_searchproperty;
     private int[] IMAGE_IDS = {
             R.drawable.ad1,R.drawable.ad2};
 
@@ -75,10 +76,12 @@ public class RentalHistory extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rental_history);
 
-        txt_post=(TextView)findViewById(R.id.txt_post);
-        txt_search=(TextView)findViewById(R.id.txt_search);
+       // txt_post=(TextView)findViewById(R.id.txt_post);
+       // txt_search=(TextView)findViewById(R.id.txt_search);
         back_arrow=(LinearLayout) findViewById(R.id.back_arrow);
         slidingimage = (ImageView) findViewById(R.id.iv);
+        lt_postproperty = (LinearLayout) findViewById(R.id.layout_postproperty);
+        lt_searchproperty = (LinearLayout) findViewById(R.id.layout_searchproperty);
 
         //listview=(ListView)findViewById(R.id.listView) ;
 
@@ -113,7 +116,7 @@ public class RentalHistory extends TabActivity {
         }, delay, period);
 
 
-        txt_post.setOnClickListener(new View.OnClickListener() {
+        lt_postproperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -124,7 +127,7 @@ public class RentalHistory extends TabActivity {
         });
 
 
-        txt_search.setOnClickListener(new View.OnClickListener() {
+        lt_searchproperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
