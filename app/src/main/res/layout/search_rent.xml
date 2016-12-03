@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
-           <View
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/_15sdp"
@@ -87,7 +87,6 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:text="Apartment"
@@ -156,7 +155,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:layout_weight="1"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
@@ -192,13 +190,13 @@
 
 
 
-               <!-- <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:background="#d8d8d8">
+                <!-- <View
+                     android:layout_width="match_parent"
+                     android:layout_height="0.5dp"
+                     android:layout_marginLeft="@dimen/_15sdp"
+                     android:background="#d8d8d8">
 
-                </View>-->
+                 </View>-->
             </LinearLayout>
 
 
@@ -239,7 +237,6 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:text="Apartment"
@@ -298,7 +295,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:textSize="@dimen/_10sdp"
@@ -372,7 +368,6 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:text="2/2.5 BHK"
@@ -391,14 +386,14 @@
 
                     </RadioGroup>
                 </LinearLayout>
-<!--
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:background="#d8d8d8">
+                <!--
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.5dp"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:background="#d8d8d8">
 
-                </View>-->
+                                </View>-->
             </LinearLayout>
 
 
@@ -436,7 +431,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
                             android:text="1/1.5 BHK"
@@ -467,13 +461,13 @@
                     </RadioGroup>
                 </LinearLayout>
 
-             <!--   <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:background="#d8d8d8">
+                <!--   <View
+                       android:layout_width="match_parent"
+                       android:layout_height="0.5dp"
+                       android:layout_marginLeft="@dimen/_15sdp"
+                       android:background="#d8d8d8">
 
-                </View>-->
+                   </View>-->
             </LinearLayout>
 
 
@@ -511,7 +505,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:layout_weight="1"
                             android:drawableTop="@drawable/flat_selector"
                             android:gravity="center"
@@ -556,13 +549,13 @@
                     </RadioGroup>
                 </LinearLayout>
 
-               <!-- <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:background="#d8d8d8">
+                <!-- <View
+                     android:layout_width="match_parent"
+                     android:layout_height="0.5dp"
+                     android:layout_marginLeft="@dimen/_15sdp"
+                     android:background="#d8d8d8">
 
-                </View>-->
+                 </View>-->
             </LinearLayout>
 
             <View
@@ -611,7 +604,6 @@
                             android:layout_width="@dimen/_120sdp"
                             android:layout_height="wrap_content"
                             android:button="@android:color/transparent"
-                            android:checked="true"
                             android:drawableLeft="@drawable/flat_selector"
                             android:gravity="center"
                             android:padding="@dimen/_2sdp"
@@ -657,7 +649,7 @@
 
             </View>
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -695,47 +687,47 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:background="#d8d8d8">
 
-            </View>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/_10sdp">
-
-
-            <LinearLayout
+            </View>-->
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_10sdp">
 
-                <EditText
-                    android:id="@+id/max_rent_et"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:drawableLeft="@drawable/currency_icon"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:hint="@string/maxValue"
-                    android:imeOptions="actionDone"
-                    android:background="@null"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:paddingBottom="@dimen/_13sdp"
-                    android:textSize="@dimen/_12sdp" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <EditText
+                        android:id="@+id/max_rent_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:drawableLeft="@drawable/currency_icon"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:hint="@string/maxValue"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:paddingBottom="@dimen/_13sdp"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
 
 
-</LinearLayout>
+            </LinearLayout>-->
 
-            <View
+         <!--   <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:background="#d8d8d8">
 
             </View>
-
+-->
 
 
         </LinearLayout>

@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/location_icon"
             android:drawablePadding="@dimen/_5sdp"
+     android:gravity="center"
             android:singleLine="true"
             android:text="RS. "
             android:textColor="@color/black"
@@ -152,6 +153,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
+                    android:gravity="start|center"
                     android:drawableLeft="@drawable/bedroom_icon"/>
 
                     <TextView
@@ -203,6 +205,7 @@
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
                         android:text="Sub Type:"
+                        android:gravity="start|center"
                         android:drawablePadding="@dimen/_5sdp"
                         android:drawableLeft="@drawable/house_icon"
                         android:textColor="@color/black"/>
@@ -229,6 +232,7 @@
                         android:text="Furnished:"
                         android:drawablePadding="@dimen/_5sdp"
                         android:textColor="@color/black"
+                        android:gravity="start|center"
                         android:textSize="@dimen/_11sdp"
                         android:drawableLeft="@drawable/house_icon"
                         android:id="@+id/furnishedtype_tv" />

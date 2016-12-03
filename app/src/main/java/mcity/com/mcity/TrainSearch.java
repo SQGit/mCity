@@ -63,7 +63,6 @@ public class TrainSearch extends Activity {
     TextView txt_time;
     String URL_NORMAL = Data_Service.URL_API + "trainsearch";
     String URL_SUNDAY = Data_Service.URL_API + "trainsearchsun";
-
     String URL_NORMAL_REV = Data_Service.URL_API + "revtrainsearch";
     String URL_SUNDAY_REV = Data_Service.URL_API + "revtrainsearchsun";
 

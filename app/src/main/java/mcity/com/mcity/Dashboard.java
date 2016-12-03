@@ -71,15 +71,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class Dashboard extends AppCompatActivity {
 
     String LOGOUT = Data_Service.URL_API + "logout";
-    LinearLayout lin_mcoupon,lin_shop,lin_auto,lin_train,lin_rental,lin_ride,lin_garage,lin_food,lin_order;
+    LinearLayout lin_mcoupon,lin_shop,lin_auto,lin_train,lin_rental,lin_ride,lin_garage,lin_beauty,lin_order;
     ImageView img_settings_icon,imv_coupon,img_shop,img_auto;
     TextView txt_coupon,txt_shop,txt_auto,txt_train,txt_rental,txt_ride,txt_garage,txt_desclaimer, txt_site;
-
-
-   /* public ImageView img_mRental, img_mRides, img_train_icon, img_mauto, img_mfood, img_morder, img_mshop, img_mcoupon, img_mgarage, img_settings_icon, img_slidingimage;
-    TextView txt_desclaimer, txt_site;*/
-    String str_token, str_uid, str_imagepath;
-
+    String str_token, str_uid;
     SharedPreferences s_pref;
     Intent intent;
     Typeface tf;
@@ -99,7 +94,7 @@ public class Dashboard extends AppCompatActivity {
         lin_rental=(LinearLayout)findViewById(R.id.lin_rental) ;
         lin_ride=(LinearLayout)findViewById(R.id.lin_ride) ;
         lin_garage=(LinearLayout)findViewById(R.id.lin_garage) ;
-        lin_food=(LinearLayout)findViewById(R.id.lin_food) ;
+        lin_beauty=(LinearLayout)findViewById(R.id.lin_beauty) ;
         lin_order=(LinearLayout) findViewById(R.id.lin_order);
 
         imv_coupon=(ImageView)findViewById(R.id.imv_coupon);
@@ -201,20 +196,16 @@ public class Dashboard extends AppCompatActivity {
         lin_garage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-
-                /*lin_garage.setBackgroundResource(R.drawable.auto_press_bg);
-                txt_garage.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
-                Intent garage = new Intent(getApplicationContext(),  MGarage_History.class);
-                startActivity(garage);
-                finish();*/
+                Toast.makeText(getApplicationContext(), "Coming Soon !", Toast.LENGTH_SHORT).show();
             }
         });
 
-        lin_food.setOnClickListener(new View.OnClickListener() {
+        lin_beauty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_SHORT, TastyToast.INFO);
+                Intent beauty=new Intent(getApplicationContext(),Mbeauty.class);
+                startActivity(beauty);
+                finish();
 
             }
         });
@@ -222,7 +213,7 @@ public class Dashboard extends AppCompatActivity {
         lin_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TastyToast.makeText(getApplicationContext(), "Coming Soon !", TastyToast.LENGTH_SHORT, TastyToast.INFO);
+                Toast.makeText(getApplicationContext(), "Coming Soon !", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -280,7 +271,7 @@ public class Dashboard extends AppCompatActivity {
 
                 });
 
-                popup.show();//showing popup menu
+                popup.show();
             }
         });
     }

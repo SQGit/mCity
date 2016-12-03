@@ -23,6 +23,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,9 @@ public class OneFragment extends Fragment {
     ListView shoplist;
     ArrayList<HashMap<String, String>> shoparraylist;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    Dialog dialog2;
+    ProgressBar progressBar;
+
 
 
     static String shopname = "shopname";

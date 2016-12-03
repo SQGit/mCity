@@ -76,18 +76,25 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 import nl.changer.polypicker.Config;
 import nl.changer.polypicker.ImagePickerActivity;
 import nl.changer.polypicker.utils.ImageInternalFetcher;
 
+import static android.R.attr.data;
+
 public class PostHouse extends Activity implements AdapterView.OnItemSelectedListener {
 
     String POST_HOUSE = Data_Service.URL_API + "postforrent";
-    String id, token, path, landmark, address, rentAmount, depositAmount, description, img, str_pho_enable;
+
+    String id, token, path, landmark, address, rentAmount, depositAmount, description, img, str_pho_enable,path_img;
     String root1,root0, root2, root3, str_location, str_landmark, str_address, str_residential, str_residential1,str_bedroom,str_bedroom1,str_bedroom2, str_renttype, str_furnished_type, str_monthrent, str_deposit, str_description, str_city;
     EditText location_et, lanmark_et, address_et, rentamount_et, depositamount_et, description_et;
     TextView msg;
+    ArrayList<String> selectedPhotos = new ArrayList<>();
+    int index;
+    private static final int REQUEST_CODE = 1;
     private RadioGroup radioResidentialGroup1,radioResidentialGroupcut,radioBedroomothers,radioResidentialGroup2, radioBedroomGroup,radioBedroomGroupbar1,radioBedroomGroupbar2, radiorentGroup, radioFurnishedGroup;
     private RadioButton radioresidentalButton1,radioresidentalButtoncut,radioresidentalButton2, radioBedroomButton,radiobar1,radiobar2, radiorentButton, radioFurnishedButton;
     Button camera;
@@ -171,20 +178,7 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
 
 
         View getImages = findViewById(R.id.get_images);
-        getImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                //getImagesView();
-
-                PhotoPickerIntent intent = new PhotoPickerIntent(PostHouse.this);
-                intent.setPhotoCount(1);
-                intent.setColumn(4);
-                intent.setShowCamera(true);
-                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-
-            }
-        });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (this, android.R.layout.select_dialog_item, city);
@@ -236,7 +230,20 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
 
 
 
+        getImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+               Log.e("tag","1230");
+
+                PhotoPickerIntent intent = new PhotoPickerIntent(PostHouse.this);
+                intent.setPhotoCount(5);
+                intent.setColumn(4);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+                Log.e("tag","1231");
+            }
+        });
 
         img_submit.setOnClickListener(new View.OnClickListener()
 
@@ -460,6 +467,147 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
         );
     }
 
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+        List<String> photos = null;
+
+            if (resultCode == RESULT_OK && requestCode == INTENT_REQUEST_GET_IMAGES) {
+                Parcelable[] parcelableUris = data.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+
+                if (parcelableUris == null) {
+                    return;
+                }
+
+                // Java doesn't allow array casting, this is a little hack
+                Uri[] uris = new Uri[parcelableUris.length];
+                System.arraycopy(parcelableUris, 0, uris, 0, parcelableUris.length);
+
+                if (uris != null) {
+
+                    for (Uri uri : uris) {
+                        Log.e("tag", " uri: " + uri);
+                        //**************************************************
+                        path = uri.toString();
+                        //**************************************************
+                        mMedia.add(uri);
+                        Log.e("tag","11111111111"+mMedia);
+
+                        mdatas.add(String.valueOf(uri));
+
+                        Log.d("tag", "choosed file" + mMedia);
+                        StringBuilder builder = new StringBuilder();
+                        for (Uri value : mMedia) {
+                            builder.append(value + "#####");
+                        }
+                        String text = builder.toString();
+                        imagearray=text.split("\\#\\#\\#\\#\\#");
+                        Log.e("tag","222222222222"+imagearray);
+                    }
+                    showMedia();
+                }
+            }
+
+
+
+    }
+
+
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
+        super.onActivityResult(requestCode, resuleCode, intent);
+        msg.setVisibility(View.GONE);
+        Log.e("tag","1231");
+
+
+
+        if (resuleCode == Activity.RESULT_OK) {
+            if (requestCode == INTENT_REQUEST_GET_IMAGES || requestCode == INTENT_REQUEST_GET_N_IMAGES) {
+                Parcelable[] parcelableUris = intent.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+
+                if (parcelableUris == null) {
+                    return;
+                }
+
+                // Java doesn't allow array casting, this is a little hack
+                Uri[] uris = new Uri[parcelableUris.length];
+                System.arraycopy(parcelableUris, 0, uris, 0, parcelableUris.length);
+
+                if (uris != null) {
+
+                    for (Uri uri : uris) {
+                        Log.e("tag", " uri: " + uri);
+                        /*/
+/**************************************************
+                        path = uri.toString();
+                        /*/
+/**************************************************
+                        mMedia.add(uri);
+
+                        mdatas.add(String.valueOf(uri));
+
+                        StringBuilder builder = new StringBuilder();
+                        for (Uri value : mMedia) {
+                            builder.append(value + "#####");
+
+                        }
+                        String text = builder.toString();
+                        imagearray=text.split("\\#\\#\\#\\#\\#");
+
+                    }
+                    showMedia();
+                }
+            }
+        }
+
+
+
+    }
+*/
+
+    private void showMedia() {
+        // Remove all views before
+        // adding the new ones.
+        Log.e("tag","7777989898");
+        mSelectedImagesContainer.removeAllViews();
+
+        Iterator<Uri> iterator = mMedia.iterator();
+        ImageInternalFetcher imageFetcher = new ImageInternalFetcher(this, 500);
+        while (iterator.hasNext()) {
+            Uri uri = iterator.next();
+
+            if (mMedia.size() >= 1) {
+                mSelectedImagesContainer.setVisibility(View.VISIBLE);
+            }
+
+            View imageHolder = LayoutInflater.from(this).inflate(R.layout.media_layout, null);
+            img_thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
+
+            if (!uri.toString().contains("content://")) {
+                uri = Uri.fromFile(new File(uri.toString()));
+            }
+
+            imageFetcher.loadImage(uri, img_thumbnail);
+
+            mSelectedImagesContainer.addView(imageHolder);
+
+
+            int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+            int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+            img_thumbnail.getLayoutParams().width = 250;
+            img_thumbnail.getLayoutParams().height = 250;
+            img_thumbnail.setAdjustViewBounds(true);
+        }
+    }
+
+
     private void setSpinner1() {
 
         final CustomAdapter arrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, categories) {
@@ -579,101 +727,8 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
 
 
 
-    private void getImagesView() {
-
-        Intent intent = new Intent(getApplicationContext(), ImagePickerActivity.class);
-        Config config = new Config.Builder()
-                .setTabBackgroundColor(R.color.white)    // set tab background color. Default white.
-
-                .setSelectionLimit(6)    // set photo selection limit. Default unlimited selection.
-                .build();
-        ImagePickerActivity.setConfig(config);
-        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-
-    }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
-        super.onActivityResult(requestCode, resuleCode, intent);
-        msg.setVisibility(View.GONE);
-
-        if (resuleCode == Activity.RESULT_OK) {
-            if (requestCode == INTENT_REQUEST_GET_IMAGES || requestCode == INTENT_REQUEST_GET_N_IMAGES) {
-                Parcelable[] parcelableUris = intent.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-
-                if (parcelableUris == null) {
-                    return;
-                }
-
-                // Java doesn't allow array casting, this is a little hack
-                Uri[] uris = new Uri[parcelableUris.length];
-                System.arraycopy(parcelableUris, 0, uris, 0, parcelableUris.length);
-
-                if (uris != null) {
-
-                    for (Uri uri : uris) {
-                        Log.e("tag", " uri: " + uri);
-                        //**************************************************
-                        path = uri.toString();
-                        //**************************************************
-                        mMedia.add(uri);
-
-                        mdatas.add(String.valueOf(uri));
-
-                        StringBuilder builder = new StringBuilder();
-                        for (Uri value : mMedia) {
-                            builder.append(value + "#####");
-
-                        }
-                        String text = builder.toString();
-                        imagearray=text.split("\\#\\#\\#\\#\\#");
-
-                    }
-                    showMedia();
-                }
-            }
-        }
-
-
-
-    }
-
-
-
-    private void showMedia() {
-        // Remove all views before
-        // adding the new ones.
-        mSelectedImagesContainer.removeAllViews();
-
-        Iterator<Uri> iterator = mMedia.iterator();
-        ImageInternalFetcher imageFetcher = new ImageInternalFetcher(this, 500);
-        while (iterator.hasNext()) {
-            Uri uri = iterator.next();
-
-            if (mMedia.size() >= 1) {
-                mSelectedImagesContainer.setVisibility(View.VISIBLE);
-            }
-
-            View imageHolder = LayoutInflater.from(this).inflate(R.layout.media_layout, null);
-            img_thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
-
-            if (!uri.toString().contains("content://")) {
-                uri = Uri.fromFile(new File(uri.toString()));
-            }
-
-            imageFetcher.loadImage(uri, img_thumbnail);
-
-            mSelectedImagesContainer.addView(imageHolder);
-
-
-            int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-            int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-            img_thumbnail.getLayoutParams().width = 250;
-            img_thumbnail.getLayoutParams().height = 250;
-            img_thumbnail.setAdjustViewBounds(true);
-        }
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

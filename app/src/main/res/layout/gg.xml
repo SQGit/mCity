@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
 
 
     <LinearLayout
@@ -10,29 +11,26 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_3sdp">
-
+        android:background="@drawable/dotted_red"
+        android:layout_margin="@dimen/_5sdp">
 
         <LinearLayout
             android:id="@+id/imagelin"
             android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:background="#EBEBEB"
+            android:layout_height="@dimen/_70sdp"
             android:layout_gravity="center">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/shop_logo"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"/>
-            </LinearLayout>
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/shop_logo"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/_80sdp"
-            android:layout_margin="@dimen/_3sdp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:orientation="horizontal"
             android:background="#EBEBEB">
@@ -76,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tc"
                     android:textColor="#E51C39"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
                     android:gravity="right"
                     android:textSize="@dimen/_7sdp"
                     android:id="@+id/tc"
@@ -86,13 +84,11 @@
 
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/_1sdp"
-                android:gravity="right"
+                android:gravity="center"
                 android:orientation="vertical">
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,5 +100,4 @@
 
     </LinearLayout>
 
-
-</LinearLayout>
+    </LinearLayout>

@@ -1,9 +1,11 @@
 package mcity.com.mcity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,6 +28,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,8 @@ public class MShop extends AppCompatActivity {
     ImageView img_settings_icon;
     LinearLayout lnr_back_icon;
     String str_uid, str_token;
+    Dialog dialog2;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,12 @@ public class MShop extends AppCompatActivity {
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
+        dialog2 = new Dialog(MShop.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
         lnr_back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,6 +263,8 @@ public class MShop extends AppCompatActivity {
 
 
         protected void onPreExecute() {
+
+
             super.onPreExecute();
         }
 

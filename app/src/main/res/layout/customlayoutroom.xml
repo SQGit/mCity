@@ -16,8 +16,8 @@
         android:drawableLeft="@drawable/black_house"
         android:textColor="@color/black"
         android:textSize="12sp"
-        android:gravity="start|center"
-        android:paddingLeft="@dimen/_15sdp"
+        android:gravity="left|center"
+        android:paddingLeft="@dimen/_25sdp"
         android:textStyle="bold" />
 
 </LinearLayout>

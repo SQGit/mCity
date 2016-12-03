@@ -69,11 +69,11 @@ public class SplashScreen extends Activity {
             else
             {
                 Log.e("tag","333");
-                db.addContact(new PlaceDetails("Paranur Railway Station","12.729674", "79.985543",	"AutoStand, MahindraWorldCIty, Chengalpattu",	"8AM to 10PM pickups",	"8883070913","9788891120","9659108191","S.ARUL","N.SATHAM UZEN","V.LOGU"));
-                db.addContact(new PlaceDetails("Canopy","12.731442", "80.000516",	"AutoStand, MahindraWorldCIty, Chengalpattu",	"8AM to 10PM pickups",	"9840357483","9940100332","9578616872","VINAYAKAM","MANI","SHANMUGAM"));
-                db.addContact(new PlaceDetails("Capegemini","12.736314", "80.007350",	"AutoStand, MahindraWorldCIty, Chengalpattu",	"8AM to 10PM pickups",	"7094345321","9962183068","952404293","BALAJI","SEKAR","MAGESH"));
-                db.addContact(new PlaceDetails("Aqualily","12.728183", "80.006341",	"AutoStand, MahindraWorldCIty, Chengalpattu",	"8AM to 10PM pickups",	"hidden","hidden","hidden","hidden","hidden","hidden"));
-                db.addContact(new PlaceDetails("Zeropoint","12.742792", "80.0103423",	"AutoStand, MahindraWorldCIty, Chengalpattu",	"8AM to 10PM pickups",	"7094345321","9962183068","952404293","BALAJI","SEKAR","MAGESH"));
+                db.addContact(new PlaceDetails("Paranur Railway Station","12.729674", "79.985543",	"AutoStand, MahindraWorldCity, Chengalpattu.",	"8AM to 10PM pickups",	"8883070913","9788891120","9659108191","S.ARUL","N.SATHAM UZEN","V.LOGU"));
+                db.addContact(new PlaceDetails("Canopy","12.731442", "80.000516",	"AutoStand, MahindraWorldCity, Chengalpattu.",	"8AM to 10PM pickups",	"9840357483","9940100332","9578616872","VINAYAKAM","MANI","SHANMUGAM"));
+                db.addContact(new PlaceDetails("Capegemini","12.736314", "80.007350",	"AutoStand, MahindraWorldCity, Chengalpattu.",	"8AM to 10PM pickups",	"7094345321","9962183068","952404293","BALAJI","SEKAR","MAGESH"));
+                db.addContact(new PlaceDetails("Aqualily","12.728183", "80.006341",	"AutoStand, MahindraWorldCity, Chengalpattu.",	"8AM to 10PM pickups",	"hidden","hidden","hidden","hidden","hidden","hidden"));
+                db.addContact(new PlaceDetails("Zeropoint","12.742792", "80.0103423",	"AutoStand, MahindraWorldCity, Chengalpattu.",	"8AM to 10PM pickups",	"7094345321","9962183068","952404293","BALAJI","SEKAR","MAGESH"));
                 Intent intent = new Intent(SplashScreen.this,   Test_L.class);
                 SplashScreen.this.startActivity(intent);
                 SplashScreen.this.finish();

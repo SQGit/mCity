@@ -79,8 +79,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_gravity="left"
-                            android:layout_below="@id/lin1"
                             android:layout_marginTop="@dimen/_5sdp">
 
                             <TextView
@@ -88,7 +88,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Food Zone"
                                 android:textStyle="bold"
-                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_gravity="left"
                                 android:textSize="@dimen/_13sdp"
                                 android:id="@+id/txt_shopname"/>
@@ -102,7 +101,6 @@
                                 android:text="Mahindra World City, Chengalpattu"
                                 android:textSize="@dimen/_9sdp"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_gravity="left"
                                 android:id="@+id/txt_address"
                                 android:singleLine="false"
@@ -122,7 +120,6 @@
                                 android:id="@+id/txt_time"
                                 android:singleLine="false"
                                 android:textColor="#E51C39"
-                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_gravity="left" />
 
 

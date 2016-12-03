@@ -79,7 +79,7 @@ public class ShopAdapter extends BaseAdapter {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
-        final TextView txt_description,txt_shopname,txt_address,txt_time,txt_menu;
+        final TextView txt_description,txt_shopname,txt_address,txt_time,txt_menu,txt_coupon;
         ImageView call;
 
 
@@ -98,6 +98,7 @@ public class ShopAdapter extends BaseAdapter {
         txt_address = (TextView) itemView.findViewById(R.id.txt_address);
         txt_time = (TextView) itemView.findViewById(R.id.txt_time);
         txt_menu= (TextView) itemView.findViewById(R.id.txt_menu);
+        txt_coupon=(TextView) itemView.findViewById(R.id.txt_coupon);
         call=(ImageView)itemView.findViewById(R.id.call);
 
         str_shop_path=IMAGE_UPLOAD+resultp.get("filename");
@@ -119,6 +120,10 @@ public class ShopAdapter extends BaseAdapter {
         txt_description.setTypeface(tf);
         txt_address.setTypeface(tf);
         txt_time.setTypeface(tf);
+        txt_menu.setTypeface(tf);
+        txt_coupon.setTypeface(tf);
+
+
 
         String str_shopname=resultp.get(OneFragment.shopname);
         String str_description=resultp.get(OneFragment.description);
@@ -164,6 +169,19 @@ public class ShopAdapter extends BaseAdapter {
 
             }
         });
+
+        txt_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent t_coupon=new Intent(context.getApplicationContext(),MCoupon.class);
+                context.startActivity(t_coupon);
+                ((Activity)context).finish();
+
+
+            }
+        });
+
+
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,9 +2,11 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.widget.PopupMenu;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -25,6 +28,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +55,7 @@ import java.util.TimerTask;
 public class MCoupon extends Activity {
     String URL = Data_Service.URL_API + "getcoupons";
     String LOGOUT = Data_Service.URL_API + "logout";
+
     String str_token, str_uid;
     CouponAdapter couponadapter;
     ListView couponlist;
@@ -58,8 +63,10 @@ public class MCoupon extends Activity {
     ArrayList<HashMap<String, String>> couponarraylist;
     LinearLayout lnr_back_arrow;
     public int currentimageindex = 0;
-
-
+    Dialog dialog2;
+    ProgressBar progressBar;
+    String IMAGE_AD1 = Data_Service.URL_ADS + "ad1/";
+    String IMAGE_AD2 = Data_Service.URL_ADS + "ad2/";
     static String shopname = "shopname";
     static String expireddate = "expireddate";
     static String description = "description";
@@ -85,6 +92,13 @@ public class MCoupon extends Activity {
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
+
+        dialog2 = new Dialog(MCoupon.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
         final Handler mHandler = new Handler();
 
@@ -257,6 +271,8 @@ public class MCoupon extends Activity {
         Typeface font = Typeface.createFromAsset(getAssets(), "mont.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mNewTitle.setSpan(new RelativeSizeSpan(10f), 0, 0, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         mi.setTitle(mNewTitle);
     }
 
@@ -279,6 +295,8 @@ public class MCoupon extends Activity {
 
 
         protected void onPreExecute() {
+
+            dialog2.show();
             super.onPreExecute();
         }
 
@@ -305,6 +323,7 @@ public class MCoupon extends Activity {
         @Override
         protected void onPostExecute(String jsonstr) {
             super.onPostExecute(jsonstr);
+            dialog2.dismiss();
             //progressBar.setVisibility(View.GONE);
 
             if (jsonstr.equals("")) {

@@ -28,6 +28,7 @@ import java.util.HashMap;
  */
 public class HistoryHouse extends Activity {
     String ALL_RENT = Data_Service.URL_API + "allrent";
+    String SHOW_IMAGE = Data_Service.URL_IMG + "rent/";
     String str_uid,str_token;
     ArrayList<HashMap<String, String>> contactList1;
     HouseAdapter houseAdapter;
@@ -49,8 +50,6 @@ public class HistoryHouse extends Activity {
         listView=(ListView)findViewById(R.id.listView);
 
         new HistoryRental().execute();
-
-
 
     }
 
@@ -146,6 +145,27 @@ public class HistoryHouse extends Activity {
                                 Log.e("tag", "11" + pos_rent.getString("residential"));
                                 map.put("location", pos_rent.getString("location"));
                                 Log.e("tag", "12" + pos_rent.getString("location"));
+
+
+
+                                JSONArray img_ar = pos_rent.getJSONArray("imageurl");
+
+                                if(img_ar.length()>0){
+
+
+                                    for(int i =0;i<img_ar.length();i++){
+
+                                        JSONObject img_obj =img_ar.getJSONObject(i);
+
+                                        String path = SHOW_IMAGE + img_obj.getString("filename");
+
+                                        map.put("path" + i, path);
+                                        Log.e("tag","image_location"+path);
+
+
+                                    }
+                                }
+
                                 contactList1.add(map);
                                 Log.e("tag", "CONTACT_LIST"+contactList1);
 
@@ -178,6 +198,9 @@ public class HistoryHouse extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+
+
 
 }
 

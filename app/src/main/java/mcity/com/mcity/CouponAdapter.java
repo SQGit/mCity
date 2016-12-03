@@ -89,7 +89,6 @@ public class CouponAdapter extends BaseAdapter {
 
         txt_shopname = (TextView) itemView.findViewById(R.id.txt_shopname);
         txt_description = (TextView) itemView.findViewById(R.id.txt_description);
-        txt_expiredval = (TextView) itemView.findViewById(R.id.txt_expiredval);
         txt_expired = (TextView) itemView.findViewById(R.id.txt_expired);
         txt_tc = (TextView) itemView.findViewById(R.id.tc);
 
@@ -103,13 +102,10 @@ public class CouponAdapter extends BaseAdapter {
 
         txt_shopname.setTypeface(tf);
         txt_description.setTypeface(tf);
-        txt_expiredval.setTypeface(tf);
-        txt_expired.setTypeface(tf);
         txt_tc.setTypeface(tf);
 
         txt_shopname.setText(resultp.get(MCoupon.shopname));
         txt_description.setText(resultp.get(MCoupon.description));
-        txt_expiredval.setText(resultp.get(MCoupon.expireddate));
         str_shop_id = resultp.get(MCoupon._id);
 
         dot_background.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +133,6 @@ public class CouponAdapter extends BaseAdapter {
                 shop_name1.setText(resultp.get(MCoupon.shopname));
                 description1.setText(resultp.get(MCoupon.description));
 
-
                 Picasso.with(context)
                         .load(str_shop_path)
                         .into(logo);
@@ -145,36 +140,11 @@ public class CouponAdapter extends BaseAdapter {
 
                 new CodeGenerate().execute();
 
-
-               /* for(int i=0;i<position;i++)
-                {
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                    String coupon_code = sharedPreferences.getString("coupon_code", "");
-                    Log.e("tag","check"+resultp);
-
-                    if(coupon_code.equals(""))
-                    {
-
-                        new CodeGenerate().execute();
-                    }
-
-                    {
-
-                        txt_tokencode.setText(coupon_code);
-
-                    }
-
-
-                }
-*/
-
-
                 Typeface tt = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
                 shop_name1.setTypeface(tt);
                 description1.setTypeface(tt);
                 txt_tokencode.setTypeface(tt);
                 redeem.setTypeface(tt);
-
 
                 img_cross.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -187,11 +157,7 @@ public class CouponAdapter extends BaseAdapter {
                 generate_code.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        //new codeToServer().execute();
-
                         Toast.makeText(context, "You have redeemed your coupon Successfully", Toast.LENGTH_SHORT).show();
-
                     }
                 });
                 dialog.show();
@@ -201,13 +167,13 @@ public class CouponAdapter extends BaseAdapter {
 
 
         if (position % 2 == 0) {
-            img_background.setBackgroundColor(context.getResources().getColor(R.color.bg3));
-            dot_background.setBackgroundResource(R.drawable.dotted_red);
+            //img_background.setBackgroundColor(context.getResources().getColor(R.color.bg3));
+            //dot_background.setBackgroundResource(R.drawable.dotted_red);
 
 
         } else {
-            img_background.setBackgroundColor(context.getResources().getColor(R.color.bg4));
-            dot_background.setBackgroundResource(R.drawable.doted_yellow);
+            //img_background.setBackgroundColor(context.getResources().getColor(R.color.bg4));
+            //dot_background.setBackgroundResource(R.drawable.doted_yellow);
 
         }
         return itemView;

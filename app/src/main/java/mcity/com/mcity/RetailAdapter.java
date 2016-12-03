@@ -127,41 +127,12 @@ public class RetailAdapter extends BaseAdapter{
 
 
         txt_shopname.setText(resultp.get(TwoFragment.retailname));
-        txt_address.setText(resultp.get(TwoFragment.retaildescription));
+        txt_address.setText(resultp.get(TwoFragment.description));
         txt_time.setText(resultp.get(TwoFragment.openingtime));
         txt_description.setText(resultp.get(TwoFragment.retaildescription));
 
 
-     /*   txt_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(context);
 
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.setContentView(R.layout.samp);
-
-
-                ImageView cross = (ImageView) dialog.findViewById(R.id.cross);
-                ImageView menu_list = (ImageView) dialog.findViewById(R.id.menu_list);
-
-
-                Picasso.with(context)
-                        .load(str_shop_view)
-                        .into(menu_list);
-
-
-                cross.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-
-                    }
-                });
-                dialog.show();
-
-            }
-        });*/
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override

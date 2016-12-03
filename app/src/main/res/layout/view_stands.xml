@@ -11,17 +11,37 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-
+        android:layout_weight="1"/>
 
 
     <LinearLayout
         android:id="@+id/lin_hide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:orientation="vertical"
+       >
+
+        <LinearLayout
+            android:id="@+id/imagelin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/close_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:src="@drawable/grey_cross"/>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/dotlin"
@@ -30,116 +50,58 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/_10sdp">
 
-            <LinearLayout
-                android:id="@+id/imagelin"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/shop_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/_1sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
                 android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/large_auto"
+                    android:id="@+id/imageView" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_80sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
                     android:orientation="vertical">
 
-
-
-
-
-                    <LinearLayout
-                        android:id="@+id/lin1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:orientation="horizontal">
-
-
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Paranur Railway Station"
-                            android:textSize="@dimen/_13sdp"
-                            android:textColor="#000000"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="@dimen/_4sdp"
-                            android:id="@+id/txt_station" />
-                        <ImageView
-                            android:id="@+id/close_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|right"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:paddingRight="@dimen/_20sdp"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:src="@drawable/grey_cross"/>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/lin2"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_below="@id/lin1"
-                       >
+                        android:text="Paranur Railway Station"
+                        android:textSize="@dimen/_13sdp"
+                        android:textColor="#000000"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:id="@+id/txt_station" />
 
-                        <TextView
-                            android:id="@+id/txt_description"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Autostand, MahindraWorldCity, Chengalpattu"
-                            android:textSize="@dimen/_11sdp"
-                            android:layout_gravity="right" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/lin3"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_description"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_below="@id/lin1"
-                        android:layout_marginTop="@dimen/_7sdp">
+                        android:singleLine="false"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Autostand, MahindraWorldCity, Chengalpattu"
+                        android:textSize="@dimen/_11sdp"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="8AM to 10PM Pickups"
-                            android:textColor="#E51C39"
-                            android:drawableLeft="@drawable/timer"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:textSize="@dimen/_9sdp"
-                            android:id="@+id/txt_time"
-                            android:singleLine="false"
-                            android:layout_gravity="right" />
-                    </LinearLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8AM to 10PM Pickups"
+                        android:textColor="#E51C39"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawableLeft="@drawable/timer"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textSize="@dimen/_9sdp"
+                        android:id="@+id/txt_time"
+                        android:singleLine="false" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -155,14 +117,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_7sdp"
             android:orientation="horizontal"
             android:background="@drawable/autodriver_bc">
-
-
-
 
 
             <TextView
@@ -172,23 +130,13 @@
                 android:textSize="@dimen/_11sdp"
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableLeft="@drawable/call_white"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textColor="#FFF"
                 android:text="Call Auto Driver"/>
-
-
-
 
 
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
-
 
 
 </LinearLayout>

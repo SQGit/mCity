@@ -42,6 +42,7 @@ repositories {
     maven { url 'https://repo.commonsware.com.s3.amazonaws.com' }
     maven { url 'https://jitpack.io' }
     maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -61,4 +62,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.sdsmdg.tastytoast:tastytoast:0.1.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
+    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
 }

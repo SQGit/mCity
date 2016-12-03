@@ -69,6 +69,13 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
+
+        <activity android:name=".Mbeauty"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
+
+
         <activity android:name=".MGarage_PostAds"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">

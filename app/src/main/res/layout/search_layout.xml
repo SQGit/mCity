@@ -106,7 +106,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/red_stroke_bg">
         </TabWidget>
 

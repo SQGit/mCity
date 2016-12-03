@@ -111,16 +111,7 @@ public class MRental extends TabActivity {
         token = sharedPreferences.getString("token", "");
         uid = sharedPreferences.getString("id", "");
 
-      /*  postentry_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MRentalPost.class);
-                startActivity(intent);
-                finish();
 
-
-            }
-        });*/
         settings_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

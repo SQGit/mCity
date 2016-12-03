@@ -1,9 +1,6 @@
 package mcity.com.mcity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.TabActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -11,28 +8,26 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sloop.fonts.FontsManager;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,126 +38,47 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Admin on 09-11-2016.
+ * Created by Admin on 01-12-2016.
  */
-
-public class RentalHistory extends TabActivity {
-    String LOGOUT = Data_Service.URL_API + "logout";
-    TextView txt_post,txt_search;
+public class Mbeauty extends AppCompatActivity {
     LinearLayout back_arrow;
-    public int currentimageindex = 0;
-
-    Typeface tf;
-    LinearLayout back;
-    TextView postentry_id;
-    TabHost.TabSpec firstTabSpec, secondTabSpec;
-    View tabView, tabViewroom;
-    int val = 0;
-    TabHost tabHost;
-    ImageView  settings_icon,slidingimage;
-    //ListView listview;
-    String token, uid,imagepath;
-
-    LinearLayout lt_postproperty,lt_searchproperty;
-    private int[] IMAGE_IDS = {
-            R.drawable.ad1,R.drawable.ad2};
-
-
+    ImageView settings_icon;
+    String LOGOUT = Data_Service.URL_API + "logout";
+    String str_token,str_uid;
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
+    private static final Integer[] IMAGES= {R.drawable.aaspire,R.drawable.spa};
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rental_history);
+        setContentView(R.layout.beauty);
 
-       // txt_post=(TextView)findViewById(R.id.txt_post);
-       // txt_search=(TextView)findViewById(R.id.txt_search);
-        back_arrow=(LinearLayout) findViewById(R.id.back_arrow);
-        slidingimage = (ImageView) findViewById(R.id.iv);
-        lt_postproperty = (LinearLayout) findViewById(R.id.layout_postproperty);
-        lt_searchproperty = (LinearLayout) findViewById(R.id.layout_searchproperty);
-
-        //listview=(ListView)findViewById(R.id.listView) ;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        str_token = sharedPreferences.getString("token", "");
+        str_uid = sharedPreferences.getString("id", "");
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-
-        final Handler mHandler = new Handler();
-
-        // Create runnable for posting
-        final Runnable mUpdateResults = new Runnable() {
-            public void run()
-            {
-                AnimateandSlideShow();
-            }
-        };
-
-        int delay = 30; // delay for 1 sec.
-
-        int period = 5000; // repeat every 4 sec.
-
-        Timer timer = new Timer();
-
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            public void run() {
-
-                mHandler.post(mUpdateResults);
-
-            }
-
-        }, delay, period);
-
-
-        lt_postproperty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent post=new Intent(getApplicationContext(),MRentalPost.class);
-                startActivity(post);
-                finish();
-            }
-        });
-
-
-        lt_searchproperty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent post=new Intent(getApplicationContext(),MRental.class);
-                startActivity(post);
-                finish();
-            }
-
-        });
-
-
+        back_arrow = (LinearLayout) findViewById(R.id.back_arrow);
+        settings_icon = (ImageView) findViewById(R.id.settings_icon);
 
         back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent post=new Intent(getApplicationContext(),Dashboard.class);
-                startActivity(post);
+                Intent i = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(i);
                 finish();
             }
         });
-
-        tabHost = (TabHost) findViewById(android.R.id.tabhost);
-        back = (LinearLayout) findViewById(R.id.back_arrow);
-       // postentry_id = (TextView) findViewById(R.id.postentry_id);
-        settings_icon = (ImageView) findViewById(R.id.settings_icon);
-        tabView = createTabView(getApplicationContext(), "House", R.drawable.house);
-        tabViewroom = createTabViewRoom(getApplicationContext(), "Paying Guest", R.drawable.house);
-        FontsManager.initFormAssets(this, "mont.ttf");
-        FontsManager.changeFonts(this);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        token = sharedPreferences.getString("token", "");
-        uid = sharedPreferences.getString("id", "");
-
 
         settings_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,20 +86,21 @@ public class RentalHistory extends TabActivity {
                 Log.e("tag", "DDD");
 
 
-                PopupMenu popup = new PopupMenu(RentalHistory.this, settings_icon);
+                PopupMenu popup = new PopupMenu(Mbeauty.this, settings_icon);
+                popup.getMenuInflater().inflate(R.menu.opt_menu1, popup.getMenu());
+
                 MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.opt_menu2, popup.getMenu());
                 MenuItem pinMenuItem1 = popup.getMenu().getItem(0);
                 MenuItem pinMenuItem2 = popup.getMenu().getItem(1);
-                MenuItem pinMenuItem3 = popup.getMenu().getItem(2);
 
                 applyFontToMenuItem(pinMenuItem1);
                 applyFontToMenuItem(pinMenuItem2);
-                applyFontToMenuItem(pinMenuItem3);
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+
+
                         int id = item.getItemId();
 
 
@@ -193,69 +110,91 @@ public class RentalHistory extends TabActivity {
                                 return true;
 
                             case R.id.item2:
-                                Intent history=new Intent(getApplicationContext(),MPostHistory.class);
-                                startActivity(history);
-                                finish();
-                                return true;
-
-
-                            case R.id.item3:
                                 exitIcon();
                                 return true;
+
+
                         }
                         return true;
                     }
 
                 });
+
                 popup.show();//showing popup menu
 
             }
         });
 
-
-
-
-
-        //*************************************************
-        firstTabSpec = tabHost.newTabSpec("tid1");
-        secondTabSpec = tabHost.newTabSpec("tid1");
-        Intent intent = new Intent(this, HistoryHouse.class);
-        firstTabSpec.setIndicator(tabView).setContent(intent);
-
-
-
-        secondTabSpec.setIndicator(tabViewroom).setContent(new Intent(this, HistoryPg.class));
-        tabHost.addTab(firstTabSpec);
-        tabHost.addTab(secondTabSpec);
-
-        //*********************************************
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
+        init();
     }
 
-    private void AnimateandSlideShow() {
-
-        slidingimage.setImageResource(IMAGE_IDS[currentimageindex % IMAGE_IDS.length]);
-
-
-        currentimageindex++;
 
 
 
-        Animation rotateimage = AnimationUtils.loadAnimation(this, R.anim.right_left);
+    private void init() {
 
 
-        slidingimage.startAnimation(rotateimage);
+        for(int i=0;i<IMAGES.length;i++)
+            ImagesArray.add(IMAGES[i]);
 
+        mPager = (ViewPager) findViewById(R.id.pager);
+
+
+        mPager.setAdapter(new SlidingImage_Adapter(Mbeauty.this,ImagesArray));
+
+
+        CirclePageIndicator indicator = (CirclePageIndicator)
+                findViewById(R.id.indicator);
+
+        indicator.setViewPager(mPager);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+        indicator.setRadius(5 * density);
+
+
+
+        NUM_PAGES =IMAGES.length;
+
+
+
+// Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
 
     }
 
@@ -269,12 +208,11 @@ public class RentalHistory extends TabActivity {
         mi.setTitle(mNewTitle);
     }
 
-
-
     private void exitIcon() {
-        LayoutInflater layoutInflater = LayoutInflater.from(RentalHistory.this);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(Mbeauty.this);
         View promptView = layoutInflater.inflate(R.layout.exitdialog, null);
-        final AlertDialog alertD = new AlertDialog.Builder(RentalHistory.this).create();
+        final AlertDialog alertD = new AlertDialog.Builder(Mbeauty.this).create();
         alertD.setCancelable(false);
         Window window = alertD.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -286,20 +224,25 @@ public class RentalHistory extends TabActivity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
         head1.setTypeface(tf);
 
+
         head1.setText("mCity");
         head2.setText("Do You want to Sign Out?");
+
 
         yes.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
-                SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(RentalHistory.this);
+                SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(Mbeauty.this);
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putString("check","");
                 editor.commit();
                 logoutMethod();
                 alertD.dismiss();
+
+
+
             }
         });
 
@@ -311,19 +254,18 @@ public class RentalHistory extends TabActivity {
         });
         alertD.setView(promptView);
         alertD.show();
-
     }
 
     private void logoutMethod() {
-
         new Logout().execute();
+
     }
 
     private void aboutUs() {
 
-        LayoutInflater layoutInflater = LayoutInflater.from(RentalHistory.this);
+        LayoutInflater layoutInflater = LayoutInflater.from(Mbeauty.this);
         View promptView = layoutInflater.inflate(R.layout.aboutus, null);
-        final AlertDialog alertD = new AlertDialog.Builder(RentalHistory.this).create();
+        final AlertDialog alertD = new AlertDialog.Builder(Mbeauty.this).create();
         alertD.setCancelable(false);
         Window window = alertD.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -345,35 +287,22 @@ public class RentalHistory extends TabActivity {
                 alertD.dismiss();
             }
         });
+
+
         alertD.setView(promptView);
         alertD.show();
 
     }
 
-    private View createTabView(Context context, String tabText, int home_icon) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.customlayout, null, true);
+    @Override
+    public void onBackPressed() {
 
-        TextView tv = (TextView) view.findViewById(R.id.tabTitleText1);
-        tf = Typeface.createFromAsset(this.getAssets(), "mont.ttf");
-        tv.setText(tabText);
-        //tv.setGravity(Gravity.CENTER);
-        tv.setTypeface(tf);
-        return view;
+        Intent i = new Intent(Mbeauty.this, Dashboard.class);
+        startActivity(i);
+        finish();
+        // super.onBackPressed();
     }
-
-    private View createTabViewRoom(Context context, String tabText, int home_icon) {
-
-        View view = LayoutInflater.from(context).inflate(R.layout.customlayoutroom, null, true);
-        TextView tv = (TextView) view.findViewById(R.id.tabTitleText1);
-        tf = Typeface.createFromAsset(this.getAssets(), "mont.ttf");
-        tv.setText(tabText);
-        tv.setTypeface(tf);
-        //tv.setGravity(Gravity.CENTER);
-        return view;
-    }
-
-
 
     private class Logout extends AsyncTask<String, String, String> {
         @Override
@@ -381,6 +310,8 @@ public class RentalHistory extends TabActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
+            //progressBar.setVisibility(View.VISIBLE);
+
         }
 
         protected String doInBackground(String... params) {
@@ -389,8 +320,8 @@ public class RentalHistory extends TabActivity {
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpPost postMethod = new HttpPost(LOGOUT);
-                postMethod.addHeader("x-access-token", token);
-                postMethod.addHeader("id", uid);
+                postMethod.addHeader("x-access-token", str_token);
+                postMethod.addHeader("id", str_uid);
                 postMethod.addHeader("Content-Type", "multipart-form-data");
 
                 HttpResponse response = client.execute(postMethod);
@@ -416,6 +347,9 @@ public class RentalHistory extends TabActivity {
                 json = e.toString();
             }
             return json;
+
+
+
         }
 
 
@@ -433,15 +367,20 @@ public class RentalHistory extends TabActivity {
 
                 if (status.equals("true"))
                 {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
                     Intent exit=new Intent(getApplicationContext(),Test_L.class);
                     startActivity(exit);
                     finish();
+
+
+                    Log.e("tag","s...........");
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     Log.e("tag","no...........");
+
                 }
             }
             catch (JSONException e) {
@@ -450,26 +389,4 @@ public class RentalHistory extends TabActivity {
             }
         }
     }
-
-
-
-    @Override
-    public void onBackPressed()
-    {
-        //get current tab index.
-        int index = tabHost.getCurrentTab();
-
-        //decide what to do
-        if(index!=0){
-            tabHost.setCurrentTab(index-1);
-        } else {
-            super.onBackPressed();
-            Intent i = new Intent(RentalHistory.this,Dashboard.class);
-            startActivity(i);
-            finish();
-        }
-
-    }
-
 }
-

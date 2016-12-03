@@ -88,9 +88,9 @@ public class HouseAdapter extends BaseAdapter {
         View itemView = inflater.inflate(R.layout.search_properties_list_items, parent, false);
         resultp = data.get(position);
 
+
+
         Log.e("tag","11111"+resultp);
-
-
         loading = new ArrayList<>();
 
         img1 = resultp.get("path0");
@@ -122,6 +122,7 @@ public class HouseAdapter extends BaseAdapter {
         txt_send_mail = (TextView) itemView.findViewById(R.id.send_mail);
         LinearLayout linearLayout = (LinearLayout) itemView.findViewById(R.id.view);
         final ImageView loadimage = (ImageView) itemView.findViewById(R.id.loadimg);
+
 
         Log.e("tag","1222222"+resultp.get("address"));
         Log.e("tag","333333"+resultp.get("bedroom"));
@@ -227,6 +228,9 @@ public class HouseAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+
+
+
                 loading = new ArrayList<>();
                 resultp = data.get(position);
 
@@ -241,9 +245,17 @@ public class HouseAdapter extends BaseAdapter {
 
                 LayoutInflater layoutInflater = LayoutInflater.from(v.getRootView().getContext());
                 View promptView = layoutInflater.inflate(R.layout.zoom_layout1, null);
-
-                AlertDialog.Builder alertbox = new AlertDialog.Builder(v.getRootView().getContext());
+                    ImageView close_iv;
+                    close_iv=(ImageView)v.findViewById(R.id.close_iv);
+                final AlertDialog.Builder alertbox = new AlertDialog.Builder(v.getRootView().getContext());
                 alertbox.setCancelable(true);
+
+                   /* close_iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertbox.
+                        }
+                    });*/
 
                 ViewPager mViewPager;
                 CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(v.getRootView().getContext(), loading);
@@ -254,7 +266,7 @@ public class HouseAdapter extends BaseAdapter {
                 alertbox.show();
             }
                 else{
-
+                    TastyToast.makeText(v.getContext(), "no images found", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
             }
         });

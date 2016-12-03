@@ -156,11 +156,14 @@ public class TwoFragment extends Fragment{
                             HashMap<String, String> map1 = new HashMap<String, String>();
                             map1.put("_id", dataObj.getString("_id"));
                             map1.put("retailname", dataObj.getString("retailname"));
+                            Log.e("tag","111"+dataObj.getString("retailname"));
                             map1.put("openingtime", dataObj.getString("openingtime"));
+                            Log.e("tag","222"+dataObj.getString("openingtime"));
                             map1.put("retaildescription", dataObj.getString("retaildescription"));
+                            Log.e("tag","333"+dataObj.getString("retaildescription"));
                             map1.put("mobileno", dataObj.getString("mobileno"));
-                            Log.e("tag", "mobile" +  dataObj.getString("mobileno"));
-
+                            map1.put("description", dataObj.getString("description"));
+                            Log.e("tag", "guna" +  dataObj.getString("description"));
 
 
 

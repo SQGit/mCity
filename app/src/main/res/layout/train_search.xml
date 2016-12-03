@@ -10,13 +10,13 @@
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@color/colorAccent"
             android:gravity="start|center"
             android:orientation="horizontal">
 
@@ -29,7 +29,6 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:src="@drawable/back" />
             </LinearLayout>
 
@@ -39,76 +38,32 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="mTRAIN"
+                android:text="mTRAINS"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
 
-            <ImageView
+           <ImageView
                 android:id="@+id/settings_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
                 android:background="@drawable/settings_icon"
-                android:layout_gravity="right"/>
+                android:layout_gravity="right|center"/>
+
 
         </LinearLayout>
 
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:text="mCITY"
-                android:textColor="@color/yellow"
-                android:textSize="@dimen/_11sdp"
-                android:textStyle="bold" />
+    <!--    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:scaleType="fitXY"
+            android:id="@+id/iv"/>
 
 
-            <!-- <ImageView
-                 android:id="@+id/settings_icon"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_marginRight="@dimen/_10sdp"
-                 android:padding="@dimen/_10sdp"
-                 android:background="@drawable/settings_icon"
-                 android:layout_gravity="right"/>-->
+-->
 
-        </LinearLayout>-->
-
-
-        <LinearLayout
-            android:id="@+id/cc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:background="@color/orange"
-            android:gravity="center"
-            android:padding="@dimen/_3sdp">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LIVE. WORK. SHOP"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp"
-                android:textStyle="bold"/>
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -124,14 +79,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="0.69">
 
             <TextView
                 android:id="@+id/txt_sou_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="From Paranur To Chennai Beach"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
                 android:textColor="#F44336"
                 android:layout_marginLeft="@dimen/_20sdp"
@@ -161,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trains After  "
+                    android:layout_marginLeft="@dimen/_15sdp"
                     android:textSize="@dimen/_13sdp"
                     android:gravity="center"
                     android:layout_gravity="center"/>
@@ -179,17 +136,26 @@
                     android:layout_gravity="center"/>
 
             </LinearLayout>
-
-
             </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
 
         <ImageView
             android:id="@+id/train_menu"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_gravity="center|right"
             android:background="@drawable/repeat_icon"/>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -248,7 +214,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginTop="@dimen/_15sdp"
         android:orientation="vertical">
 
         <ListView
@@ -275,43 +240,47 @@
             android:layout_centerHorizontal="true" />
 
 
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:weightSum="1">
+android:weightSum="1"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.67"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_40sdp"
+
+            android:orientation="horizontal">
+
 
         <Button
             android:id="@+id/getmoretrain"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:background="@drawable/autodriver_bc"
             android:textColor="#FFF"
-            android:paddingRight="@dimen/_20sdp"
-            android:paddingLeft="@dimen/_20sdp"
-            android:layout_marginLeft="@dimen/_80sdp"
+            android:textSize="@dimen/_11sdp"
+            android:paddingRight="@dimen/_35sdp"
+            android:paddingLeft="@dimen/_35sdp"
             android:textAllCaps="false"
-            android:text="Get more trains"
-            android:layout_weight="0.62" />
+            android:layout_gravity="center"
 
+            android:text="Get More Trains"/>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/get_train"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:paddingLeft="@dimen/_20sdp"
-            android:background="@drawable/train_small"/>
+            android:layout_gravity="right|end"
+            android:layout_marginRight="@dimen/_7sdp"
+            android:src="@drawable/train_small"/>
     </LinearLayout>
-
-
-
-
 
 
     <LinearLayout
@@ -319,15 +288,12 @@
         android:layout_height="@dimen/_25sdp">
 
 
-
-
         <include
             android:id="@+id/container_header_lyt"
             layout="@layout/footer_privacyplolicy1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            >
+            android:layout_gravity="center">
 
         </include>
 

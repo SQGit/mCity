@@ -17,8 +17,8 @@
         android:textSize="12sp"
         android:text="House"
         android:background="@drawable/tab_selector"
-        android:gravity="start|center"
-        android:paddingLeft="@dimen/_15sdp"
+        android:gravity="left|center"
+        android:paddingLeft="@dimen/_45sdp"
         android:textStyle="bold" />
 
 </LinearLayout>

@@ -52,9 +52,9 @@
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_gravity="center"
+                android:background="#EBEBEB"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@color/bg4">
+                android:gravity="center">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -122,7 +122,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@drawable/dotted_grey"
+                android:background="#cccccc"
                 android:layout_marginTop="@dimen/_10sdp"/>
 
 
