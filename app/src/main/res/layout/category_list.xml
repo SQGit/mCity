@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_15sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/category"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtv"
+                android:text="CATEGORIES LIST"
+                android:textSize="@dimen/_17sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_7sdp">
+
+                    <RadioButton
+                        android:id="@+id/radio1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bikes, Bike Spares, Accessories"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:singleLine="true"
+                        android:drawableLeft="@drawable/bike"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"/>
+
+
+                    <RadioButton
+                        android:id="@+id/radio2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cars, Car Spare Parts"
+                        android:drawableLeft="@drawable/car"
+                        android:singleLine="true"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"
+                        />
+                    <RadioButton
+                        android:id="@+id/radio3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Electronics and Home Appliances"
+                        android:layout_gravity="start"
+                        android:drawableLeft="@drawable/bulb"
+                        android:singleLine="true"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"
+                        />
+                    <RadioButton
+                        android:id="@+id/radio4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mobiles and Mobile Accessories"
+                        android:layout_gravity="start"
+                        android:drawableLeft="@drawable/mobile"
+                        android:singleLine="true"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"
+                        />
+                    <RadioButton
+                        android:id="@+id/radio5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Furniture, Household Articles"
+                        android:layout_gravity="start"
+                        android:drawableLeft="@drawable/furn"
+                        android:singleLine="true"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"
+                        />
+                    <RadioButton
+                        android:id="@+id/radio6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Books"
+                        android:drawableLeft="@drawable/book"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="start"
+                        android:singleLine="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"/>
+
+
+                    <RadioButton
+                        android:id="@+id/radio7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pets"
+                        android:drawableLeft="@drawable/pets"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="start"
+                        android:singleLine="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:button="@drawable/radio_selector_garage"
+                        android:layoutDirection="rtl"
+                        android:textAlignment="textStart"
+                        android:textColor="#343333"
+                        android:textSize="@dimen/_9sdp"/>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#cccccc"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_weight="1"
+
+                                android:layout_height="wrap_content">
+
+
+
+
+
+
+                            <Button
+                                android:id="@+id/garage_back"
+                                android:layout_width="@dimen/_45sdp"
+                                android:layout_height="@dimen/_45sdp"
+                                android:background="@drawable/submit_back"/>
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:layout_height="wrap_content">
+
+
+                                <Button
+                                android:id="@+id/garage_submit"
+                                android:layout_width="@dimen/_45sdp"
+                                android:layout_height="@dimen/_45sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:background="@drawable/submit_icon"/>
+                        </LinearLayout>
+                        </LinearLayout>
+                </RadioGroup>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

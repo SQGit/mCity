@@ -137,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -150,17 +150,20 @@
                     <TextView
                         android:id="@+id/rent_tv"
                         android:textSize="@dimen/_11sdp"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:text="Rent:"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="start|center"
+                        android:drawablePadding="@dimen/_5sdp"
+                     android:layout_gravity="center"
                         android:drawableLeft="@drawable/type_icon"/>
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/_25sdp"
                         android:text="Bed Room"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:textColor="@color/black"
@@ -177,17 +180,21 @@
                     <TextView
                         android:id="@+id/subtype_tv"
                         android:textSize="@dimen/_11sdp"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
                         android:text="Gender:"
+                        android:layout_gravity="center"
                         android:drawablePadding="@dimen/_5sdp"
                         android:drawableLeft="@drawable/house_icon"
                         android:textColor="@color/black"
                         />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/_25sdp"
                         android:text="Flats"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:textColor="@color/black"
@@ -202,9 +209,11 @@
 
 
                     <TextView
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:text="RoomType:"
+                        android:layout_gravity="center"
                         android:drawablePadding="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp"
@@ -212,8 +221,10 @@
                         android:id="@+id/furnishedtype_tv" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/_25sdp"
                         android:text="Bed Room"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:textColor="@color/black"

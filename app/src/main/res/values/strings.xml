@@ -20,7 +20,7 @@
     <string name="depositamount">Deposit Amount</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="tc"><![CDATA[T&C apply]]></string>
+    <string name="tc"><![CDATA[ * T&C apply]]></string>
 
     <string name="no_geocoder_available">No geocoder available</string>
 
@@ -33,4 +33,13 @@
     <string name="service_not_available">Sorry, the service is not available</string>
     <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
     <string name="auto"><![CDATA[* Prices & Rates are subject to vary.]]></string>
+    <string name="time">10 AM to 10 PM (Mon-Sun)</string>
+    <string name="ok">UPDATE</string>
+    <string name="not_ok">NOT NOW</string>
+    <string name="con_one">In Case of any Emergency in the Community would you like to be notified.</string>
+    <string name="con_two">Would you like to Volunteer with mCity App Team to update on any Emergency Information.</string>
+    <string name="chk_one">Yes via Sms</string>
+    <string name="chk_two">No I do not want to be notified.</string>
+    <string name="chk_three">Yes</string>
+    <string name="chk_four">No</string>
 </resources>

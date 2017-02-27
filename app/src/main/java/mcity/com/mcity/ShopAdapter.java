@@ -24,11 +24,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,15 +43,18 @@ import java.util.HashMap;
 public class ShopAdapter extends BaseAdapter {
 
     Context context;
-    String URL = Data_Service.URL_API + "generatecoupon";
+
     String IMAGE_UPLOAD = Data_Service.URL_IMG + "restaurant/";
-    String str_token, str_uid,str_shop_id,str_shop_path,str_shop_view,str_phno;
+    String IMAGE_UPLOAD1 = Data_Service.URL_IMG + "menu/";
+    String str_token, str_uid,str_shop_id,str_shop_path,str_shop_view,str_phno,call_coupon_id;
     ArrayList<HashMap<String, String>> searchridelist;
     ArrayList<HashMap<String, String>> data;
     LayoutInflater inflater;
     TextView txt_tokencode;
     HashMap<String, String> resultp = new HashMap<String, String>();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    ProgressBar progressBar;
+    Dialog dialog2;
 
 
     public ShopAdapter(Context context, ArrayList<HashMap<String, String>> arraylist) {
@@ -79,10 +84,15 @@ public class ShopAdapter extends BaseAdapter {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
-        final TextView txt_description,txt_shopname,txt_address,txt_time,txt_menu,txt_coupon;
+        final TextView txt_description,txt_shopname,txt_address,txt_time,txt_timedes,txt_time_sun,txt_des_sun,txt_menu,txt_coupon;
         ImageView call;
 
-
+        dialog2 = new Dialog(context);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader1);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
@@ -98,17 +108,20 @@ public class ShopAdapter extends BaseAdapter {
         txt_address = (TextView) itemView.findViewById(R.id.txt_address);
         txt_time = (TextView) itemView.findViewById(R.id.txt_time);
         txt_menu= (TextView) itemView.findViewById(R.id.txt_menu);
+        txt_timedes=(TextView)itemView.findViewById(R.id.txt_des) ;
+        txt_time_sun=(TextView)itemView.findViewById(R.id.txt_time_sun) ;
+        txt_des_sun=(TextView)itemView.findViewById(R.id.txt_des_sun) ;
         txt_coupon=(TextView) itemView.findViewById(R.id.txt_coupon);
         call=(ImageView)itemView.findViewById(R.id.call);
 
-        str_shop_path=IMAGE_UPLOAD+resultp.get("filename");
+        str_shop_path=IMAGE_UPLOAD+resultp.get("shop_logo");
         Log.e("tag","testing..."+str_shop_path);
 
-        str_shop_view=IMAGE_UPLOAD+resultp.get("filename1");
+        str_shop_view=IMAGE_UPLOAD1+resultp.get("image");
         Log.e("tag","testing1..."+str_shop_view);
 
         str_phno=resultp.get("mobileno");
-        Log.e("tag","mobile..."+str_phno);
+
 
 
         Picasso.with(context)
@@ -122,62 +135,61 @@ public class ShopAdapter extends BaseAdapter {
         txt_time.setTypeface(tf);
         txt_menu.setTypeface(tf);
         txt_coupon.setTypeface(tf);
+        txt_timedes.setTypeface(tf);
+        txt_time_sun.setTypeface(tf);
+        txt_des_sun.setTypeface(tf);
 
-
-
-        String str_shopname=resultp.get(OneFragment.shopname);
-        String str_description=resultp.get(OneFragment.description);
-        String str_address=resultp.get(OneFragment.address);
-        String str_openingtime=resultp.get(OneFragment.openingtime);
+        String str_shopname=resultp.get("shop_name");
+        String str_description=resultp.get("Restaurants");
+        String str_address=resultp.get("shop_address");
+        String str_openingtime=resultp.get("time_mon_sat");
 
         Log.e("tag","checking_values"+str_shopname+str_description+str_address+str_openingtime);
 
-
-        txt_shopname.setText(resultp.get(OneFragment.shopname));
-        txt_address.setText(resultp.get(OneFragment.address));
-        txt_time.setText(resultp.get(OneFragment.openingtime));
-        txt_description.setText(resultp.get(OneFragment.description));
-
+        txt_shopname.setText(resultp.get("shop_name"));
+        txt_address.setText(resultp.get("shop_address"));
+        txt_time.setText(resultp.get("time_mon_sat"));
+        txt_time_sun.setText(resultp.get("time_sun"));
+        txt_description.setText(resultp.get("Restaurants"));
 
         txt_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(context);
-
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 dialog.setContentView(R.layout.samp);
-
+                dialog2.show();
 
                 ImageView cross = (ImageView) dialog.findViewById(R.id.cross);
                 ImageView menu_list = (ImageView) dialog.findViewById(R.id.menu_list);
-
 
                 Picasso.with(context)
                         .load(str_shop_view)
                         .into(menu_list);
 
-
+                dialog2.dismiss();
                 cross.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-
                     }
                 });
                 dialog.show();
-
             }
         });
 
         txt_coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent t_coupon=new Intent(context.getApplicationContext(),MCoupon.class);
+                resultp = data.get(position);
+                call_coupon_id=resultp.get("demo_shop_id");
+                Log.e("tag","call..."+call_coupon_id);
+
+                Intent t_coupon=new Intent(context.getApplicationContext(),CallCouponFromShop.class);
+                t_coupon.putExtra("demo_shop_id",call_coupon_id);
                 context.startActivity(t_coupon);
                 ((Activity)context).finish();
-
-
             }
         });
 
@@ -208,5 +220,13 @@ public class ShopAdapter extends BaseAdapter {
 
         return itemView;
     }
-}
+
+
+
+
+
+
+
+    }
+
 

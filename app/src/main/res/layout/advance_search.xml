@@ -380,7 +380,7 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/weight_icon"
+                        android:drawableLeft="@drawable/persons_icon"
                         android:drawablePadding="@dimen/_15sdp"
                         android:hint="No.of Luggage"
                         android:layout_marginLeft="@dimen/_10sdp"

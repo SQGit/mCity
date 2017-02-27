@@ -1,18 +1,22 @@
 package mcity.com.mcity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -37,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostPG extends Activity implements AdapterView.OnItemSelectedListener{
-	String URL = Data_Service.URL_API + "postforroom";
+	String URL = Data_Service.URL_API + "postforroomnew";
 	ImageView img_submit;
 	String str_uid, str_token, str_location, str_landmark, str_address, str_rent, str_description, str_residential, str_gender,room,str_spin_val,str_pho_enable;
 	EditText  edt_lanmark_et, edt_address_et, edt_rentamount_et, edt_description_et;
@@ -49,6 +53,7 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 	Typeface tf;
 	List<String> categories;
 	ProgressBar progressBar;
+	Dialog dialog2;
 
 
 	@Override
@@ -56,19 +61,23 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.post_pg);
 
-		//select_city = (AutoCompleteTextView) findViewById(R.id.location_et);
-		//location_et = (EditText) findViewById(R.id.location_et);
 		edt_lanmark_et = (EditText) findViewById(R.id.landmark_et);
 		edt_address_et = (EditText) findViewById(R.id.Address_et);
-		//rentamount_et = (EditText) findViewById(R.id.rent_et);
 		edt_description_et = (EditText) findViewById(R.id.description_et);
 		img_submit = (ImageView) findViewById(R.id.submit);
 		edt_rentamount_et = (EditText) findViewById(R.id.rent_et);
 		spinner=(Spinner)findViewById(R.id.spinner);
 		radioResidentialGroup = (RadioGroup) findViewById(R.id.radioGroup1);
 		radioGenderGroup= (RadioGroup) findViewById(R.id.radioGroup2) ;
-		progressBar=(ProgressBar)findViewById(R.id.progressBar);
 		chk_phone_enable=(CheckBox)findViewById(R.id.phone_enable);
+
+		dialog2 = new Dialog(PostPG.this);
+		dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		dialog2.setCancelable(false);
+		dialog2.setContentView(R.layout.test_loader);
+		progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+		edt_rentamount_et.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "5000000")});
 
 		FontsManager.initFormAssets(this, "mont.ttf");
 		FontsManager.changeFonts(this);
@@ -77,7 +86,6 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		str_token = sharedPreferences.getString("token", "");
 		str_uid = sharedPreferences.getString("id", "");
-		progressBar.setVisibility(View.GONE);
 		spinner.setOnItemSelectedListener(this);
 
 		// Spinner Drop down elements
@@ -90,33 +98,20 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 		categories.add("Others");
 
 
-
-
-
-		// Creating adapter for spinner
 		ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
-
-		// Drop down layout style - list view with radio button
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		// attaching data adapter to spinner
 		spinner.setAdapter(dataAdapter);
 		setSpinner1();
-
-
 
 		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				str_spin_val = spinner.getItemAtPosition(position).toString();
-				Log.e("tag", "123" + str_spin_val);
-
 				setLocation();
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-
 			}
 		});
 
@@ -132,7 +127,6 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 				radioresidentalButton = (RadioButton) findViewById(selectedId1);
 				radiogGnderButton = (RadioButton) findViewById(selectedId2);
 
-
 				str_location = spinner.getSelectedItem().toString();
 				str_landmark = edt_lanmark_et.getText().toString();
 				str_address = edt_address_et.getText().toString();
@@ -141,16 +135,14 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 				str_rent = edt_rentamount_et.getText().toString();
 				str_description = edt_description_et.getText().toString();
 
-
-				if(str_gender.equals("I Have a PG/Hostel")) {
+				if(str_residential.equals("I Have a PG/Hostel"))
+				{
 					room = "pg";
 				}
 				else
 				{
 					room = "room";
 				}
-
-
 
 				if (chk_phone_enable.isChecked()) {
 					str_pho_enable = "enabled";
@@ -159,16 +151,18 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 				}
 
 
-
-
 			if (Util.Operations.isOnline(PostPG.this)) {
-				if (!str_location.isEmpty() && !str_landmark.isEmpty() && !str_address.isEmpty() && !str_residential.isEmpty() && !str_gender.isEmpty() && !str_rent.isEmpty() && !str_description.isEmpty()) {
-
+				if (!str_location.equals(null) && !str_location.contains("Select Location")) {
+				if (!str_landmark.isEmpty() && !str_address.isEmpty() && !str_rent.isEmpty() && !str_description.isEmpty()) {
 					new PostHouseAsync().execute();
-
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(), "Invalid Fields..", Toast.LENGTH_LONG).show();
+				}
 
 				} else {
-					Toast.makeText(getApplicationContext(), "Invalid Fields..", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Please Select Location..", Toast.LENGTH_LONG).show();
 				}
 			} else {
 				Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
@@ -182,29 +176,39 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 	}
 
 	private void setLocation() {
-
-
 		if (str_spin_val.equals("Aqualily")) {
 			edt_lanmark_et.setText("Opposite BMW Factory");
 			edt_address_et.setText("Mahindra City");
+			edt_lanmark_et.setEnabled(false);
+			edt_address_et.setEnabled(false);
+
+
 		} else {
 			if (str_spin_val.equals("Iris Court")) {
 				edt_lanmark_et.setText("Close to Paranur Station");
 				edt_address_et.setText("Mahindra City");
+				edt_lanmark_et.setEnabled(false);
+				edt_address_et.setEnabled(false);
 			} else {
 				if (str_spin_val.equals("Nova")) {
 					edt_lanmark_et.setText("Close to Paranur Station");
 					edt_address_et.setText("Mahindra City");
+					edt_lanmark_et.setEnabled(false);
+					edt_address_et.setEnabled(false);
 
 				} else if (str_spin_val.equals("Sylvan County")){
 
 					edt_lanmark_et.setText("Close to Canopy");
 					edt_address_et.setText("Mahindra City");
+					edt_lanmark_et.setEnabled(false);
+					edt_address_et.setEnabled(false);
 				}
 				else
 				{
 					edt_lanmark_et.setText("");
 					edt_address_et.setText("");
+					edt_lanmark_et.setEnabled(true);
+					edt_address_et.setEnabled(true);
 				}
 			}
 		}
@@ -264,8 +268,7 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 		}
 
 		protected void onPreExecute() {
-			img_submit.setVisibility(View.GONE);
-			progressBar.setVisibility(View.VISIBLE);
+			dialog2.show();
 			super.onPreExecute();
 		}
 
@@ -302,22 +305,19 @@ public class PostPG extends Activity implements AdapterView.OnItemSelectedListen
 
 		@Override
 		protected void onPostExecute(String jsonStr) {
-			Log.e("tag", "<-----result---->" + jsonStr);
-			img_submit.setVisibility(View.VISIBLE);
-			progressBar.setVisibility(View.GONE);
+			dialog2.dismiss();
 			super.onPostExecute(jsonStr);
 			try {
 				JSONObject jo = new JSONObject(jsonStr);
 				String status = jo.getString("status");
 				String msg = jo.getString("message");
-				Log.d("tag", "<-----Status----->" + status);
+				Log.e("tag","error_msg"+msg);
 				if (status.equals("true")) {
-					Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-					edt_lanmark_et.setText("");
-					edt_address_et.setText("");
-					edt_description_et.setText("");
-					edt_rentamount_et.setText("");
+					Intent back_service=new Intent(getApplicationContext(),RentalHistory.class);
+					startActivity(back_service);
+					finish();
 
+					Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
 
 				} else {

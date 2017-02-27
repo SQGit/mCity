@@ -29,7 +29,7 @@ import java.util.List;
 
 public class SearchPg extends Activity implements AdapterView.OnItemSelectedListener{
 	ImageView submit;
-	String URL = Data_Service.URL_API + "searchforroom";
+	String URL = Data_Service.URL_API + "searchforroomnew";
 	EditText location_et, min_rent_et, max_rent_et;
 	AutoCompleteTextView get_location;
 	String location, minRent, maxRent,spin_val;
@@ -50,10 +50,8 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 
 		submit = (ImageView) findViewById(R.id.submit);
 		spinner = (Spinner) findViewById(R.id.spinner);
-		//location_et = (EditText) findViewById(R.id.location_et);
 		min_rent_et = (EditText) findViewById(R.id.min_rent_et);
 		max_rent_et = (EditText) findViewById(R.id.max_rent_et);
-		//get_location = (AutoCompleteTextView) findViewById(R.id.get_location);
 		radioResidentialGroup = (RadioGroup) findViewById(R.id.radioResidentialGroup);
 		radioGenderGroup = (RadioGroup) findViewById(R.id.radioGenderGroup);
 
@@ -63,8 +61,6 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 
 
 		spinner.setOnItemSelectedListener(this);
-
-		// Spinner Drop down elements
 		categories = new ArrayList<String>();
 		categories.add("Select Location");
 		categories.add("Aqualily");
@@ -73,14 +69,10 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 		categories.add("Sylvan County");
 		categories.add("Others");
 
-
-		// Creating adapter for spinner
 		ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
 
-		// Drop down layout style - list view with radio button
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		// attaching data adapter to spinner
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(dataAdapter);
 		setSpinner1();
 
@@ -89,14 +81,10 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				spin_val = spinner.getItemAtPosition(position).toString();
-				Log.e("tag", "123" + spin_val);
-
-
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-
 			}
 		});
 
@@ -110,96 +98,91 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 
 				radioResidentalButton = (RadioButton) findViewById(selectedId1);
 				radioGenderButton = (RadioButton) findViewById(selectedId2);
-
-
-				//new SearchHouseAsync().execute();
 				str_city = spinner.getSelectedItem().toString();
-				Log.e("tag", "1" + str_city);
 				str_resi = radioResidentalButton.getText().toString();
-
-				Log.e("tag", "2" + str_resi);
 				str_gender = radioGenderButton.getText().toString();
-				Log.e("tag", "2" + str_gender);
 				str_minval = min_rent_et.getText().toString();
-				Log.e("tag", "4" + str_minval);
 				str_maxval = max_rent_et.getText().toString();
-				Log.e("tag", "5" + str_maxval);
+
 				if (str_gender.equals("PG/Hostel")) {
 					room = "pg";
 				} else {
 					room = "room";
 				}
 
-				if (!str_city.isEmpty() && !str_resi.isEmpty() && !str_gender.isEmpty() && !str_minval.isEmpty() && !str_maxval.isEmpty()) {
 
-					Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
-					intent.putExtra("location", str_city);
-					intent.putExtra("room_type", room);
-					intent.putExtra("gender_type", str_gender);
-					intent.putExtra("minRent", str_minval);
-					intent.putExtra("maxRent", str_maxval);
-					startActivity(intent);
 
-				} else {
-
-					Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
-					intent.putExtra("location", str_city);
-					intent.putExtra("room_type", room);
-					intent.putExtra("gender_type", str_gender);
-					intent.putExtra("minRent", "100");
-					intent.putExtra("maxRent", "200000");
-					startActivity(intent);
-
+				if(str_city.equals("Select Location"))
+				{
+					Toast.makeText(SearchPg.this, "Please Select Location", Toast.LENGTH_SHORT).show();
 				}
+				else
+				{
+					if (!str_resi.isEmpty() && !str_gender.isEmpty() && !str_minval.isEmpty() && !str_maxval.isEmpty()) {
+
+						Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
+						intent.putExtra("location", str_city);
+						intent.putExtra("room_type", room);
+						intent.putExtra("gender_type", str_gender);
+						intent.putExtra("minRent", str_minval);
+						intent.putExtra("maxRent", str_maxval);
+						startActivity(intent);
+
+					} else {
+
+						Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
+						intent.putExtra("location", str_city);
+						intent.putExtra("room_type", room);
+						intent.putExtra("gender_type", str_gender);
+						intent.putExtra("minRent", "100");
+						intent.putExtra("maxRent", "200000");
+						startActivity(intent);
+					}
+				}
+
 
 			}
 
 
 		});
-
-
 	}
-
-
-
 	private void setSpinner1() {
 
 
-		final CustomAdapter arrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, categories) {
-			@Override
-			public boolean isEnabled(int position) {
-				if (position == 0) {
-					return false;
-				} else {
-					return true;
-				}
+	final CustomAdapter arrayAdapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, categories) {
+		@Override
+		public boolean isEnabled(int position) {
+			if (position == 0) {
+				return false;
+			} else {
+				return true;
 			}
+		}
 
+		@Override
+		public View getDropDownView(int position, View convertView,
+									ViewGroup parent) {
+			View view = super.getDropDownView(position, convertView, parent);
+			TextView tv = (TextView) view;
 
-			@Override
-			public View getDropDownView(int position, View convertView,
-										ViewGroup parent) {
-				View view = super.getDropDownView(position, convertView, parent);
-				TextView tv = (TextView) view;
+			tv.setTypeface(tf);
 
-				tv.setTypeface(tf);
-
-				if (position == 0) {
-					tv.setTextColor(Color.RED);
-				} else {
-					tv.setTextColor(Color.BLACK);
-				}
-				return view;
+			if (position == 0) {
+				tv.setTextColor(Color.RED);
+			} else {
+				tv.setTextColor(Color.BLACK);
 			}
-		};
-		spinner.setAdapter(arrayAdapter);
-	}
+			return view;
+		}
+	};
+	spinner.setAdapter(arrayAdapter);
+}
 
 
 	@Override
 	public void onBackPressed()
 	{
-		Intent i = new Intent(SearchPg.this,Dashboard.class);
+		Intent i = new Intent(SearchPg.this,MRental.class);
 		startActivity(i);
 		finish();
 	}

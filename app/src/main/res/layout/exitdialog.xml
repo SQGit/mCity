@@ -54,24 +54,36 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/_20sdp">
 
-            <ImageView
-                android:id="@+id/no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginLeft="@dimen/_100sdp"
-                android:background="@drawable/cross"
-                android:layout_gravity="center"/>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:background="@drawable/cross" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginLeft="@dimen/_50sdp"
-                android:background="@drawable/tick"
-                android:layout_gravity="center"/>
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/tick" />
+                </LinearLayout>
 
         </LinearLayout>
 

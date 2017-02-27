@@ -2,9 +2,11 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,21 +48,21 @@ import java.util.HashMap;
  * Created by Admin on 16-10-2016.
  */
 public class MorePOst extends Activity {
-    String SEARCH_RIDE = Data_Service.URL_API + "searchforride";
-    String RIDE_FILTER = Data_Service.URL_API + "searchforridefilter";
-    String GET_IMAGE = Data_Service.URL_IMG + "licence/";
+    String SEARCH_RIDE = Data_Service.URL_API + "searchforridenew";
+    String RIDE_FILTER = Data_Service.URL_API + "searchforridefilternew";
+    String SHOW_IMAGE = Data_Service.URL_IMG + "licence/";
     String LOGOUT = Data_Service.URL_API + "logout";
-
-
     ProgressBar progressBar;
+    Dialog dialog2;
+    String gk;
     ListView searchlist;
     RideAdapter1 rideAdapter;
-    ArrayList<HashMap<String, String>> searchridelist;
-    ArrayList<HashMap<String, String>> normal_searchridelist;
+    RideAdapter2 rideAdapter2;
+    ArrayList<HashMap<String, String>> more_searchridelist;
+    ArrayList<HashMap<String, String>> more_normal_searchridelist;
     String str_token, str_uid,str_pathnew,str_key_open,str_from,str_to;
-    LinearLayout lnr_back_arrow,lnr_progress_linr;
+    LinearLayout lnr_back_arrow,lnr_empty;
     ImageView img_settings_icon;
-
 
     static String phone = "phone";
     static String from = "from";
@@ -71,7 +73,7 @@ public class MorePOst extends Activity {
     static String price = "price";
     static String midwaydrop="midwaydrop";
     static String username="username";
-
+    static String noofpersons="noofpersons";
 
 
     @Override
@@ -82,15 +84,19 @@ public class MorePOst extends Activity {
 
         searchlist = (ListView) findViewById(R.id.searchlist);
         lnr_back_arrow=(LinearLayout) findViewById(R.id.back_arrow);
-        lnr_progress_linr=(LinearLayout) findViewById(R.id.progress_linr);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
         img_settings_icon = (ImageView) findViewById(R.id.settings_icon);
-
+        lnr_empty=(LinearLayout)findViewById(R.id.lnr_empty);
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-        searchridelist = new ArrayList<>();
-        normal_searchridelist=new ArrayList<>();
+        more_searchridelist = new ArrayList<>();
+        more_normal_searchridelist=new ArrayList<>();
+        dialog2 = new Dialog(MorePOst.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader1);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
@@ -98,16 +104,25 @@ public class MorePOst extends Activity {
         str_key_open=sharedPreferences.getString("view_post","");
         str_from=sharedPreferences.getString("from","");
         str_to=sharedPreferences.getString("to","");
+        lnr_empty.setVisibility(View.GONE);
 
-        lnr_progress_linr.setVisibility(View.GONE);
+         gk=sharedPreferences.getString("view_post","");
 
-        if(sharedPreferences.getString("view_post","").equals("")){
-            new RideSearchAsync().execute();
+        if (Util.Operations.isOnline(MorePOst.this))
+        {
+            if(gk.equals("filter")){
+                str_from=sharedPreferences.getString("from","");
+                str_to=sharedPreferences.getString("to","");
+                new filterAsync(str_from, str_to).execute();
+            }
+
+            else{
+                new RideSearchAsync().execute();
+            }
         }
-        else{
-            str_from=sharedPreferences.getString("from","");
-            str_to=sharedPreferences.getString("to","");
-            new filterAsync(str_from,str_to).execute();
+        else
+        {
+            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_SHORT).show();
         }
 
         lnr_back_arrow.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +154,6 @@ public class MorePOst extends Activity {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
 
-
                         switch (id) {
                             case R.id.item1:
                                 aboutUs();
@@ -151,19 +165,14 @@ public class MorePOst extends Activity {
                                 finish();
                                 return true;
 
-
                             case R.id.item3:
                                 exitIcon();
                                 return true;
-
                         }
                         return true;
                     }
-
                 });
-
                 popup.show();
-
             }
         });
     }
@@ -258,95 +267,98 @@ public class MorePOst extends Activity {
 
 
         protected void onPreExecute() {
+            dialog2.show();
             super.onPreExecute();
-            lnr_progress_linr.setVisibility(View.VISIBLE);
         }
 
         protected String doInBackground(String... params) {
 
-            String json = "", jsonStr = "";
-            String id = "";
-            try {
+            String json = "", jsonStr;
 
+            try {
 
                 JSONObject jsonObject = new JSONObject();
                 json = jsonObject.toString();
-
                 return jsonStr = HttpUtils.makeRequest1(SEARCH_RIDE, json, str_uid, str_token);
             } catch (Exception e) {
             }
             return null;
-
         }
-
 
 
         @Override
         protected void onPostExecute(String jsonstr) {
-            Log.e("tag", "<-----111111111--------->" + jsonstr);
+            dialog2.dismiss();
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
 
             if (jsonstr.equals("")) {
+                Toast.makeText(getApplicationContext(),"Check Network Connection",Toast.LENGTH_LONG).show();
 
-                Toast.makeText(getApplicationContext(),"Check Network Connection",Toast.LENGTH_SHORT).show();
-
-            } else {
-
+            }
+            else {
                 try {
 
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
                     JSONArray data1 = jo.getJSONArray("message");
 
-
                     if (data1.length() > 0) {
                         for (int i1 = 0; i1 < data1.length(); i1++) {
                             HashMap<String, String> map = new HashMap<String, String>();
                             JSONObject jsonObject = data1.getJSONObject(i1);
 
-
-                            String postforride = jsonObject.getString("postforride");
-                            JSONObject pos_rent = new JSONObject(postforride);
-
+                            map.put("_id", jsonObject.getString("_id"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            map.put("midwaydrop", jsonObject.getString("midwaydrop"));
+                            map.put("price", jsonObject.getString("price"));
+                            map.put("to", jsonObject.getString("to"));
+                            map.put("from", jsonObject.getString("from"));
                             map.put("mobileno", jsonObject.getString("mobileno"));
-                            map.put("email", jsonObject.getString("email"));
-                            map.put("username", jsonObject.getString("username"));
-                            map.put("from", pos_rent.getString("from"));
-                            map.put("to", pos_rent.getString("to"));
-                            map.put("date", pos_rent.getString("date"));
-                            map.put("price", pos_rent.getString("price"));
-                            map.put("phone", pos_rent.getString("phone"));
-                            map.put("midwaydrop", pos_rent.getString("midwaydrop"));
+                            map.put("date", jsonObject.getString("date"));
+                            JSONObject other_det = jsonObject.getJSONObject("otherdetails");
+                            map.put("noofpersons", other_det.getString("noofpersons"));
+                            JSONObject other_det1 = other_det.getJSONObject("roundtrip");
+                            map.put("returndate", other_det1.getString("returndate"));
+                            map.put("godate", other_det1.getString("godate"));
 
 
-                            JSONArray img_ar = jsonObject.getJSONArray("licence");
+                            JSONArray userdetails = jsonObject.getJSONArray("userdetails");
 
-                            if(img_ar.length()>0){
 
-                                for(int i =0;i<img_ar.length();i++){
 
-                                    JSONObject img_obj =img_ar.getJSONObject(i);
 
-                                    str_pathnew = GET_IMAGE + img_obj.getString("filename");
+                            for (int user = 0; user < userdetails.length(); user++) {
+                                JSONObject user_obj = userdetails.getJSONObject(user);
+                                map.put("email", user_obj.getString("email"));
+                                map.put("username", user_obj.getString("username"));
 
-                                    Log.e("tag", "data: " + str_pathnew);
 
-                                    map.put("path", str_pathnew);
+                                JSONArray license = user_obj.getJSONArray("licence");
+                                for (int j = 0; j < license.length(); j++) {
+                                    JSONObject pos_rent = license.getJSONObject(j);
+                                    String path = SHOW_IMAGE + pos_rent.getString("filename");
+                                    map.put("path", path);
                                 }
                             }
 
-                            normal_searchridelist.add(map);
+                            lnr_empty.setVisibility(View.GONE);
+                            more_searchridelist.add(map);
+
                         }
+                        rideAdapter = new RideAdapter1(MorePOst.this, more_searchridelist);
+                        searchlist.setAdapter(rideAdapter);
 
 
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_SHORT).show();
-                    }
+                        SharedPreferences s_pref1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor edit = s_pref1.edit();
+                        edit.putString("ride_search", "no_data");
+                        edit.commit();
+                        searchlist.setVisibility(View.GONE);
+                        lnr_empty.setVisibility(View.VISIBLE);
+                       }
 
-                    rideAdapter = new RideAdapter1(MorePOst.this, normal_searchridelist);
-                    searchlist.setAdapter(rideAdapter);
 
 
                 } catch (JSONException e) {
@@ -377,8 +389,6 @@ public class MorePOst extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-
         }
 
         @Override
@@ -398,13 +408,12 @@ public class MorePOst extends Activity {
 
         @Override
         protected void onPostExecute(String jsonstr) {
-
+            Log.e("tag", "<-----0000000--------->" + jsonstr);
+            dialog2.dismiss();
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
 
             if (jsonstr.equals("")) {
-
-                Toast.makeText(getApplicationContext(),"Check Network Connection",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Check Network Connection",Toast.LENGTH_LONG).show();
 
             } else {
 
@@ -420,50 +429,55 @@ public class MorePOst extends Activity {
                             HashMap<String, String> map = new HashMap<String, String>();
                             JSONObject jsonObject = data1.getJSONObject(i1);
 
-
-                            String postforride = jsonObject.getString("postforride");
-
-                            JSONObject pos_rent = new JSONObject(postforride);
+                            map.put("_id", jsonObject.getString("_id"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            map.put("midwaydrop", jsonObject.getString("midwaydrop"));
+                            map.put("price", jsonObject.getString("price"));
+                            map.put("to", jsonObject.getString("to"));
+                            map.put("from", jsonObject.getString("from"));
                             map.put("mobileno", jsonObject.getString("mobileno"));
-                            map.put("email", jsonObject.getString("email"));
-                            map.put("username", jsonObject.getString("username"));
-                            map.put("from", pos_rent.getString("from"));
-                            map.put("to", pos_rent.getString("to"));
-                            map.put("date", pos_rent.getString("date"));
-                            map.put("price", pos_rent.getString("price"));
-                            map.put("midwaydrop", pos_rent.getString("midwaydrop"));
+                            map.put("date", jsonObject.getString("date"));
 
 
-                            JSONArray img_ar = jsonObject.getJSONArray("licence");
+                            JSONObject other_det = jsonObject.getJSONObject("otherdetails");
+                            map.put("noofpersons", other_det.getString("noofpersons"));
+                            JSONObject other_det1 = other_det.getJSONObject("roundtrip");
+                            map.put("returndate", other_det1.getString("returndate"));
+                            map.put("godate", other_det1.getString("godate"));
 
-                            if(img_ar.length()>0){
-
-                                for(int i =0;i<img_ar.length();i++){
-
-                                    JSONObject img_obj =img_ar.getJSONObject(i);
-
-                                    str_pathnew = GET_IMAGE + img_obj.getString("filename");
-
-                                    map.put("path", str_pathnew);
+                            JSONArray userdetails = jsonObject.getJSONArray("userdetails");
+                            for (int u = 0; u < userdetails.length(); u++) {
+                                JSONObject user_obj = userdetails.getJSONObject(u);
+                                map.put("email", user_obj.getString("email"));
+                                map.put("username", user_obj.getString("username"));
 
 
+
+                                JSONArray license = user_obj.getJSONArray("licence");
+                                for (int j = 0; j < license.length(); j++) {
+                                    JSONObject pos_rent = license.getJSONObject(j);
+                                    String path = SHOW_IMAGE + pos_rent.getString("filename");
+                                    map.put("path" , path);
                                 }
                             }
 
-                            searchridelist.add(map);
-                            Log.e("tag","<---contactList---->"+  searchridelist);
 
+                            more_normal_searchridelist.add(map);
+                            Log.e("tag","<---contactList---->"+  more_normal_searchridelist);
 
                         }
+                        rideAdapter2 = new RideAdapter2(MorePOst.this, more_normal_searchridelist);
+                        searchlist.setAdapter(rideAdapter2);
 
 
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                        lnr_empty.setVisibility(View.VISIBLE);
+
                     }
 
-                    rideAdapter = new RideAdapter1(MorePOst.this, searchridelist);
-                    searchlist.setAdapter(rideAdapter);
+
+
 
 
                 } catch (JSONException e) {

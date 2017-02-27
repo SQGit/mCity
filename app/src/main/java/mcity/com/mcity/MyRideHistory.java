@@ -2,10 +2,12 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,7 +32,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.HttpEntity;
@@ -50,14 +51,16 @@ import java.util.HashMap;
  * Created by Admin on 24-10-2016.
  */
 public class MyRideHistory extends Activity{
-    String URL = Data_Service.URL_API + "myrides";
+    String URL = Data_Service.URL_API + "myridesnew";
+    String SHOW_IMAGE = Data_Service.URL_IMG + "licence/";
     String str_token, str_uid;
-    ProgressBar progressBar;
     RideHistoryAdapter ridehistoryAdapter;
     ArrayList<HashMap<String, String>> rideHistory;
     ListView searchlist;
-    LinearLayout lnr_back_arrow;
+    LinearLayout lnr_back_arrow,lnr_empty;
     ImageView img_settings_icon;
+    ProgressBar progressBar;
+    Dialog dialog2;
 
 
     static String from = "from";
@@ -68,6 +71,10 @@ public class MyRideHistory extends Activity{
     static String id_main = "id_main";
     static String id_sub = "id_sub";
     static String midwaydrop="midwaydrop";
+    static String noofpersons="noofpersons";
+    static String price="price";
+    static String returndate="returndate";
+    static String godate="godate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +85,29 @@ public class MyRideHistory extends Activity{
 
         searchlist = (ListView) findViewById(R.id.searchlist);
         lnr_back_arrow=(LinearLayout)findViewById(R.id.back_arrow);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+
+        lnr_empty=(LinearLayout)findViewById(R.id.lnr_empty);
         img_settings_icon=(ImageView)findViewById(R.id.settings_icon);
 
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
+
+
+        dialog2 = new Dialog(MyRideHistory.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader1);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+
         rideHistory = new ArrayList<>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
+
+        lnr_empty.setVisibility(View.GONE);
 
         img_settings_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,8 +253,8 @@ public class MyRideHistory extends Activity{
     private class Logout extends AsyncTask<String, String, String> {
         @Override
 
-
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
         }
 
@@ -248,14 +267,12 @@ public class MyRideHistory extends Activity{
                 postMethod.addHeader("x-access-token", str_token);
                 postMethod.addHeader("id", str_uid);
                 postMethod.addHeader("Content-Type", "multipart-form-data");
-
                 HttpResponse response = client.execute(postMethod);
                 HttpEntity r_entity = response.getEntity();
                 int statusCode = response.getStatusLine().getStatusCode();
 
                 if (statusCode == 200) {
                     json = EntityUtils.toString(r_entity);
-
                     JSONObject result1 = new JSONObject(json);
                     String status = result1.getString("status");
                     if (status.equals("true")){
@@ -268,35 +285,27 @@ public class MyRideHistory extends Activity{
                 json = e.toString();
             }
             return json;
-
-
-
         }
 
 
         @Override
         protected void onPostExecute(String jsonStr) {
             super.onPostExecute(jsonStr);
-
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
                 String msg = jo.getString("message");
 
-
                 if (status.equals("true"))
                 {
-
                     Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
                     Intent exit=new Intent(getApplicationContext(),Login.class);
                     startActivity(exit);
                     finish();
-
                 }
                 else
                 {
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
                 }
             }
             catch (JSONException e) {
@@ -308,21 +317,17 @@ public class MyRideHistory extends Activity{
 
 
 
-
     private class RideHistoryAsync extends AsyncTask<String, String, String> {
         @Override
 
-
         protected void onPreExecute() {
+            dialog2.show();
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-
         }
 
         protected String doInBackground(String... params) {
-
             String json = "", jsonStr = "";
-            String id = "";
+
             try {
 
                 HttpClient client = new DefaultHttpClient();
@@ -330,13 +335,9 @@ public class MyRideHistory extends Activity{
                 postMethod.addHeader("x-access-token", str_token);
                 postMethod.addHeader("id", str_uid);
                 postMethod.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-
-
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("id", str_uid);
                 json = jsonObject.toString();
-
                 return jsonStr = HttpUtils.makeRequest1(URL, json, str_uid, str_token);
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
@@ -349,62 +350,46 @@ public class MyRideHistory extends Activity{
 
         @Override
         protected void onPostExecute(String jsonstr) {
-            Log.e("tag", "<-----111111111--------->" + jsonstr);
+            Log.e("tag", "<-----0000000--------->" + jsonstr);
+            dialog2.dismiss();
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
-
             if (jsonstr.equals("")) {
-
-                Toast.makeText(getApplicationContext(),"Check Network Connection",Toast.LENGTH_SHORT).show();
-
-            }
-            else {
+                Toast.makeText(getApplicationContext(),"Check Network Connection",Toast.LENGTH_LONG).show();
+            } else {
 
                 try {
+
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
-                    Log.e("tag","status"+status);
-                    JSONObject data11 = jo.getJSONObject("message");
-                    Log.e("tag","...#...1"+data11);
-
-
-
-
-
-                    JSONArray data1 = data11.getJSONArray("postforride");
-
+                    JSONArray data1 = jo.getJSONArray("message");
 
                     if (data1.length() > 0) {
-                        for (int k = 0; k < data1.length(); k++) {
+                        for (int i1 = 0; i1 < data1.length(); i1++) {
                             HashMap<String, String> map = new HashMap<String, String>();
-
-                            JSONObject jsonObject = data1.getJSONObject(k);
-
-                            map.put("mobileno", data11.getString("mobileno"));
-                            map.put("email", data11.getString("email"));
-                            map.put("id_main", data11.getString("_id"));
-
-                            map.put("from", jsonObject.getString("from"));
-                            map.put("to", jsonObject.getString("to"));
-                            map.put("date", jsonObject.getString("date"));
-                            map.put("price", jsonObject.getString("price"));
+                            JSONObject jsonObject = data1.getJSONObject(i1);
+                            map.put("_id", jsonObject.getString("_id"));
+                            map.put("phone", jsonObject.getString("phone"));
                             map.put("midwaydrop", jsonObject.getString("midwaydrop"));
-                            map.put("id_sub", jsonObject.getString("_id"));
+                            map.put("price", jsonObject.getString("price"));
+                            map.put("to", jsonObject.getString("to"));
+                            map.put("from", jsonObject.getString("from"));
+                            map.put("mobileno", jsonObject.getString("mobileno"));
+                            map.put("date", jsonObject.getString("date"));
 
+                            JSONObject other_det = jsonObject.getJSONObject("otherdetails");
+                            map.put("noofpersons", other_det.getString("noofpersons"));
+                            JSONObject other_det1 = other_det.getJSONObject("roundtrip");
+                            map.put("returndate", other_det1.getString("returndate"));
+                            map.put("godate", other_det1.getString("godate"));
                             rideHistory.add(map);
-
                         }
+                        ridehistoryAdapter = new RideHistoryAdapter(MyRideHistory.this, rideHistory);
+                        searchlist.setAdapter(ridehistoryAdapter);
 
                     } else
                     {
-                        TastyToast.makeText(getApplicationContext(), "No Rides are Available in this Location..", TastyToast.LENGTH_LONG, TastyToast.INFO);
-                        //Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_SHORT).show();
+                        lnr_empty.setVisibility(View.VISIBLE);
                     }
-
-                    ridehistoryAdapter = new RideHistoryAdapter(MyRideHistory.this, rideHistory);
-                    searchlist.setAdapter(ridehistoryAdapter);
-
-
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -3,19 +3,24 @@ package mcity.com.mcity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,9 +63,9 @@ public class RideAdapter1 extends BaseAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final TextView fromaddress, toaddress,to, date, open_stmt, mail, time, amount, contact,midway_status;
-        //final ImageView author_image;
-
+        final TextView fromaddress, toaddress,to, date, open_stmt, mail, time, amount, contact,midway_status,date1,date2,date_head;
+        final String str_persons,lic_image,return_date,go_date;
+        final LinearLayout lnr_round_trip;
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View itemView = inflater.inflate(R.layout.search_ride_list, parent, false);
@@ -72,18 +77,22 @@ public class RideAdapter1 extends BaseAdapter {
         toaddress = (TextView) itemView.findViewById(R.id.toaddress);
         date = (TextView) itemView.findViewById(R.id.date);
         time = (TextView) itemView.findViewById(R.id.timer);
-        open_stmt= (TextView) itemView.findViewById(R.id.open_stmt);
+        open_stmt= (TextView) itemView.findViewById(R.id.no_of_persons);
         amount= (TextView) itemView.findViewById(R.id.amount);
         mail = (TextView) itemView.findViewById(R.id.mail);
         contact = (TextView) itemView.findViewById(R.id.contact);
         midway_status=(TextView)itemView.findViewById(R.id.midway_status);
-        author_image=(TextView)itemView.findViewById(R.id.author_image);
+        author_image=(TextView)itemView.findViewById(R.id.license_image);
+        date1 = (TextView) itemView.findViewById(R.id.date1);
+        date2 = (TextView) itemView.findViewById(R.id.date2);
+        date_head = (TextView) itemView.findViewById(R.id.round_head);
+        lnr_round_trip=(LinearLayout)itemView.findViewById(R.id.lnr_round_trip);
 
 
 
 
-       show_image=resultp.get("path");
-        Log.e("tag","@@@"+show_image);
+        lic_image=resultp.get("path");
+        Log.e("tag","zooo"+lic_image);
 
         str_from = resultp.get(MorePOst.from);
         str_to=resultp.get(MorePOst.to);
@@ -92,29 +101,46 @@ public class RideAdapter1 extends BaseAdapter {
         call_no=resultp.get(MorePOst.mobileno);
         String datestr=resultp.get(MorePOst.date);
         String iii=resultp.get("path");
+        return_date=resultp.get(RideSearch.returndate);
+        go_date=resultp.get(RideSearch.godate);
 
 
+        if(return_date.equals("empty")&&go_date.equals("empty"))
+        {
+            lnr_round_trip.setVisibility(View.GONE);
+        }
+        else
+        {
+            lnr_round_trip.setVisibility(View.VISIBLE);
+            date1.setText(go_date);
+            date2.setText(return_date);
+        }
 
-        String[] splited = datestr.split(" ");
+
+        String[] splited = str_date.split(" ");
 
 
         fromaddress.setText(resultp.get(MorePOst.from));
         toaddress.setText(resultp.get(MorePOst.to));
 
         date.setText(splited[0]);
-        time.setText(splited[2]);
-        //contact.setText(resultp.get(RideSearch.mobileno));
-        //mail.setText(resultp.get(RideSearch.email));
+        time.setText(splited[2]+" "+splited[3]);
+
         get_mailaddress=resultp.get(MorePOst.email);
-        //call_no=resultp.get(RideSearch.mobileno);
-        Log.e("tag","1234567"+get_mailaddress);
         amount.setText(resultp.get(MorePOst.price));
         midway_status.setText(resultp.get(MorePOst.midwaydrop));
-        Log.e("tag","dropppppp"+resultp.get(MorePOst.midwaydrop));
         String enable_status=resultp.get(MorePOst.phone);
-        Log.e("tag","please check"+enable_status);
+        str_persons=resultp.get(MorePOst.noofpersons);
+        Log.e("tag","test_person"+str_persons);
 
-       // Log.e("tag","@@@@"+resultp.get(RideSearch.price));
+        if(str_persons.equals("1"))
+        {
+            open_stmt.setText(str_persons+" Seat Available");
+        }
+        else
+        {
+            open_stmt.setText(str_persons+" Seats Available");
+        }
 
 
 
@@ -129,12 +155,14 @@ public class RideAdapter1 extends BaseAdapter {
         contact.setTypeface(tf);
         midway_status.setTypeface(tf);
         author_image.setTypeface(tf);
-
+        date1.setTypeface(tf);
+        date2.setTypeface(tf);
+        date_head.setTypeface(tf);
 
 
  if(enable_status.equals("enabled"))
         {
-            contact.setText(resultp.get("mobileno"));
+            contact.setText("Make Call");
 
             contact.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,9 +172,8 @@ public class RideAdapter1 extends BaseAdapter {
                     int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
                     if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
-                    } else {
-
-                        Log.e("tag","we"+call_no);
+                    } else
+                    {
                         Intent phoneIntent = new Intent(Intent.ACTION_CALL);
                         phoneIntent.setData(Uri.parse("tel:"+call_no));
 
@@ -154,9 +181,7 @@ public class RideAdapter1 extends BaseAdapter {
                             v.getContext().startActivity(phoneIntent);
                         } catch (android.content.ActivityNotFoundException ex) {
                             Toast.makeText(v.getContext(), "yourActivity is not founded", Toast.LENGTH_SHORT).show();
-
                         }
-
                     }
                 }
             });
@@ -164,11 +189,11 @@ public class RideAdapter1 extends BaseAdapter {
 
         }else
         {
-            contact.setText("hidden");
+            contact.setText("Make Call");
             contact.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(),"You cant able to make call. Please contact through mail...",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(),"You cant able to make call. Please contact through Email...",Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -178,21 +203,25 @@ public class RideAdapter1 extends BaseAdapter {
         author_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                loading = new ArrayList<>();
+                resultp = data.get(position);
+
+                        loading.add(resultp.get("path"));
+
                 LayoutInflater layoutInflater = LayoutInflater.from(v.getRootView().getContext());
-                View promptView = layoutInflater.inflate(R.layout.zoom_layout, null);
-                final ImageView image = (ImageView) promptView.findViewById(R.id.image);
-                AlertDialog.Builder alertbox = new AlertDialog.Builder(v.getRootView().getContext());
+                View promptView = layoutInflater.inflate(R.layout.zoom_layout1, null);
+                ImageView close_iv;
+                close_iv=(ImageView)v.findViewById(R.id.close_iv);
+                final AlertDialog.Builder alertbox = new AlertDialog.Builder(v.getRootView().getContext());
                 alertbox.setCancelable(true);
 
-                Picasso.with(context)
-                        .load(resultp.get("path"))
-                        .into(image);
-
-               /* ViewPager mViewPager;
-                CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(v.getRootView().getContext(),show_image);
+                ViewPager mViewPager;
+                CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(v.getRootView().getContext(), loading);
                 mViewPager = (ViewPager) promptView.findViewById(R.id.pager);
                 mViewPager.setAdapter(mCustomPagerAdapter);
-                mCustomPagerAdapter.notifyDataSetChanged();*/
+                mCustomPagerAdapter.notifyDataSetChanged();
                 alertbox.setView(promptView);
                 alertbox.show();
             }

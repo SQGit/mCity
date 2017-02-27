@@ -74,7 +74,7 @@ public class Login extends AppCompatActivity {
         img_submit=(ImageView) findViewById(R.id.submittv);
         progressBar.setVisibility(View.GONE);
 
-        String textsignup = "<font color=#000000>Dont Have an Account?</font><font color=#E51C39> Register!</font>";
+        String textsignup = "<font color=#000000>Don't have an Account?</font><font color=#E51C39> Register!</font>";
         txt_reg.setText(Html.fromHtml(textsignup));
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

@@ -13,8 +13,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -32,7 +30,7 @@
                 android:singleLine="true"
                 android:text="RS. "
                 android:textColor="@color/black"
-                android:textSize="@dimen/_9sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/rents"
@@ -41,7 +39,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_9sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/comma"
@@ -51,17 +49,7 @@
                 android:singleLine="true"
                 android:text=", "
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
-
-            <TextView
-                android:id="@+id/bedtypes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_5sdp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
-
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/mcity"
@@ -71,7 +59,17 @@
                 android:singleLine="true"
                 android:text="  FOR RENT IN MCITY"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_11sdp" />
+
+            <TextView
+                android:id="@+id/bedtypes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_5sdp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
 
             <TextView
                 android:id="@+id/gap"
@@ -81,7 +79,7 @@
                 android:singleLine="true"
                 android:text="   "
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
+             />
 
 
 
@@ -93,7 +91,7 @@
                 android:singleLine="true"
                 android:text=" AQUALILY"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_12sdp"/>
 
 
             <TextView
@@ -104,117 +102,53 @@
                 android:singleLine="true"
                 android:text=", CHENNAI"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
-
-
-
+                android:textSize="@dimen/_11sdp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal"
-            android:weightSum="3"
-            android:paddingLeft="@dimen/_10sdp">
+            android:paddingLeft="@dimen/_12sdp">
 
 
-           <!-- <LinearLayout
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:background="@drawable/housee"/>
-            </LinearLayout>-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:orientation="vertical">
-               <!-- <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
 
-                    <TextView
-                        android:id="@+id/bedroom_tv"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="wrap_content"
-                        android:text="Room Type :"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_11sdp"
-                        android:drawableLeft="@drawable/bedroom_icon"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bed Room"
-                        android:layout_marginLeft="@dimen/_15sdp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_11sdp"
-                        android:id="@+id/bedroom" />
-                </LinearLayout>-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/rent_tv"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="wrap_content"
-                        android:text="Rent:"
-                        android:textColor="@color/black"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="start|center"
-                        android:drawableLeft="@drawable/type_icon"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bed Room"
-                        android:layout_marginLeft="@dimen/_15sdp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_11sdp"
-                        android:id="@+id/subtype" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="horizontal">
 
 
                     <TextView
                         android:id="@+id/subtype_tv"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_width="@dimen/_100sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Gender:"
+                        android:singleLine="true"
+                        android:padding="@dimen/_3sdp"
+                        android:gravity="start|center"
+                        android:textSize="@dimen/_11sdp"
                         android:drawablePadding="@dimen/_5sdp"
                         android:drawableLeft="@drawable/gender"
-                        android:textColor="@color/black"
-                        />
+                        android:textColor="@color/black"/>
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Flats"
-                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:singleLine="true"
+                        android:padding="@dimen/_3sdp"
+                        android:layout_marginRight="@dimen/_25sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp"
                         android:id="@+id/gender" />
@@ -222,14 +156,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal">
 
 
                     <TextView
-                        android:layout_width="@dimen/_100sdp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="RoomType:"
+                        android:singleLine="true"
+                        android:padding="@dimen/_3sdp"
+                        android:gravity="start|center"
                         android:drawablePadding="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp"
@@ -237,14 +174,54 @@
                         android:id="@+id/furnishedtype_tv" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Bed Room"
-                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:singleLine="true"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:layout_marginRight="@dimen/_25sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp"
                         android:id="@+id/roomTypeval" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/rent_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Land Mark:"
+                        android:singleLine="true"
+                        android:padding="@dimen/_3sdp"
+                        android:gravity="start|center"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_11sdp"
+                        android:drawableLeft="@drawable/house_icon"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_3sdp"
+                        android:text=""
+                        android:singleLine="true"
+                        android:layout_marginRight="@dimen/_25sdp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/_11sdp"
+                        android:id="@+id/txt_landmark" />
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
@@ -254,7 +231,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_7sdp"
             android:gravity="right"
             android:orientation="horizontal">
 
@@ -267,7 +244,7 @@
                 android:background="@drawable/red_stroke_bg"
                 android:text="Send Mail"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_12sdp"
                 android:id="@+id/send_mail" />
 
             <TextView
@@ -281,7 +258,7 @@
                 android:layout_marginRight="@dimen/_20sdp"
                 android:background="@drawable/red_stroke_bg"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_12sdp"
                 android:text="Make Call"/>
 
         </LinearLayout>
@@ -289,8 +266,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:paddingLeft="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:orientation="horizontal">
             <TextView
@@ -298,6 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:padding="@dimen/_3sdp"
                 android:textSize="@dimen/_12sdp"
 
                 android:text="test description"/>

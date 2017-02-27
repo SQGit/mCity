@@ -1,6 +1,7 @@
 package mcity.com.mcity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,6 +79,8 @@ public class MRentalPost extends TabActivity {
         tabView = createTabView(getApplicationContext(), "Post a House", R.drawable.house);
         tabViewroom = createTabViewRoom(getApplicationContext(), "Post for Room", R.drawable.house);
 
+
+
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
@@ -95,11 +99,9 @@ public class MRentalPost extends TabActivity {
         Timer timer = new Timer();
 
         timer.scheduleAtFixedRate(new TimerTask() {
-
             public void run() {
 
                 mHandler.post(mUpdateResults);
-
             }
 
         }, delay, period);

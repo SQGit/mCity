@@ -31,7 +31,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:maxLength="10"
                 android:hint="Mobile No."
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:paddingBottom="@dimen/_13sdp"
                 android:inputType="number"
                 android:singleLine="true"
@@ -70,9 +70,11 @@
                 android:id="@+id/text_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dont Have an Account? "
+                android:text="Don't have an Account? "
                 android:textColor="#000000"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"/>
+
+
             <LinearLayout
                 android:id="@+id/layout_register"
                 android:layout_width="wrap_content"

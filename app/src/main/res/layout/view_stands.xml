@@ -19,8 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_25sdp"
-        android:orientation="vertical"
-       >
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="#cccccc"/>
 
         <LinearLayout
             android:id="@+id/imagelin"
@@ -131,6 +136,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableLeft="@drawable/call_white"
                 android:textColor="#FFF"
+                android:background="@drawable/ripple_effect"
                 android:text="Call Auto Driver"/>
 
 

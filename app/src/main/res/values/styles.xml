@@ -22,5 +22,11 @@
         <item name="android:background">#FFF</item>
     </style>
 
+    <style name="DialogAnimation">
+
+        <item name="android:windowEnterAnimation">@anim/slide_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_right</item>
+    </style>
+
 
 </resources>

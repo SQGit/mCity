@@ -112,8 +112,6 @@ public class Mbeauty extends AppCompatActivity {
                             case R.id.item2:
                                 exitIcon();
                                 return true;
-
-
                         }
                         return true;
                     }

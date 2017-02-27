@@ -332,40 +332,38 @@
                         android:text="mBEAUTY"
                         android:textColor="@color/train_text_color"
                         android:textSize="@dimen/_10sdp" />
-
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/lin_garage"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/auto_bg"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-
-                    <LinearLayout
-                        android:id="@+id/lin_garage"
-                        android:layout_width="@dimen/_90sdp"
-                        android:layout_height="@dimen/_90sdp"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/coming_soon"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/img_garage"
+                        android:id="@+id/img_order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/grey_order" />
+                        android:src="@drawable/garage" />
+
+                <TextView
+                    android:id="@+id/txt_garage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:singleLine="true"
+                    android:text="mSELL"
+                    android:textColor="@color/auto_text_color"
+                    android:textSize="@dimen/_10sdp" />
 
 
-                    <TextView
-                        android:id="@+id/txt_garage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:singleLine="true"
-                        android:text="mGARAGE"
-                        android:textSize="@dimen/_10sdp" />
-
-
-                </LinearLayout>
+            </LinearLayout>
 
 
                 <LinearLayout
@@ -374,16 +372,17 @@
                     android:layout_height="@dimen/_90sdp"
                     android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/coming_soon"
+                    android:background="@drawable/train_bg"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="vertical">
 
+
+
                     <ImageView
-                        android:id="@+id/img_order"
+                        android:id="@+id/img_garage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/grey_sell" />
-
+                        android:src="@drawable/mceas" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -391,7 +390,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:text="mORDER"
+                        android:text="mCEAS"
+                        android:textColor="@color/train_text_color"
                         android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>

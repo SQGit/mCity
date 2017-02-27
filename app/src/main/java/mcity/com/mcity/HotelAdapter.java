@@ -58,7 +58,7 @@ public class HotelAdapter extends BaseAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        TextView txt_loc,txt_roomTypeval,txt_rent,txt_chennai,txt_mcity,txt_rs,txt_subtype, txt_address, txt_description,txt_gender,txt_renttv,txt_subtv,txt_furnishedtv,txt_make_call, txt_send_mail;
+        TextView txt_loc,txt_roomTypeval,txt_rent,txt_chennai,txt_mcity,txt_rs,txt_landmark, txt_address, txt_description,txt_gender,txt_renttv,txt_subtv,txt_furnishedtv,txt_make_call, txt_send_mail;
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
 
@@ -68,13 +68,13 @@ public class HotelAdapter extends BaseAdapter {
 
 
         txt_loc = (TextView) itemView.findViewById(R.id.loc);
-        txt_address = (TextView) itemView.findViewById(R.id.city);
         txt_rent=(TextView) itemView.findViewById(R.id.rents);
-        txt_subtype=(TextView) itemView.findViewById(R.id.subtype);
+
         txt_chennai=(TextView) itemView.findViewById(R.id.chennai);
         txt_rs=(TextView) itemView.findViewById(R.id.rs);
         txt_mcity = (TextView) itemView.findViewById(R.id.mcity);
         txt_gender =(TextView)itemView.findViewById(R.id.gender);
+        txt_landmark=(TextView)itemView.findViewById(R.id.txt_landmark);
         txt_description = (TextView) itemView.findViewById(R.id.description);
         txt_renttv = (TextView) itemView.findViewById(R.id.rent_tv);
         txt_subtv = (TextView) itemView.findViewById(R.id.subtype_tv);
@@ -88,13 +88,13 @@ public class HotelAdapter extends BaseAdapter {
         txt_loc.setText(resultp.get("location"));
         txt_rent.setText(resultp.get("monthlyrent"));
         txt_description.setText(resultp.get("description"));
-        txt_subtype.setText(resultp.get("monthlyrent"));
         txt_gender.setText(resultp.get("gender"));
         txt_roomTypeval.setText(resultp.get("roomtype"));
         str_owner_no = resultp.get("mobileno");
         str_owner_mail=resultp.get("email");
         String enable_status=resultp.get("phone");
         final String username=resultp.get("username");
+        txt_landmark.setText(resultp.get("landmark"));;
 
 
 
@@ -104,17 +104,18 @@ public class HotelAdapter extends BaseAdapter {
         txt_rent.setTypeface(tf);
         txt_rs.setTypeface(tf);
         txt_mcity.setTypeface(tf);
-        txt_subtype.setTypeface(tf);
         txt_renttv.setTypeface(tf);
         txt_furnishedtv.setTypeface(tf);
         txt_gender.setTypeface(tf);
         txt_subtv.setTypeface(tf);
         txt_roomTypeval.setTypeface(tf);
-
+        txt_send_mail.setTypeface(tf);
+        txt_make_call.setTypeface(tf);
+        txt_landmark.setTypeface(tf);
 
         if(enable_status.equals("enabled"))
         {
-            txt_make_call.setText(resultp.get("mobileno"));
+            txt_make_call.setText("Make Call");
 
             txt_make_call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,7 +145,7 @@ public class HotelAdapter extends BaseAdapter {
 
         }else
         {
-            txt_make_call.setText("hidden");
+
             txt_make_call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -161,7 +162,7 @@ public class HotelAdapter extends BaseAdapter {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", str_owner_mail, null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "MCity");
-                emailIntent.putExtra(Intent.EXTRA_TEXT   , "Hi  "+username+"\n"+ "   Iam interested in your Property. Please contact me.");
+                emailIntent.putExtra(Intent.EXTRA_TEXT   , "Hi  "+username+"\n"+ "   I am interested in your Property. Please contact me.");
                 emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(emailIntent);
             }

@@ -19,5 +19,6 @@
     <color name="rental_text_color">#E51E3A</color>
     <color name="ride_text_color">#DD8436</color>
     <color name="coupon_text_color">#DD4A36</color>
+    <color name="ripple_color">#f5f5f5</color>
 
 </resources>

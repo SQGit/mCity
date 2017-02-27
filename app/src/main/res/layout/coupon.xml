@@ -55,15 +55,11 @@
         </LinearLayout>
 
 
-
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="@dimen/_50sdp"
             android:scaleType="fitXY"
             android:id="@+id/iv"/>
-
-
-
 
 
     </LinearLayout>

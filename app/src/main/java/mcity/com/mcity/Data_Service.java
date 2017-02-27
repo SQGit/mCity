@@ -11,17 +11,17 @@ public class Data_Service {
 
 
 
+  public static String URL= "http://104.197.80.225:3000/mcity/";
+    public static String URL_API= "http://104.197.80.225:3000/mcity/api/";
+    public static String URL_IMG="http://104.197.80.225:3000/mcity/";
+    public static String URL_ADS="http://104.197.80.225:3000/mcity/ads/";
 
-    public static String URL= "http://104.197.80.225:3000/";
-    public static String URL_API= "http://104.197.80.225:3000/api/";
-    public static String URL_IMG="http://104.197.80.225:3000/";
-    public static String URL_ADS="http://104.197.80.225:3000/ads/";
 
-  /* public static String URL= "http://104.197.80.225:3010/";
-    public static String URL_API= "http://104.197.80.225:3010/api/";
-    public static String URL_IMG="http://104.197.80.225:3010/";
-    public static String URL_ADS="http://104.197.80.225:3010/ads/";
-*/
+    /*public static String URL= "http://104.197.80.225:3010/mcity/";
+    public static String URL_API= "http://104.197.80.225:3010/mcity/api/";
+    public static String URL_IMG="http://104.197.80.225:3010/mcity/";
+    public static String URL_ADS="http://104.197.80.225:3010/mcity/ads/";*/
+
 
 
 

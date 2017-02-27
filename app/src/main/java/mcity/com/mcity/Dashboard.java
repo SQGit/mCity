@@ -39,8 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -75,7 +73,6 @@ public class Dashboard extends AppCompatActivity {
     ImageView img_settings_icon,imv_coupon,img_shop,img_auto;
     TextView txt_coupon,txt_shop,txt_auto,txt_train,txt_rental,txt_ride,txt_garage,txt_desclaimer, txt_site;
     String str_token, str_uid;
-    SharedPreferences s_pref;
     Intent intent;
     Typeface tf;
 
@@ -84,7 +81,6 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-
 
         img_settings_icon = (ImageView) findViewById(R.id.settings_icon);
         lin_mcoupon=(LinearLayout)findViewById(R.id.lin_mcoupon);
@@ -96,12 +92,9 @@ public class Dashboard extends AppCompatActivity {
         lin_garage=(LinearLayout)findViewById(R.id.lin_garage) ;
         lin_beauty=(LinearLayout)findViewById(R.id.lin_beauty) ;
         lin_order=(LinearLayout) findViewById(R.id.lin_order);
-
         imv_coupon=(ImageView)findViewById(R.id.imv_coupon);
         img_shop=(ImageView)findViewById(R.id.img_shop);
         img_auto=(ImageView)findViewById(R.id.img_auto);
-
-
         txt_coupon=(TextView)findViewById(R.id.txt_coupon);
         txt_shop=(TextView)findViewById(R.id.txt_shop);
         txt_auto=(TextView)findViewById(R.id.txt_auto);
@@ -109,19 +102,15 @@ public class Dashboard extends AppCompatActivity {
         txt_rental=(TextView)findViewById(R.id.txt_rental);
         txt_ride=(TextView)findViewById(R.id.txt_ride);
         txt_garage=(TextView)findViewById(R.id.txt_garage);
-
         txt_desclaimer = (TextView) findViewById(R.id.txt_desclaimer);
         txt_site = (TextView) findViewById(R.id.txt_site);
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
-        Log.e("tag","check_token"+str_token);
         str_uid = sharedPreferences.getString("id", "");
-        Log.e("tag","check_id"+str_uid);
 
         lin_mcoupon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +162,7 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 lin_rental.setBackgroundResource(R.drawable.rental_press_bg);
-                txt_rental.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
+                txt_rental.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.rental_text_color));
                 Intent intent = new Intent(getApplicationContext(), RentalHistory.class);
                 startActivity(intent);
                 finish();
@@ -184,8 +173,8 @@ public class Dashboard extends AppCompatActivity {
         lin_ride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lin_ride.setBackgroundResource(R.drawable.rental_press_bg);
-                txt_ride.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.rental_text_color));
+                lin_ride.setBackgroundResource(R.drawable.ride_press_bg);
+                txt_ride.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.ride_text_color));
                 Intent intent = new Intent(getApplicationContext(), RideSearch.class);
                 startActivity(intent);
                 finish();
@@ -196,7 +185,11 @@ public class Dashboard extends AppCompatActivity {
         lin_garage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Coming Soon !", Toast.LENGTH_SHORT).show();
+                lin_garage.setBackgroundResource(R.drawable.auto_press_bg);
+                txt_garage.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.auto_text_color));
+                Intent intent = new Intent(getApplicationContext(), MGarage_History.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -206,15 +199,17 @@ public class Dashboard extends AppCompatActivity {
                 Intent beauty=new Intent(getApplicationContext(),Mbeauty.class);
                 startActivity(beauty);
                 finish();
-
             }
         });
 
         lin_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Coming Soon !", Toast.LENGTH_SHORT).show();
-
+                lin_train.setBackgroundResource(R.drawable.train_press_bg);
+                txt_train.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.train_text_color));
+                Intent beauty=new Intent(getApplicationContext(),Mceas.class);
+                startActivity(beauty);
+                finish();
             }
         });
 
@@ -223,7 +218,6 @@ public class Dashboard extends AppCompatActivity {
         txt_desclaimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 showDesclaimerContent();
             }
         });
@@ -248,14 +242,11 @@ public class Dashboard extends AppCompatActivity {
                 MenuInflater inflater = popup.getMenuInflater();
                 MenuItem pinMenuItem1 = popup.getMenu().getItem(0);
                 MenuItem pinMenuItem2 = popup.getMenu().getItem(1);
-
                 applyFontToMenuItem(pinMenuItem1);
                 applyFontToMenuItem(pinMenuItem2);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-
-
                         int id = item.getItemId();
                         switch (id) {
                             case R.id.item1:
@@ -381,6 +372,7 @@ public class Dashboard extends AppCompatActivity {
 
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
         head1.setTypeface(tf);
+        head2.setTypeface(tf);
         head1.setText("mCity");
         head2.setText("Do You want to Sign Out?");
 
@@ -394,7 +386,7 @@ public class Dashboard extends AppCompatActivity {
                 editor.putString("login_status", "false");
                 editor.commit();
                 logoutMethod();
-                //alertD.dismiss();
+
             }
         });
 
@@ -436,20 +428,19 @@ public class Dashboard extends AppCompatActivity {
                 HttpResponse response = client.execute(postMethod);
                 HttpEntity r_entity = response.getEntity();
                 int statusCode = response.getStatusLine().getStatusCode();
-                Log.e("tag", "res " + response.getStatusLine().toString());
+
                 if (statusCode == 200) {
                     json = EntityUtils.toString(r_entity);
 
                     JSONObject result1 = new JSONObject(json);
                     String status = result1.getString("status");
-                    Log.e("tag", "status..........." + status);
 
                     if (status.equals("true")) {
-                        Log.e("tag", "Success...........");
+
                     }
                 } else {
                     json = "Error occurred! Http Status Code: " + statusCode;
-                    Log.e("tag", "failure...........");
+
                 }
 
             } catch (Exception e) {
@@ -461,30 +452,26 @@ public class Dashboard extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String jsonStr) {
-            Log.e("tag", "<-----result---->" + jsonStr);
             super.onPostExecute(jsonStr);
 
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
                 String msg = jo.getString("message");
-                Log.e("tag", "<-----Status----->" + status);
-                Log.e("tag", "<-----msg----->" + msg);
 
                 if (status.equals("true")) {
 
-                Log.e("tag","first");
-                    TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
-                    //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     Intent intent_logout=new Intent(Dashboard.this,Test_L.class);
                     startActivity(intent_logout);
                     finish();
 
 
-                } else { Log.e("tag","second");
+                } else {
 
-                    TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                   // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+
                 }
 
             } catch (JSONException e) {

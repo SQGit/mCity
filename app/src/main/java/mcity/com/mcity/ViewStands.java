@@ -371,7 +371,6 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
                         edit.putString("ph3", str_phn3);
                         edit.commit();
 
-
                     } catch (Exception e) {
 
                     }
@@ -389,21 +388,23 @@ public class ViewStands extends Fragment implements OnMapReadyCallback, GoogleAp
 
         googleMap.addMarker(new MarkerOptions().position(MAHINDRA_WORLD_CITY).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_icon)));
 
-        if (checkPermission()) {
-            LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                if (checkPermission()) {
+                    LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+                    Criteria criteria = new Criteria();
 
 
-            String bestProvider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(bestProvider);
-            if (location != null) {
-                //  onLocationChanged(location);
-            } else {
-                // showGPSDisabledAlertToUser();
+                    String bestProvider = locationManager.getBestProvider(criteria, true);
+                    Location location = locationManager.getLastKnownLocation(bestProvider);
+                    if (location != null) {
+                        //(location);
+                    } else {
+                        // showGPSDisabledAlertToUser();
+                    }
+                    locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+                }
             }
-            locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
-        }
-
 
         return view;
     }

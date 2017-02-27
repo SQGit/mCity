@@ -2,10 +2,12 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.LinkAddress;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,16 +61,15 @@ public class TrainSearch extends Activity {
     LinearLayout back_arrow;
     ImageView get_train,train_menu;
     String dayOfTheWeek, time;
+    Dialog dialog2;
     ProgressBar progressBar;
     String token, uid,more_train;
     TextView txt_time;
     String URL_NORMAL = Data_Service.URL_API + "trainsearch";
     String URL_SUNDAY = Data_Service.URL_API + "trainsearchsun";
-    String URL_NORMAL_REV = Data_Service.URL_API + "revtrainsearch";
-    String URL_SUNDAY_REV = Data_Service.URL_API + "revtrainsearchsun";
-
+    String URL_NORMAL_REV = Data_Service.URL_API + "parche";
+    String URL_SUNDAY_REV = Data_Service.URL_API + "parchesun";
     String LOGOUT = Data_Service.URL_API + "logout";
-
     ArrayList<HashMap<String, String>> searchridelist;
     TrainAdapter trainAdapter;
     String str_token,str_uid,train_status;
@@ -77,8 +79,6 @@ public class TrainSearch extends Activity {
     ImageView settings_icon;
     Button getmoretrain;
     TextView txt_sou_des;
-
-
     static String name = "name";
     static String departuretime = "departuretime";
     static String arrivaltime = "arrivaltime";
@@ -90,17 +90,21 @@ public class TrainSearch extends Activity {
         setContentView(R.layout.train_search);
 
         searchridelist = new ArrayList<>();
-
         back_arrow = (LinearLayout) findViewById(R.id.back_arrow);
-        get_train=(ImageView)findViewById(R.id.get_train);
+        //get_train=(ImageView)findViewById(R.id.get_train);
         getmoretrain=(Button)findViewById(R.id.getmoretrain);
         train_menu=(ImageView)findViewById(R.id.train_menu);
         txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
         txt_time=(TextView)findViewById(R.id.txt_time);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         searchlist=(ListView)findViewById(R.id.searchlist);
         settings_icon = (ImageView) findViewById(R.id.settings_icon);
 
+        dialog2 = new Dialog(TrainSearch.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,10 +128,6 @@ public class TrainSearch extends Activity {
 
         DateFormat df = new SimpleDateFormat("HH:mm");
         time = df.format(Calendar.getInstance().getTime());
-       /* SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
-        String formattedDate = dateFormat.format(new Date()).toString();
-        Log.e("tag", "time2" + formattedDate);
-        */
         txt_time.setText(time);
 
 
@@ -161,7 +161,7 @@ public class TrainSearch extends Activity {
 
         else
         {
-            txt_sou_des.setText("From  Chennai Beach To Paranur");
+            txt_sou_des.setText("From  Paranur  To Chengalpattu");
 
 
             if (dayOfTheWeek.equals("Sunday"))
@@ -193,10 +193,6 @@ public class TrainSearch extends Activity {
 
 
 
-
-
-
-
         back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,15 +203,6 @@ public class TrainSearch extends Activity {
         });
 
 
-        get_train.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-          Intent i = new Intent(getApplicationContext(), TrainTime.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         getmoretrain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +213,6 @@ public class TrainSearch extends Activity {
                 editor.putString("more_train", "true");
                 editor.commit();
                 train_status = sharedPreferences.getString("train_status", "");
-
 
 
                 if(train_status.equals("pcb"))
@@ -241,8 +227,6 @@ public class TrainSearch extends Activity {
                     } else {
                         if (Util.Operations.isOnline(TrainSearch.this)) {
                             new TrainSearchForAllday().execute();
-
-
                         } else {
                             Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
                         }
@@ -251,8 +235,6 @@ public class TrainSearch extends Activity {
 
                 else
                 {
-
-
                     if (dayOfTheWeek.equals("Sunday"))
                     {
                         if (Util.Operations.isOnline(TrainSearch.this)) {
@@ -263,15 +245,11 @@ public class TrainSearch extends Activity {
                     } else {
                         if (Util.Operations.isOnline(TrainSearch.this)) {
                             new TrainSearchForAlldayRev().execute();
-
-
                         } else {
                             Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
                         }
                     }
-
                 }
-
             }
         });
 
@@ -284,7 +262,7 @@ public class TrainSearch extends Activity {
                 if(train_status.equals("pcb"))
                 {
 
-                    txt_sou_des.setText("From  Chennai Beach To Paranur");
+                    txt_sou_des.setText("From  Paranur  To Chengalpattu");
 
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -520,17 +498,15 @@ public class TrainSearch extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            dialog2.show();
 
         }
 
         protected String doInBackground(String... params) {
 
-            String json = "", jsonStr = "";
-            String id = "";
-            try {
+            String json = "", jsonStr;
 
-                //location,landmark,address,roomtype,monthlyrent,gender,description
+            try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("departuretime", time);
                 json = jsonObject.toString();
@@ -547,7 +523,7 @@ public class TrainSearch extends Activity {
         protected void onPostExecute(String jsonstr) {
             Log.e("tag", "<-----111111111--------->" + jsonstr);
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
+           dialog2.dismiss();
 
             if (jsonstr.equals("")) {
 
@@ -622,7 +598,7 @@ public class TrainSearch extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            dialog2.show();
 
         }
 
@@ -648,7 +624,7 @@ public class TrainSearch extends Activity {
         protected void onPostExecute(String jsonstr) {
             Log.e("tag", "<-----111111111--------->" + jsonstr);
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
+            dialog2.dismiss();
 
             if (jsonstr.equals("")) {
 
@@ -729,7 +705,7 @@ public class TrainSearch extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            dialog2.show();
 
         }
 
@@ -755,7 +731,7 @@ public class TrainSearch extends Activity {
         protected void onPostExecute(String jsonstr) {
             Log.e("tag", "<-----111111111--------->" + jsonstr);
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
+            dialog2.dismiss();
 
             if (jsonstr.equals("")) {
 
@@ -834,7 +810,7 @@ public class TrainSearch extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            dialog2.show();
 
         }
 
@@ -860,7 +836,7 @@ public class TrainSearch extends Activity {
         protected void onPostExecute(String jsonstr) {
             Log.e("tag", "<-----111111111--------->" + jsonstr);
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
+           dialog2.dismiss();
 
             if (jsonstr.equals("")) {
 
@@ -941,7 +917,7 @@ public class TrainSearch extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            //progressBar.setVisibility(View.VISIBLE);
+            dialog2.show();
 
         }
 
@@ -988,6 +964,7 @@ public class TrainSearch extends Activity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----result---->" + jsonStr);
             super.onPostExecute(jsonStr);
+            dialog2.dismiss();
 
             try {
                 JSONObject jo = new JSONObject(jsonStr);

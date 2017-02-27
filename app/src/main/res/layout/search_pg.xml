@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_13sdp">
+                android:paddingLeft="@dimen/_10sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -35,27 +35,18 @@
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="@dimen/_230sdp"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:layout_gravity="center"/>
 
 
-
-
-
-
-                <!-- <AutoCompleteTextView
-                     android:id="@+id/location_et_et"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:drawableLeft="@drawable/location_icon"
-                     android:drawablePadding="@dimen/_5sdp"
-                     android:hint="@string/location"
-                     android:imeOptions="actionNext"
-                     android:paddingBottom="@dimen/_13sdp"
-                     android:inputType="textNoSuggestions"
-                     android:singleLine="true"
-                     android:textSize="@dimen/_12sdp" />
- -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/down_full"/>
 
             </LinearLayout>
 

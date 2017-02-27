@@ -53,7 +53,19 @@
         </activity>
 
 
-        <activity android:name=".OfferRide"
+        <activity android:name=".SearchSellActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
+
+
+
+        <activity android:name=".CallCouponFromShop"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
+
+        <activity android:name=".MGarage_Edit_PostAds"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
@@ -88,6 +100,10 @@
         </activity>
 
 
+        <activity android:name=".OfferRide"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
 
 
         <activity android:name=".MCoupon"
@@ -111,6 +127,7 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+
 
 
         </activity>
@@ -151,6 +168,10 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
+        <activity android:name=".Mceas"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
 
 
         <activity android:name=".MPostHistory"
@@ -242,16 +263,24 @@
         </activity>
 
 
-        <activity android:name=".TrainTime"
+        <activity android:name=".OfferRideNew"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
         </activity>
 
-        <activity
+
+        <activity android:name=".MyAddHistory"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustPan">
+        </activity>
+
+       <!-- <activity
             android:name="nl.changer.polypicker.ImagePickerActivity" />
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".MapsActivity"></activity>-->
 
-
+        <activity android:name="com.gun0912.tedpicker.ImagePickerActivity"
+            android:screenOrientation="portrait"
+            />
 
         <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for

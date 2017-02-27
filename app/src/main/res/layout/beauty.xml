@@ -54,12 +54,12 @@
 
 
 
-        <ImageView
+       <!-- <ImageView
             android:layout_width="fill_parent"
             android:layout_height="@dimen/_50sdp"
             android:scaleType="fitXY"
             android:id="@+id/iv"/>
-
+-->
 
 
 
@@ -85,8 +85,8 @@
             android:gravity="bottom"
             android:padding="10dip"
             app:centered="true"
-            app:fillColor="#ff0099"
-            app:pageColor="#FF0000"
+            app:fillColor="#FF0000"
+            app:pageColor="#FFFFFF"
             app:snap="false" />
     </RelativeLayout>
 

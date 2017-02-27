@@ -1,20 +1,21 @@
 package mcity.com.mcity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.json.JSONArray;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 
 public class SearchPGFilter extends Activity {
     ImageView submit;
-    String URL = Data_Service.URL_API + "searchforroom";
+    String URL = Data_Service.URL_API + "searchforroomnew";
     ListView listView;
     ArrayList<HashMap<String, String>> contactList;
     static String location = "location";
@@ -42,11 +43,12 @@ public class SearchPGFilter extends Activity {
     static String username="username";
 
     ProgressBar progressBar;
-
-    LinearLayout back;
+    Dialog dialog2;
+    LinearLayout back,lnr_empty;
     HotelAdapter hotelAdapter;
     String id, token;
     String str_location,str_roomtype,str_gendertype, minRent, maxRent;
+    HashMap<String, String> map;
 
     /**
      * Called when the activity is first created.
@@ -59,23 +61,24 @@ public class SearchPGFilter extends Activity {
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
         Intent intent = getIntent();
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
         str_location = intent.getStringExtra("location");
-        Log.e("tag","1"+str_location);
         str_roomtype = intent.getStringExtra("room_type");
-        Log.e("tag","checkroom"+str_roomtype);
         str_gendertype= intent.getStringExtra("gender_type");
         minRent = intent.getStringExtra("minRent");
-        Log.e("tag","2"+minRent);
         maxRent = intent.getStringExtra("maxRent");
-        Log.e("tag","3"+maxRent);
-
 
         listView = (ListView) findViewById(R.id.listView);
         back = (LinearLayout) findViewById(R.id.back_arrow);
+        lnr_empty = (LinearLayout) findViewById(R.id.lnr_empty);
+        dialog2 = new Dialog(SearchPGFilter.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+
         contactList = new ArrayList<>();
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         token = sharedPreferences.getString("token", "");
         id = sharedPreferences.getString("id", "");
         new SearchHouseAsync().execute();
@@ -85,7 +88,7 @@ public class SearchPGFilter extends Activity {
                 finish();
             }
         });
-
+        lnr_empty.setVisibility(View.GONE);
 
     }
 
@@ -96,7 +99,7 @@ public class SearchPGFilter extends Activity {
         }
 
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            dialog2.show();
             super.onPreExecute();
         }
 
@@ -132,52 +135,61 @@ public class SearchPGFilter extends Activity {
 
         @Override
         protected void onPostExecute(String jsonStr) {
-            Log.e("tag", "<-----result112323---->" + jsonStr);
-            progressBar.setVisibility(View.GONE);
+            dialog2.dismiss();
             super.onPostExecute(jsonStr);
-
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
-                //String msg = jo.getString("message");
-                Log.d("tag", "<-----Status----->" + status);
+
                 if (status.equals("true")) {
-                    //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                    //finish();
-
-
                     JSONArray data = jo.getJSONArray("message");
-                    Log.e("tag", "<-----data----->" + data.length());
-                    if (data.length() > 0) {
+
+
+                    if (data.length() > 0)
+                    {
+
                         for (int i1 = 0; i1 < data.length(); i1++) {
-                            HashMap<String, String> map = new HashMap<String, String>();
                             JSONObject jsonObject = data.getJSONObject(i1);
+                            map = new HashMap<String, String>();
 
-                            String postforroom = jsonObject.getString("postforroom");
-                            JSONObject pos_rent = new JSONObject(postforroom);
-                            Log.e("tag","pos_rent"+  pos_rent);
-
+                            map.put("monthlyrent", jsonObject.getString("monthlyrent"));
+                            Log.e("tag","1"+jsonObject.getString("monthlyrent"));
+                            map.put("roomtype", jsonObject.getString("roomtype"));
+                            Log.e("tag","2"+jsonObject.getString("roomtype"));
+                            map.put("gender", jsonObject.getString("gender"));
+                            Log.e("tag","3"+jsonObject.getString("gender"));
+                            map.put("location", jsonObject.getString("location"));
+                            Log.e("tag","4"+jsonObject.getString("location"));
                             map.put("mobileno", jsonObject.getString("mobileno"));
-                            map.put("email", jsonObject.getString("email"));
-                            map.put("username", jsonObject.getString("username"));
+                            Log.e("tag","5"+jsonObject.getString("mobileno"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            Log.e("tag","6"+jsonObject.getString("phone"));
+                            map.put("landmark", jsonObject.getString("landmark"));
+                            Log.e("tag","6"+jsonObject.getString("landmark"));
+                            map.put("description", jsonObject.getString("description"));
+                            Log.e("tag","6"+jsonObject.getString("description"));
 
-                            map.put("location", pos_rent.getString("location"));
-                            map.put("address", pos_rent.getString("address"));
-                            map.put("roomtype", pos_rent.getString("roomtype"));
-                            map.put("description", pos_rent.getString("description"));
-                            map.put("phone", pos_rent.getString("phone"));
-                            map.put("monthlyrent", pos_rent.getString("monthlyrent"));
-                            map.put("gender", pos_rent.getString("gender"));
+                            JSONArray userdetails = jsonObject.getJSONArray("userdetails");
+                            Log.e("tag","7"+userdetails);
+                            for(int u =0;u<userdetails.length();u++){
+                                JSONObject user_obj =userdetails.getJSONObject(u);
+                                map.put("email", user_obj.getString("email"));
+                                Log.e("tag","8"+user_obj.getString("email"));
+                                map.put("username", user_obj.getString("username"));
+                                Log.e("tag","9"+user_obj.getString("username"));
+                            }
+
+
                             contactList.add(map);
-
                         }
-
+                        lnr_empty.setVisibility(View.GONE);
                         hotelAdapter = new HotelAdapter(getApplicationContext(), contactList);
                         listView.setAdapter(hotelAdapter);
+
+
                     } else
                     {
-                        TastyToast.makeText(getApplicationContext(), "Your desired Room/PG is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
-                        //Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
+                        lnr_empty.setVisibility(View.VISIBLE);
                     }
                 }
             } catch (JSONException e) {
@@ -189,7 +201,7 @@ public class SearchPGFilter extends Activity {
     @Override
     public void onBackPressed()
     {
-        Intent i = new Intent(SearchPGFilter.this,Dashboard.class);
+        Intent i = new Intent(SearchPGFilter.this,RentalHistory.class);
         startActivity(i);
         finish();
     }

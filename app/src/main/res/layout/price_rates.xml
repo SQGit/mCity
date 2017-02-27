@@ -194,7 +194,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
 
@@ -260,7 +260,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
 
@@ -325,7 +325,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
                         <TableRow
@@ -389,7 +389,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
                         <TableRow
@@ -451,7 +451,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
                     </TableLayout>
                 </LinearLayout>
@@ -560,7 +560,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
 
@@ -623,7 +623,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
 
@@ -685,7 +685,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
                         <TableRow
@@ -854,7 +854,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
 
@@ -916,7 +916,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
 
@@ -976,7 +976,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="#000"/>
+                            android:background="#cccccc"/>
 
 
                         <TableRow
@@ -1126,38 +1126,13 @@
                                 android:layout_weight="1"
                                 android:layout_gravity="center"
                                 android:text="-"/>
-
-
                         </TableRow>
-
-
-
 
                     </TableLayout>
                 </LinearLayout>
-
-
-
-
-
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
-
-   <!-- <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_20sdp">
-        <include
-            android:id="@+id/container_header_lyt"
-            layout="@layout/footer_privacyplolicy1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-        </include>
-
-    </LinearLayout>-->
 
 </LinearLayout>

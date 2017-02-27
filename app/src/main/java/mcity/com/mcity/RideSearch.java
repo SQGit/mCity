@@ -2,12 +2,14 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,8 +39,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.HttpEntity;
@@ -61,24 +61,27 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Admin on 28-09-2016.
  */
 public class RideSearch extends Activity implements AdapterView.OnItemSelectedListener {
-    String URL = Data_Service.URL_API + "searchforride";
-    String URL1 = Data_Service.URL_API + "searchforridefilter";
+    String URL = Data_Service.URL_API + "searchforridenew";
+    String URL1 = Data_Service.URL_API + "searchforridefilternew";
     String IMAGE_UPLOAD = Data_Service.URL_IMG + "licence/";
+    String SHOW_IMAGE = Data_Service.URL_IMG + "licence/";
     String LOGOUT = Data_Service.URL_API + "logout";
+    ProgressBar progressBar;
+    Dialog dialog2;
 
-    ProgressDialog mProgressDialog;
     Spinner search_from, search_go;
     TextView advanced_search, offer, morepost;
     ListView searchlist;
-    //ImageView img_offerride;
-    LinearLayout back_arrow;
-    String token, uid;
+    ImageView empty;
+    LinearLayout back_arrow,spinner_from_lnr,lnr_empty;
+    String token, uid,check_filter;
     RideAdapter rideAdapter;
+    FilterRideAdapter filterAdapter;
     Button filter;
-    ProgressBar progressBar;
-    ArrayList<HashMap<String, String>> searchridelist;
+
     ArrayList<HashMap<String, String>> normal_searchridelist;
-    String str_from, str_to,pathnew;
+    ArrayList<HashMap<String, String>> filter_searchridelist;
+    String str_from, str_to;
 
     static String from = "from";
     static String to = "to";
@@ -89,12 +92,16 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
     static String midwaydrop="midwaydrop";
     static String phone="phone";
     static String username="username";
+    static String noofpersons="noofpersons";
+    static String returndate="returndate";
+    static String godate="godate";
 
     Typeface tf;
     List<String> fromadd;
     List<String> toadd;
     ImageView settings_icon;
     LinearLayout lin_offer_ride;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,15 +112,33 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         search_from = (Spinner) findViewById(R.id.search_from);
         search_go = (Spinner) findViewById(R.id.search_go);
         offer = (TextView) findViewById(R.id.offer);
+        empty=(ImageView) findViewById(R.id.empty);
 
-        searchridelist = new ArrayList<>();
+
+        dialog2 = new Dialog(RideSearch.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader1);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+
+
         normal_searchridelist=new ArrayList<>();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        advanced_search = (TextView) findViewById(R.id.advanced_search);
+        filter_searchridelist=new ArrayList<>();
+
+        SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor edit = s_pref.edit();
+        edit.putString("view_post", "");
+        edit.commit();
+
+
+        //advanced_search = (TextView) findViewById(R.id.advanced_search);
         searchlist = (ListView) findViewById(R.id.searchlist);
         filter = (Button) findViewById(R.id.filter);
         settings_icon = (ImageView) findViewById(R.id.settings_icon);
         back_arrow = (LinearLayout) findViewById(R.id.back_arrow);
+        spinner_from_lnr = (LinearLayout) findViewById(R.id.spinner_from_lnr);
+        lnr_empty = (LinearLayout) findViewById(R.id.lnr_empty);
         morepost = (TextView) findViewById(R.id.morepost);
         lin_offer_ride=(LinearLayout)findViewById(R.id.lin_offer_ride);
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
@@ -121,16 +146,9 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-
         search_from.setOnItemSelectedListener(this);
         search_go.setOnItemSelectedListener(this);
-
-
-        SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor edit = s_pref.edit();
-
-        edit.putString("view_post", "");
-        edit.commit();
+        lnr_empty.setVisibility(View.GONE);
 
 
 
@@ -157,11 +175,9 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         toadd.add("Paranur Station");
 
 
-        // Creating adapter for spinner
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fromadd);
-        // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
         search_from.setAdapter(dataAdapter);
 
 
@@ -176,26 +192,26 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         setSpinner1();
         setSpinner2();
 
-
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         token = sharedPreferences.getString("token", "");
         uid = sharedPreferences.getString("id", "");
 
-        //search_go.addTextChangedListener(passwordWatcher);
+        if (Util.Operations.isOnline(RideSearch.this))
+        {
+            new RideSearchAsync().execute();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_LONG).show();
+        }
 
-        new RideSearchAsync().execute();
+
 
 
         settings_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("tag", "DDD");
-
-
                 PopupMenu popup = new PopupMenu(RideSearch.this, settings_icon);
-                //Inflating the Popup using xml file
-                // popup.getMenuInflater().inflate(R.menu.opt_menu, popup.getMenu());
 
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.opt_menu, popup.getMenu());
@@ -219,6 +235,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                                 return true;
 
                             case R.id.item2:
+                                Log.e("tag","guna");
                                 Intent intent=new Intent(getApplicationContext(),MyRideHistory.class);
                                 startActivity(intent);
                                 finish();
@@ -236,48 +253,109 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
                 });
 
-                popup.show();//showing popup menu
+                popup.show();
+            }
+        });
 
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("tag","@1");
+                SharedPreferences s_pref1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                check_filter=s_pref1.getString("ride_search","");
+
+
+
+                if(check_filter.equals("no_data"))
+                {
+                    Log.e("tag","@2");
+                    Toast.makeText(getApplicationContext(),"You can't able to filter because no data available",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    if(filter_searchridelist.isEmpty())
+                    {
+                        Log.e("tag","@3");
+                        rideAdapter.notifyDataSetChanged();
+                        normal_searchridelist.clear();
+
+                        str_from=search_from.getSelectedItem().toString();
+                        str_to=search_go.getSelectedItem().toString();
+
+                        SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor edit = s_pref.edit();
+                        edit.putString("view_post", "filter");
+                        edit.putString("from",str_from);
+                        edit.putString("to",str_to);
+                        edit.commit();
+
+                        if (Util.Operations.isOnline(RideSearch.this)) {
+                            if (!str_from.equals("Start Location") && !str_to.equals("Destination Location") )
+                            {
+                                new filterAsync(str_from, str_to).execute();
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Please select Source & Destination..",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else
+                    {
+                        Log.e("tag","@4");
+                        filterAdapter.notifyDataSetChanged();
+                        filter_searchridelist.clear();
+                        str_from=search_from.getSelectedItem().toString();
+                        str_to=search_go.getSelectedItem().toString();
+                        SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor edit = s_pref.edit();
+                        edit.putString("view_post", "filter");
+                        edit.putString("from",str_from);
+                        edit.putString("to",str_to);
+                        edit.commit();
+                        if (Util.Operations.isOnline(RideSearch.this)) {
+                            if (!str_from.equals("Start Location") && !str_to.equals("Destination Location") )
+
+                            {
+                                new filterAsync(str_from,str_to).execute();
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Please select Source & Destination..",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
         });
 
 
 
-        filter.setOnClickListener(new View.OnClickListener() {
+        morepost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences s_pref1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                check_filter=s_pref1.getString("ride_search","");
+                Log.e("tag","checkkkkkkkkkk"+check_filter);
 
-
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                str_from=search_from.getSelectedItem().toString();
-                str_to=search_go.getSelectedItem().toString();
-                Log.e("tag","^^^^^^^"+str_to);
-
-                SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor edit = s_pref.edit();
-                edit.putString("view_post", "filter");
-                edit.putString("from",str_from);
-                edit.putString("to",str_to);
-                edit.commit();
-
-                if (Util.Operations.isOnline(RideSearch.this)) {
-                    if (!str_from.equals("Start Location") && !str_to.equals("Destination Location") )
-                    {
-                        searchridelist.clear();
-                        new filterAsync(str_from,str_to).execute();
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"Please select Source & Destination..",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else
+                if(check_filter.equals("no_data"))
                 {
-                    Toast.makeText(getApplicationContext(), "No Internet Connectivity", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"You can't able to view More Post because no data available",Toast.LENGTH_LONG).show();
                 }
-
-
+                else {
+                    Intent i = new Intent(getApplicationContext(), MorePOst.class);
+                    startActivity(i);
+                    finish();
+                }
 
             }
         });
@@ -291,49 +369,11 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
             }
         });
 
-
-        morepost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (searchlist != null) {
-                    Intent i = new Intent(getApplicationContext(), MorePOst.class);
-                    startActivity(i);
-                    finish();
-                }
-                else
-                {
-                    TastyToast.makeText(getApplicationContext(), "Sorry, No Rides are Available", TastyToast.LENGTH_LONG, TastyToast.INFO);
-                }
-
-
-            }
-        });
-
-        advanced_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-              /*  if( searchridelist.isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"No one can post MRide",Toast.LENGTH_LONG).show();
-                }*/
-
-               /* str_from=search_from.getSelectedItem().toString();
-                str_to=search_go.getSelectedItem().toString();*/
-                Intent i = new Intent(getApplicationContext(), AdvancedSearch.class);
-               /* i.putExtra("from_location", str_from);
-                i.putExtra("to_location",str_to);*/
-                startActivity(i);
-                finish();
-            }
-        });
-
         lin_offer_ride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), OfferRide.class);
-                startActivity(i);
+                Intent offer_ride = new Intent(getApplicationContext(), OfferRideNew.class);
+                startActivity(offer_ride);
                 finish();
             }
         });
@@ -351,7 +391,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
         mi.setTitle(mNewTitle);
     }
     private void exitIcon() {
-
         LayoutInflater layoutInflater = LayoutInflater.from(RideSearch.this);
         View promptView = layoutInflater.inflate(R.layout.exitdialog, null);
         final AlertDialog alertD = new AlertDialog.Builder(RideSearch.this).create();
@@ -381,9 +420,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                 editor.commit();
                 logoutMethod();
                 alertD.dismiss();
-
-
-
             }
         });
 
@@ -403,7 +439,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
     }
 
     private void aboutUs() {
-
         LayoutInflater layoutInflater = LayoutInflater.from(RideSearch.this);
         View promptView = layoutInflater.inflate(R.layout.aboutus, null);
         final AlertDialog alertD = new AlertDialog.Builder(RideSearch.this).create();
@@ -428,8 +463,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                 alertD.dismiss();
             }
         });
-
-
         alertD.setView(promptView);
         alertD.show();
 
@@ -444,8 +477,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                     return true;
                 }
             }
-
-
 
 
             @Override
@@ -504,7 +535,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
     private final TextWatcher passwordWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -534,8 +564,9 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
 
         protected void onPreExecute() {
+            dialog2.show();
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+
 
         }
 
@@ -561,9 +592,10 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
         @Override
         protected void onPostExecute(String jsonstr) {
-            Log.e("tag", "<-----111111111--------->" + jsonstr);
+            Log.e("tag", "<-----0000000--------->" + jsonstr);
+            dialog2.dismiss();
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
+
 
             if (jsonstr.equals("")) {
 
@@ -576,10 +608,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
                     JSONArray data1 = jo.getJSONArray("message");
-                    Log.e("tag","...#...1"+data1);
-
-
-
 
 
                     if (data1.length() > 0) {
@@ -587,62 +615,81 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                             HashMap<String, String> map = new HashMap<String, String>();
                             JSONObject jsonObject = data1.getJSONObject(i1);
 
-
-                            String postforride = jsonObject.getString("postforride");
-
-                            JSONObject pos_rent = new JSONObject(postforride);
-                            Log.e("tag","pos_rent"+  pos_rent);
-
+                            map.put("_id", jsonObject.getString("_id"));
+                            Log.e("tag", "c1" + jsonObject.getString("_id"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            Log.e("tag", "c2" + jsonObject.getString("phone"));
+                            map.put("midwaydrop", jsonObject.getString("midwaydrop"));
+                            Log.e("tag", "c3" + jsonObject.getString("midwaydrop"));
+                            map.put("price", jsonObject.getString("price"));
+                            Log.e("tag", "c4" + jsonObject.getString("price"));
+                            map.put("to", jsonObject.getString("to"));
+                            Log.e("tag", "c5" + jsonObject.getString("to"));
+                            map.put("from", jsonObject.getString("from"));
+                            Log.e("tag", "c6" + jsonObject.getString("from"));
                             map.put("mobileno", jsonObject.getString("mobileno"));
-                            map.put("email", jsonObject.getString("email"));
-                            map.put("username", jsonObject.getString("username"));
-
-                            map.put("from", pos_rent.getString("from"));
-                            map.put("to", pos_rent.getString("to"));
-                            map.put("date", pos_rent.getString("date"));
-                            map.put("price", pos_rent.getString("price"));
-                            map.put("midwaydrop", pos_rent.getString("midwaydrop"));
-                            map.put("phone", pos_rent.getString("phone"));
-                            Log.e("tag","please"+pos_rent.getString("phone"));
+                            Log.e("tag", "c7" + jsonObject.getString("mobileno"));
+                            map.put("date", jsonObject.getString("date"));
+                            Log.e("tag", "c8" + jsonObject.getString("date"));
 
 
-                            JSONArray img_ar = jsonObject.getJSONArray("licence");
-
-                            Log.e("tag","pos_rent_image"+  img_ar);
-
-                            if(img_ar.length()>0){
-
-                                for(int i =0;i<img_ar.length();i++){
-
-                                    JSONObject img_obj =img_ar.getJSONObject(i);
-
-                                    pathnew = IMAGE_UPLOAD + img_obj.getString("filename");
-
-                                    Log.e("tag", "data: " + pathnew);
-
-                                    map.put("path", pathnew);
+                            JSONObject other_det = jsonObject.getJSONObject("otherdetails");
+                            Log.e("tag", "jk" + other_det);
+                            map.put("noofpersons", other_det.getString("noofpersons"));
+                            Log.e("tag", "c0001" + other_det.getString("noofpersons"));
+                            JSONObject other_det1 = other_det.getJSONObject("roundtrip");
+                            map.put("returndate", other_det1.getString("returndate"));
+                            Log.e("tag", "c0002" + other_det1.getString("returndate"));
+                            map.put("godate", other_det1.getString("godate"));
+                            Log.e("tag", "c0003" + other_det1.getString("godate"));
 
 
+                            JSONArray userdetails = jsonObject.getJSONArray("userdetails");
+
+                            Log.e("tag", "userdetails" + userdetails);
+                            for (int u = 0; u < userdetails.length(); u++) {
+                                JSONObject user_obj = userdetails.getJSONObject(u);
+                                map.put("email", user_obj.getString("email"));
+                                Log.e("tag", "c9" + user_obj.getString("email"));
+                                map.put("username", user_obj.getString("username"));
+                                Log.e("tag", "c10" + user_obj.getString("username"));
+
+
+                                JSONArray license = user_obj.getJSONArray("licence");
+                                Log.e("tag", "c11" + user_obj.getString("licence"));
+                                for (int j = 0; j < license.length(); j++) {
+                                    JSONObject pos_rent = license.getJSONObject(j);
+                                    String path = SHOW_IMAGE + pos_rent.getString("filename");
+                                    map.put("path" , path);
+                                    Log.e("tag","joooo"+path);
                                 }
                             }
 
+                            lnr_empty.setVisibility(View.GONE);
                             normal_searchridelist.add(map);
+                            SharedPreferences s_pref1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor edit = s_pref1.edit();
+                            edit.putString("ride_search", "data");
+                            edit.commit();
                             Log.e("tag","<---contactList---->"+  normal_searchridelist);
 
-
                         }
+                        rideAdapter = new RideAdapter(RideSearch.this, normal_searchridelist);
+                        searchlist.setAdapter(rideAdapter);
 
 
                     } else
                     {
+                        SharedPreferences s_pref1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor edit = s_pref1.edit();
+                        edit.putString("ride_search", "no_data");
+                        edit.commit();
+                        lnr_empty.setVisibility(View.VISIBLE);
                         //Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_LONG).show();
                     }
 
 
-                    Log.e("tag","normal_searchridelist"+normal_searchridelist);
 
-                    rideAdapter = new RideAdapter(RideSearch.this, normal_searchridelist);
-                    searchlist.setAdapter(rideAdapter);
 
 
                 } catch (JSONException e) {
@@ -663,8 +710,9 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
 
         protected void onPreExecute() {
+            dialog2.show();
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+
 
         }
 
@@ -677,8 +725,8 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                 Log.e("tag","token"+token);
                 //location,landmark,address,roomtype,monthlyrent,gender,description
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("from", source);
-                jsonObject.accumulate("to", end);
+                jsonObject.accumulate("from",source);
+                jsonObject.accumulate("to",end);
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest1(URL1, json, uid, token);
             } catch (Exception e) {
@@ -689,9 +737,10 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
         @Override
         protected void onPostExecute(String jsonstr) {
-            Log.e("tag", "<-----111111111--------->" + jsonstr);
+            Log.e("tag", "<-----0000000--------->" + jsonstr);
+            dialog2.dismiss();
             super.onPostExecute(jsonstr);
-            progressBar.setVisibility(View.GONE);
+
 
             if (jsonstr.equals("")) {
 
@@ -704,10 +753,6 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
                     JSONArray data1 = jo.getJSONArray("message");
-                    Log.e("tag","...#...1"+data1);
-
-
-
 
 
                     if (data1.length() > 0) {
@@ -715,62 +760,70 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
                             HashMap<String, String> map = new HashMap<String, String>();
                             JSONObject jsonObject = data1.getJSONObject(i1);
 
-
-                            String postforride = jsonObject.getString("postforride");
-
-                            JSONObject pos_rent = new JSONObject(postforride);
-                            Log.e("tag","pos_rent"+  pos_rent);
-
+                            map.put("_id", jsonObject.getString("_id"));
+                            Log.e("tag", "c1" + jsonObject.getString("_id"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            Log.e("tag", "c2" + jsonObject.getString("phone"));
+                            map.put("midwaydrop", jsonObject.getString("midwaydrop"));
+                            Log.e("tag", "c3" + jsonObject.getString("midwaydrop"));
+                            map.put("price", jsonObject.getString("price"));
+                            Log.e("tag", "c4" + jsonObject.getString("price"));
+                            map.put("to", jsonObject.getString("to"));
+                            Log.e("tag", "c5" + jsonObject.getString("to"));
+                            map.put("from", jsonObject.getString("from"));
+                            Log.e("tag", "c6" + jsonObject.getString("from"));
                             map.put("mobileno", jsonObject.getString("mobileno"));
-                            map.put("email", jsonObject.getString("email"));
-                            map.put("username", jsonObject.getString("username"));
-
-                            map.put("from", pos_rent.getString("from"));
-                            map.put("to", pos_rent.getString("to"));
-                            map.put("date", pos_rent.getString("date"));
-                            map.put("price", pos_rent.getString("price"));
-                            map.put("midwaydrop", pos_rent.getString("midwaydrop"));
-                            map.put("phone", pos_rent.getString("phone"));
+                            Log.e("tag", "c7" + jsonObject.getString("mobileno"));
+                            map.put("date", jsonObject.getString("date"));
+                            Log.e("tag", "c8" + jsonObject.getString("date"));
 
 
-                            JSONArray img_ar = jsonObject.getJSONArray("licence");
-
-                            Log.e("tag","pos_rent_image"+  img_ar);
-
-                            if(img_ar.length()>0){
-
-                                for(int i =0;i<img_ar.length();i++){
-
-                                    JSONObject img_obj =img_ar.getJSONObject(i);
-
-                                    pathnew = IMAGE_UPLOAD + img_obj.getString("filename");
-
-                                    Log.e("tag", "data: " + pathnew);
-
-                                    map.put("path", pathnew);
+                            JSONObject other_det = jsonObject.getJSONObject("otherdetails");
+                            Log.e("tag", "jk" + other_det);
+                            map.put("noofpersons", other_det.getString("noofpersons"));
+                            Log.e("tag", "c0001" + other_det.getString("noofpersons"));
+                            JSONObject other_det1 = other_det.getJSONObject("roundtrip");
+                            map.put("returndate", other_det1.getString("returndate"));
+                            Log.e("tag", "c0002" + other_det1.getString("returndate"));
+                            map.put("godate", other_det1.getString("godate"));
+                            Log.e("tag", "c0003" + other_det1.getString("godate"));
 
 
+                            JSONArray userdetails = jsonObject.getJSONArray("userdetails");
+
+                            Log.e("tag", "userdetails" + userdetails);
+                            for (int u = 0; u < userdetails.length(); u++) {
+                                JSONObject user_obj = userdetails.getJSONObject(u);
+                                map.put("email", user_obj.getString("email"));
+                                Log.e("tag", "c9" + user_obj.getString("email"));
+                                map.put("username", user_obj.getString("username"));
+                                Log.e("tag", "c10" + user_obj.getString("username"));
+
+
+                                JSONArray license = user_obj.getJSONArray("licence");
+                                Log.e("tag", "c11" + user_obj.getString("licence"));
+                                for (int j = 0; j < license.length(); j++) {
+                                    JSONObject pos_rent = license.getJSONObject(j);
+                                    String path = SHOW_IMAGE + pos_rent.getString("filename");
+                                    map.put("path" , path);
+                                    Log.e("tag","joooo"+path);
                                 }
                             }
 
-                            searchridelist.add(map);
-                            Log.e("tag","<---contactList---->"+  searchridelist);
-
+                            lnr_empty.setVisibility(View.GONE);
+                            filter_searchridelist.add(map);
 
                         }
+                        filterAdapter = new FilterRideAdapter(RideSearch.this, filter_searchridelist);
+                        searchlist.setAdapter(filterAdapter);
 
 
                     } else
                     {
-                        Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_LONG).show();
+                        lnr_empty.setVisibility(View.VISIBLE);
+
+                        //Toast.makeText(getApplicationContext(),"No Rides are Available in this Location..",Toast.LENGTH_LONG).show();
                     }
-
-
-                    Log.e("tag","normal_searchridelist"+searchridelist);
-
-                    rideAdapter = new RideAdapter(RideSearch.this, searchridelist);
-                    searchlist.setAdapter(rideAdapter);
-
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -796,6 +849,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
 
 
             protected void onPreExecute() {
+                dialog2.show();
                 super.onPreExecute();
                 //progressBar.setVisibility(View.VISIBLE);
 
@@ -843,6 +897,7 @@ public class RideSearch extends Activity implements AdapterView.OnItemSelectedLi
             @Override
             protected void onPostExecute(String jsonStr) {
                 Log.e("tag", "<-----result---->" + jsonStr);
+                dialog2.dismiss();
                 super.onPostExecute(jsonStr);
 
                 try {

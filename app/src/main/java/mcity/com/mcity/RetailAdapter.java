@@ -98,7 +98,7 @@ public class RetailAdapter extends BaseAdapter{
         txt_menu= (TextView) itemView.findViewById(R.id.txt_menu);
         call=(ImageView)itemView.findViewById(R.id.call);
 
-        str_shop_path=IMAGE_UPLOAD+resultp.get("filename");
+        str_shop_path=IMAGE_UPLOAD+resultp.get("shop_logo");
         Log.e("tag","testing..."+str_shop_path);
 
         /*str_shop_view=IMAGE_UPLOAD+resultp.get("filename1");
@@ -118,18 +118,18 @@ public class RetailAdapter extends BaseAdapter{
         txt_address.setTypeface(tf);
         txt_time.setTypeface(tf);
 
-        String str_shopname=resultp.get(OneFragment.shopname);
-        String str_description=resultp.get(OneFragment.description);
-        String str_address=resultp.get(OneFragment.address);
-        String str_openingtime=resultp.get(OneFragment.openingtime);
+        String str_shopname=resultp.get("shop_name");
+        String str_description=resultp.get("shop_sub_type");
+        String str_address=resultp.get("shop_address");
+        String str_openingtime=resultp.get("time_mon_sat");
 
         Log.e("tag","checking_values"+str_shopname+str_description+str_address+str_openingtime);
 
 
-        txt_shopname.setText(resultp.get(TwoFragment.retailname));
-        txt_address.setText(resultp.get(TwoFragment.description));
-        txt_time.setText(resultp.get(TwoFragment.openingtime));
-        txt_description.setText(resultp.get(TwoFragment.retaildescription));
+        txt_shopname.setText(resultp.get("shop_name"));
+        txt_address.setText(resultp.get("shop_address"));
+        txt_time.setText(resultp.get("time_mon_sat"));
+        txt_description.setText(resultp.get("shop_sub_type"));
 
 
 

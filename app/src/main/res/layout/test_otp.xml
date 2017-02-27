@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Please, Check your Mobile:******7666 for OTP Code"
+            android:text="Please, Check your Mobile for OTP Code"
             android:layout_marginTop="@dimen/_20sdp"
             android:textColor="#333333"
             android:textSize="@dimen/_14sdp" />

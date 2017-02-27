@@ -2,10 +2,12 @@ package mcity.com.mcity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,8 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,16 +39,18 @@ import java.util.HashMap;
  * Created by Admin on 03-11-2016.
  */
 public class TwoFragment extends Fragment{
-    String SHOP_URL = Data_Service.URL_API + "getretails";
+    String SHOP_URL = Data_Service.URL_API + "getretailsnew";
     TextView tv, tv1, tv2;
     TextView t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, txt_order;
     ImageView call, call1, call2;
     String str_token, str_uid,str_shop_path;
     RetailAdapter retailadapter;
     ListView shoplist;
-    ArrayList<HashMap<String, String>> shoparraylist;
+    ArrayList<HashMap<String, String>> retailarraylist;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
-
+    HashMap<String, String> map;
+    ProgressBar progressBar;
+    Dialog dialog2;
 
 
     static String retaildescription= "retaildescription";
@@ -69,16 +75,25 @@ public class TwoFragment extends Fragment{
 
         FontsManager.initFormAssets(getActivity(), "mont.ttf");
         FontsManager.changeFonts(getActivity());
-        shoparraylist=new ArrayList<>();
+        retailarraylist=new ArrayList<>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
 
+
+
+        dialog2 = new Dialog(getActivity());
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+
         shoplist=(ListView)view.findViewById(R.id.shoplist);
 
 
-        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "mont.ttf");
+                Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "mont.ttf");
 
 
         retailService();
@@ -104,6 +119,7 @@ public class TwoFragment extends Fragment{
     private class RetailSearch extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -129,75 +145,65 @@ public class TwoFragment extends Fragment{
         @Override
         protected void onPostExecute(String jsonstr) {
             super.onPostExecute(jsonstr);
+            dialog2.dismiss();
             //progressBar.setVisibility(View.GONE);
 
             if (jsonstr.equals("")) {
 
-                Toast.makeText(getActivity(), "Check Network Connection", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
 
             } else {
 
                 try {
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
-                    Log.e("tag","status"+status);
+
 
                     JSONArray data1 = jo.getJSONArray("message");
                     {
-                        for (int j = 0; j < data1.length(); j++)
-                        {
-
-                            Log.e("tag", "length" + data1.length());
+                        for (int j = 0; j < data1.length(); j++) {
 
                             JSONObject dataObj = data1.getJSONObject(j);
-                            Log.e("tag", "dataobj" + dataObj);
+                            map = new HashMap<String, String>();
 
+                            map.put("_id", dataObj.getString("_id"));
+                            Log.e("tag","1.."+dataObj.getString("_id"));
+                            map.put("shop_sub_type", dataObj.getString("shop_sub_type"));
+                            Log.e("tag","2.."+dataObj.getString("shop_sub_type"));
+                            map.put("shop_name", dataObj.getString("shop_name"));
+                            Log.e("tag","3.."+dataObj.getString("shop_name"));
+                            map.put("shop_address", dataObj.getString("shop_address"));
+                            Log.e("tag","4.."+dataObj.getString("shop_address"));
+                            map.put("time_mon_sat",dataObj.getString("time_mon_sat"));
+                            Log.e("tag","5.."+dataObj.getString("time_mon_sat"));
+                            map.put("shop_logo",dataObj.getString("shop_logo"));
+                            Log.e("tag","7.."+dataObj.getString("shop_logo"));
 
-                            HashMap<String, String> map1 = new HashMap<String, String>();
-                            map1.put("_id", dataObj.getString("_id"));
-                            map1.put("retailname", dataObj.getString("retailname"));
-                            Log.e("tag","111"+dataObj.getString("retailname"));
-                            map1.put("openingtime", dataObj.getString("openingtime"));
-                            Log.e("tag","222"+dataObj.getString("openingtime"));
-                            map1.put("retaildescription", dataObj.getString("retaildescription"));
-                            Log.e("tag","333"+dataObj.getString("retaildescription"));
-                            map1.put("mobileno", dataObj.getString("mobileno"));
-                            map1.put("description", dataObj.getString("description"));
-                            Log.e("tag", "guna" +  dataObj.getString("description"));
-
-
-
-                            JSONArray data2 = dataObj.getJSONArray("logo");
+                            JSONArray data2= dataObj.getJSONArray("images");
                             for (int k = 0; k < data2.length(); k++) {
 
                                 JSONObject path = data2.getJSONObject(k);
-                                map1.put("filename", path.getString("filename"));
+                                map.put("_id", path.getString("_id"));
+                                Log.e("tag","8.."+path.getString("_id"));
+                                map.put("image", path.getString("image"));
+                                Log.e("tag","9.."+path.getString("image"));
                             }
 
-
-
-                            JSONArray data3 = dataObj.getJSONArray("viewmenu");
-                            Log.e("tag","000");
-                            for (int l = 0; l < data3.length(); l++) {
-                                Log.e("tag","111");
-                                JSONObject path = data3.getJSONObject(l);
-                                map1.put("filename1", path.getString("filename"));
-                                Log.e("tag","222"+path.getString("filename"));
-                            }
-
-                            shoparraylist.add(map1);
+                            retailarraylist.add(map);
                         }
-                    }
-                    Log.e("tag","list"+shoparraylist);
-                    retailadapter = new RetailAdapter(getActivity(), shoparraylist);
-                    shoplist.setAdapter(retailadapter);
 
+                    }
+
+
+                    retailadapter = new RetailAdapter(getActivity(), retailarraylist);
+                    shoplist.setAdapter(retailadapter);
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
+
         }
     }
 }

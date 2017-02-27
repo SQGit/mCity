@@ -53,9 +53,8 @@ import java.util.TimerTask;
  * Created by Admin on 01-11-2016.
  */
 public class MCoupon extends Activity {
-    String URL = Data_Service.URL_API + "getcoupons";
+    String URL = Data_Service.URL_API + "getcouponsnew";
     String LOGOUT = Data_Service.URL_API + "logout";
-
     String str_token, str_uid;
     CouponAdapter couponadapter;
     ListView couponlist;
@@ -65,12 +64,8 @@ public class MCoupon extends Activity {
     public int currentimageindex = 0;
     Dialog dialog2;
     ProgressBar progressBar;
-    String IMAGE_AD1 = Data_Service.URL_ADS + "ad1/";
-    String IMAGE_AD2 = Data_Service.URL_ADS + "ad2/";
-    static String shopname = "shopname";
-    static String expireddate = "expireddate";
-    static String description = "description";
-    static String _id="_id";
+    TextView txt_loading;
+    HashMap<String, String> map;
 
     private int[] IMAGE_IDS = {
             R.drawable.ad1,R.drawable.ad2};
@@ -99,10 +94,9 @@ public class MCoupon extends Activity {
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.test_loader);
         progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+        txt_loading=(TextView)dialog2.findViewById(R.id.txt_loading);
 
         final Handler mHandler = new Handler();
-
-        // Create runnable for posting
         final Runnable mUpdateResults = new Runnable() {
             public void run()
             {
@@ -111,17 +105,13 @@ public class MCoupon extends Activity {
         };
 
         int delay = 100; // delay for 1 sec.
-
         int period = 5000; // repeat every 4 sec.
-
         Timer timer = new Timer();
 
         timer.scheduleAtFixedRate(new TimerTask() {
 
             public void run() {
-
                 mHandler.post(mUpdateResults);
-
             }
 
         }, delay, period);
@@ -144,18 +134,15 @@ public class MCoupon extends Activity {
                 PopupMenu popup = new PopupMenu(MCoupon.this, img_settings_icon);
 
                 popup.getMenuInflater().inflate(R.menu.opt_menu1, popup.getMenu());
-
                 MenuInflater inflater = popup.getMenuInflater();
                 MenuItem pinMenuItem1 = popup.getMenu().getItem(0);
                 MenuItem pinMenuItem2 = popup.getMenu().getItem(1);
-
                 applyFontToMenuItem(pinMenuItem1);
                 applyFontToMenuItem(pinMenuItem2);
 
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-
                         int id = item.getItemId();
                         switch (id) {
                             case R.id.item1:
@@ -211,7 +198,6 @@ public class MCoupon extends Activity {
             public void onClick(View v) {
                 SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(MCoupon.this);
                 SharedPreferences.Editor editor = shared.edit();
-                //editor.putString("check","");
                 editor.putString("login_status","false");
                 editor.commit();
                 logoutMethod();
@@ -252,14 +238,12 @@ public class MCoupon extends Activity {
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
         head1.setTypeface(tf);
         txt_msg.setTypeface(tf);
-
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertD.dismiss();
             }
         });
-
         alertD.setView(promptView);
         alertD.show();
     }
@@ -280,8 +264,6 @@ public class MCoupon extends Activity {
     private void couponService() {
 
         if (Util.Operations.isOnline(MCoupon.this)) {
-
-
             new CouponSearch().execute();
 
 
@@ -303,8 +285,8 @@ public class MCoupon extends Activity {
         @Override
         protected String doInBackground(String... params) {
 
-            String json = "", jsonStr = "";
-            String id = "";
+            String json = "", jsonStr;
+
             try {
 
 
@@ -324,8 +306,6 @@ public class MCoupon extends Activity {
         protected void onPostExecute(String jsonstr) {
             super.onPostExecute(jsonstr);
             dialog2.dismiss();
-            //progressBar.setVisibility(View.GONE);
-
             if (jsonstr.equals("")) {
 
                 Toast.makeText(getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
@@ -336,29 +316,27 @@ public class MCoupon extends Activity {
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
 
-
                     JSONArray data1 = jo.getJSONArray("message");
                     {
                         for (int j = 0; j < data1.length(); j++) {
 
                             JSONObject dataObj = data1.getJSONObject(j);
+                            map = new HashMap<String, String>();
+                            map.put("_id", dataObj.getString("_id"));
+                            map.put("coupon_code", dataObj.getString("coupon_code"));
+                            map.put("coupon_expiry_date", dataObj.getString("coupon_expiry_date"));
+                            map.put("coupon_desc", dataObj.getString("coupon_desc"));
+                            map.put("coupon_expiry_date",dataObj.getString("coupon_expiry_date"));
 
-                            HashMap<String, String> map1 = new HashMap<String, String>();
-                            map1.put("_id", dataObj.getString("_id"));
-                            Log.e("tag","id_checking.."+dataObj.getString("_id"));
-                            map1.put("shopname", dataObj.getString("shopname"));
-                            map1.put("expireddate", dataObj.getString("expireddate"));
-                            map1.put("description", dataObj.getString("description"));
-
-                            JSONArray data2= dataObj.getJSONArray("logo");
+                            JSONArray data2= dataObj.getJSONArray("shopdetails");
                             for (int k = 0; k < data2.length(); k++) {
 
                                 JSONObject path = data2.getJSONObject(k);
-                                map1.put("filename", path.getString("filename"));
-                                Log.e("tag","123"+path.getString("filename"));
+                                map.put("shop_name", path.getString("shop_name"));
+                                map.put("shop_logo", path.getString("shop_logo"));
                             }
 
-                            couponarraylist.add(map1);
+                            couponarraylist.add(map);
                         }
 
                     }
@@ -400,10 +378,8 @@ public class MCoupon extends Activity {
 
                 if (statusCode == 200) {
                     json = EntityUtils.toString(r_entity);
-
                     JSONObject result1 = new JSONObject(json);
                     String status = result1.getString("status");
-
 
                     if (status.equals("true")) {
 
@@ -433,17 +409,14 @@ public class MCoupon extends Activity {
 
                 if (status.equals("true"))
                 {
-
                     Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
                     Intent exit=new Intent(getApplicationContext(),Test_L.class);
                     startActivity(exit);
                     finish();
-
                 }
                 else
                 {
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
                 }
             }
             catch (JSONException e) {
@@ -454,7 +427,6 @@ public class MCoupon extends Activity {
     }
 
 
-
     @Override
     public void onBackPressed()
     {
@@ -462,6 +434,5 @@ public class MCoupon extends Activity {
         startActivity(back_arrow);
         finish();
     }
-
 }
 

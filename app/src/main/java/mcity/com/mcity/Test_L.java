@@ -1,6 +1,7 @@
 package mcity.com.mcity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,7 +35,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.json.JSONArray;
@@ -56,16 +57,17 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
     ImageView iv_login,iv_otp;
-    EditText et_email, et_otp;
-    String str_email, str_otp, str_otppin;
-    TextView tv_otp, tv_register;
+    EditText et_email;
+    String str_email,  str_otppin;
+    TextView tv_otp,text_account,textView_Register;
     SharedPreferences s_pref;
     SharedPreferences.Editor editor;
     LinearLayout layout_register;
     ProgressBar progressBar;
     Dialog dialog2;
+    Typeface tf;
     int i = 0, k;
-    String str_mobileno, str_password,str_emailValue,str_token, str_uid,str_get_email,str_check,str_signupstatus;
+    String str_token, str_uid,str_signupstatus;
 
     static EditText et_otp1, et_otp2, et_otp3, et_otp4, et_otp5;
     private View view;
@@ -85,9 +87,9 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-       // iv_next = (ImageView) findViewById(R.id.submittv);
+
         tv_otp = (TextView) findViewById(R.id.text_Otp);
-        //progressBar=(ProgressBar)findViewById(R.id.spinner);
+
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -194,10 +196,16 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
             FontsManager.changeFonts((Activity) getApplicationContext());*/
 
             if (position == 0) {
-
+                Typeface font = Typeface.createFromAsset(getAssets(), "mont.ttf");
                 et_email = (EditText) view.findViewById(R.id.editText_email);
+                text_account=(TextView)view.findViewById(R.id.text_account);
+                textView_Register=(TextView)view.findViewById(R.id.textView_Register);
                 iv_login = (ImageView) view.findViewById(R.id.login_btn);
 
+
+                et_email.setTypeface(font);
+                text_account.setTypeface(font);
+                textView_Register.setTypeface(font);
                 layout_register = (LinearLayout) view.findViewById(R.id.layout_register);
                 layout_register.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -230,7 +238,6 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
                     public void onClick(View v) {
 
                         Log.e("tag", "11111");
-                      //  iv_next.setEnabled(true);
 
                         iv_login.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -251,7 +258,7 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
 
                                 else
                                 {
-                                    TastyToast.makeText(getApplicationContext(), "Please Enter Mobile No", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                                    Toast.makeText(getApplicationContext(), "Please Enter Mobile No", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -273,16 +280,9 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
                 et_otp4.addTextChangedListener(new Test_L(et_otp4));
 
 
-
-
-
-
-
                 iv_otp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-
                             str_email = et_email.getText().toString().trim();
                             if (et_otp1.getText().toString().isEmpty()) {
                                 et_otp1.requestFocus();
@@ -304,7 +304,7 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
                                                 if (str_otppin.length() > 0) {
                                                     new AsyncLogin(str_email, str_otppin).execute();
                                                 } else {
-                                                    TastyToast.makeText(getApplicationContext(), "Please Enter OTP code", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                                                    Toast.makeText(getApplicationContext(), "Please Enter OTP code", Toast.LENGTH_LONG).show();
 
                                                 }
 
@@ -382,7 +382,7 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
 
 
         protected void onPreExecute() {
-            //progressBar.setVisibility(View.VISIBLE);
+
             dialog2.show();
             iv_login.setVisibility(View.GONE);
             super.onPreExecute();
@@ -412,7 +412,7 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
 
             super.onPostExecute(jsonStr);
 
-            //edt_pwd.setEnabled(true);
+            dialog2.dismiss();
 
             try {
                 JSONObject jo = new JSONObject(jsonStr);
@@ -422,7 +422,7 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
 
                 if (status.equals("true")) {
 
-                   // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
 
                     viewPager.setCurrentItem(R.layout.test_otp);
 
@@ -431,7 +431,9 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
 
                 } else
                 {
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                    infoDialog();
+
 
                 }
             } catch (JSONException e) {
@@ -439,6 +441,41 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void infoDialog()
+    {
+
+        LayoutInflater layoutInflater = LayoutInflater.from(Test_L.this);
+        View promptView = layoutInflater.inflate(R.layout.exitdialog1, null);
+        final AlertDialog alertD = new AlertDialog.Builder(Test_L.this).create();
+        alertD.setCancelable(false);
+        Window window = alertD.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final TextView head1 = (TextView) promptView.findViewById(R.id.head1);
+        final TextView head2 = (TextView) promptView.findViewById(R.id.head2);
+        final Button yes = (Button) promptView.findViewById(R.id.yes);
+
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
+        head1.setTypeface(tf);
+        head2.setTypeface(tf);
+        yes.setTypeface(tf);
+        head1.setText("INFO");
+        head2.setText("You have to Register first to get OTP");
+
+        yes.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                alertD.dismiss();
+                Intent ff=new Intent(getApplicationContext(),Test_L.class);
+                startActivity(ff);
+                finish();
+            }
+        });
+        alertD.setView(promptView);
+        alertD.show();
     }
 
 
@@ -452,67 +489,41 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
     }
 
     class AsyncLogin extends AsyncTask<String, Void, String> {
-
         String email, password;
-
         public AsyncLogin(String email, String password) {
             String json = "", jsonStr = "";
             this.email = email;
             this.password = password;
-
         }
 
         protected void onPreExecute() {
-
             dialog2.show();
             iv_otp.setVisibility(View.GONE);
             super.onPreExecute();
-
         }
 
         protected String doInBackground(String... params) {
-
             String json = "", jsonStr = "";
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("mobileno", str_email);
                 jsonObject.accumulate("password", str_otppin);
                 json = jsonObject.toString();
-
                 return jsonStr = HttpUtils.makeRequest(URL_LOGIN, json);
             } catch (Exception e) {
             }
             return null;
-
         }
 
         @Override
         protected void onPostExecute(String jsonStr) {
+            dialog2.dismiss();
             super.onPostExecute(jsonStr);
-
 
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
                 String msg = jo.getString("message");
-                JSONArray ja = jo.getJSONArray("licence");
-
-
-                if (ja.length() > 0) {
-
-                    for (int i = 0; i < ja.length(); i++) {
-
-                        JSONObject img_obj = ja.getJSONObject(i);
-
-                        String pathnew = LICENCE + img_obj.getString("filename");
-                        s_pref = PreferenceManager.getDefaultSharedPreferences(Test_L.this);
-                        editor = s_pref.edit();
-                        editor.putString("file_generate", pathnew);
-                        editor.commit();
-
-
-                    }
-                }
 
                 if (status.equals("true")) {
 
@@ -521,14 +532,14 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
                     iv_otp.setVisibility(View.VISIBLE);
                     String id = jo.getString("id");
                     String token = jo.getString("token");
-                    int s = ja.length();
+                    String mride=jo.getString("mride");
 
 
                     SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor edit = s_pref.edit();
                     edit.putString("id", id);
                     edit.putString("token", token);
-                    edit.putInt("licence_activation", s);
+                    edit.putString("mride",mride);
                     edit.putString("login_status", "true");
                     edit.commit();
 
@@ -536,7 +547,9 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
                     Intent intent = new Intent(getApplicationContext(), Dashboard.class);
                     startActivity(intent);
                     finish();
-                } else {
+                }
+                else
+                {
                     Toast.makeText(getApplicationContext(), msg + "\n      Please generate OTP", Toast.LENGTH_SHORT).show();
 
                 }
@@ -571,6 +584,8 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
         head1.setTypeface(tf);
         head2.setTypeface(tf);
 
+        head2.setTextSize(10);
+
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -589,15 +604,10 @@ public class Test_L extends AppCompatActivity implements TextWatcher {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 alertD.dismiss();
             }
         });
         alertD.setView(promptView);
         alertD.show();
-
     }
     }
-
-
-

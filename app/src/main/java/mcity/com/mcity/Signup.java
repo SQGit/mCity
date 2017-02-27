@@ -11,8 +11,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -205,5 +208,54 @@ public class Signup extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+        showExit();
+    }
+
+    private void showExit() {
+        LayoutInflater layoutInflater = LayoutInflater.from(Signup.this);
+        View promptView = layoutInflater.inflate(R.layout.exitlogin, null);
+        final android.app.AlertDialog alertD = new android.app.AlertDialog.Builder(Signup.this).create();
+        alertD.setCancelable(false);
+        Window window = alertD.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final TextView head1 = (TextView) promptView.findViewById(R.id.head1);
+        final TextView head2 = (TextView) promptView.findViewById(R.id.head2);
+        final ImageView no = (ImageView) promptView.findViewById(R.id.no);
+        final ImageView yes = (ImageView) promptView.findViewById(R.id.yes);
+
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "mont.ttf");
+        head1.setTypeface(tf);
+        head2.setTypeface(tf);
+
+        head2.setTextSize(10);
+
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i1 = new Intent(Intent.ACTION_MAIN);
+                i1.setAction(Intent.ACTION_MAIN);
+                i1.addCategory(Intent.CATEGORY_HOME);
+                i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i1);
+                finish();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertD.dismiss();
+            }
+        });
+        alertD.setView(promptView);
+        alertD.show();
+    }
 
 }

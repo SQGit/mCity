@@ -55,19 +55,16 @@ public class HttpUtils {
         Log.e("tag", "URL-->" + url);
         Log.e("tag", "input-->" + json);
         Log.e("tag","id"+id);
+        Log.e("tag","token"+token);
 
         try {
             HttpPost httpPost = new HttpPost(url);
             httpPost.setEntity(new StringEntity(json));
             httpPost.setHeader("id", id);
-
             httpPost.setHeader("x-access-token",token);
-
             httpPost.setHeader("Content-type", "application/json");
-            //text/html
+
             HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
-
-
             InputStream inputStream = httpResponse.getEntity().getContent();
 
             if (inputStream != null) {

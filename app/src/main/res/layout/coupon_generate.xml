@@ -63,8 +63,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:layout_gravity="center"/>
-
-
             </LinearLayout>
 
 
@@ -102,18 +100,6 @@
                 android:text=""
                 android:background="#E5E5E5"
                 android:textSize="@dimen/_14sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_gravity="center"
-                android:gravity="center"/>
-
-
-            <TextView
-                android:id="@+id/redeem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Redeem this code to get this offer!!"
-                android:textSize="@dimen/_14sdp"
-                android:textColor="#E51C39"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_gravity="center"
                 android:gravity="center"/>

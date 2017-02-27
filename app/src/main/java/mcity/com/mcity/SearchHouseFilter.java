@@ -1,15 +1,18 @@
 package mcity.com.mcity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +20,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.json.JSONArray;
@@ -29,7 +31,7 @@ import java.util.HashMap;
 
 public class SearchHouseFilter extends Activity {
     ImageView submit;
-    String URL = Data_Service.URL_API + "searchforrent";
+    String URL = Data_Service.URL_API + "searchforrentnew";
     String ALL_RENT = Data_Service.URL_API + "allrent";
     String SHOW_IMAGE = Data_Service.URL_IMG + "rent/";
     ListView listView;
@@ -37,59 +39,59 @@ public class SearchHouseFilter extends Activity {
     ArrayList<HashMap<String, ArrayList<String>>> contactList1;
     static String description = "description";
     static String landmark = "bedroom";
-    static String furnishedtype = "furnishedtype";
     static String address = "address";
-    static String residential= "residential";
     static String monthlyrent = "monthlyrent";
     static String location ="location";
-    static String bedroom = "bedroom";
-    static String renttype="renttype";
     static String mobileno="mobileno";
     static String email="email";
     static String path="path";
     static String phone="phone";
     static String username="username";
-    ArrayList<String> image_url;
-    ProgressBar progressBar;
     HashMap<String, String> map;
+    ProgressBar progressBar;
+    Dialog dialog2;
 
 
 
-    LinearLayout back;
+
+    LinearLayout back,lnr_empty;
     SearchHouseAdapter houseAdapter;
     ArrayList<String> imagelist = new ArrayList<>();
-    ArrayList<Integer> timeNames;
     String id, token;
-    String loc, resi,furnish,minRent, maxRent, bedtype,allrent;
+    String loc, resi,furnish, bedtype,allrent;
 
-    /**
-     * Called when the activity is first created.
-     */
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_filter);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+
 
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
+
         Intent intent = getIntent();
         loc = intent.getStringExtra("area");
-        Log.e("tag","!!!!!3"+loc);
         resi=intent.getStringExtra("residential");
         furnish=intent.getStringExtra("Furnishedtype");
-        minRent = intent.getStringExtra("minRent");
-        maxRent = intent.getStringExtra("maxRent");
         bedtype = intent.getStringExtra("bedroom");
         allrent=intent.getStringExtra("allrent");
 
-        Log.e("tag","qqq"+allrent);
-
         listView = (ListView) findViewById(R.id.listView);
         back = (LinearLayout) findViewById(R.id.back_arrow);
+        lnr_empty=(LinearLayout)findViewById(R.id.lnr_empty);
+
+        dialog2 = new Dialog(SearchHouseFilter.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
+
         contactList = new ArrayList<>();
         contactList1 = new ArrayList<>();
-
+        lnr_empty.setVisibility(View.GONE);
 
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -97,22 +99,60 @@ public class SearchHouseFilter extends Activity {
         token = sharedPreferences.getString("token", "");
         id = sharedPreferences.getString("id", "");
 
-        if(allrent==null)
 
+        if(loc==null)
         {
-            Log.e("tag","aaa"+allrent);
-            new SearchHouseAsync().execute();
+            loc = "";
         }
-
-        else if(allrent.equals("allrent"))
-        {
-            new HistoryRental().execute();
-        }
-
         else
         {
-            new SearchHouseAsync().execute();
+            if(resi==null)
+            {
+                resi="";
+            }
+            else{
+                if(furnish==null)
+                {
+                    furnish="";
+                }
+                else
+                {
+                    if(loc==null&&resi==null&&furnish==null)
+                    {
+                        loc="";
+                        furnish="";
+                        resi="";
+                    }
+                    else
+                    {
+                        if(loc==null&&resi==null)
+                        {
+                            loc="";
+                            resi="";
+                        }
+                        else
+                        {
+                            if(loc==null&&furnish==null)
+                            {
+                                loc="";
+                                furnish="";
+                            }
+                            else
+                            {
+                                if(resi==null&&furnish==null)
+                                {
+                                    resi="";
+                                    furnish="";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+
+        new SearchHouseAsync().execute();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,12 +170,13 @@ public class SearchHouseFilter extends Activity {
     class SearchHouseAsync extends AsyncTask<String, Void, String> {
 
         public SearchHouseAsync() {
-            String json = "", jsonStr = "";
+            String json = "", jsonStr;
         }
 
         protected void onPreExecute() {
+            dialog2.show();
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+
 
 
         }
@@ -147,13 +188,9 @@ public class SearchHouseFilter extends Activity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("location",loc);
-                Log.e("tag","@@@@"+loc);
                 jsonObject.accumulate("residential",resi);
                 jsonObject.accumulate("bedroom",bedtype);
                 jsonObject.accumulate("furnishedtype",furnish);
-                jsonObject.accumulate("minvalue", minRent);
-                jsonObject.accumulate("maxvalue", maxRent);
-
 
 
                 json = jsonObject.toString();
@@ -165,217 +202,63 @@ public class SearchHouseFilter extends Activity {
             return null;
 
         }
-
         @Override
         protected void onPostExecute(String jsonStr) {
-            Log.e("tag", "whole data" + jsonStr);
-        progressBar.setVisibility(View.GONE);
-        super.onPostExecute(jsonStr);
-        try {
-            JSONObject jo = new JSONObject(jsonStr);
-            String status = jo.getString("status");
-            Log.e("tag", "<-----Status----->" + status);
-            if (status.equals("true")) {
-                JSONArray data = jo.getJSONArray("message");
-
-                Log.e("tag", "<-----data_length----->" + data.length());
-
-
-                if (data.length() > 0) {
-                    for (int i1 = 0; i1 < data.length(); i1++) {
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        JSONObject jsonObject = data.getJSONObject(i1);
-
-
-                        String postforrent = jsonObject.getString("postforrent");
-
-                        JSONObject pos_rent = new JSONObject(postforrent);
-                        Log.e("tag","pos_rent"+  pos_rent);
-
-                        map.put("mobileno", jsonObject.getString("mobileno"));
-                        Log.e("tag","number_status"+jsonObject.getString("mobileno"));
-                        map.put("email", jsonObject.getString("email"));
-                        map.put("username", jsonObject.getString("username"));
-
-
-                        map.put("monthlyrent", pos_rent.getString("monthlyrent"));
-                        map.put("description", pos_rent.getString("description"));
-                        map.put("phone", pos_rent.getString("phone"));
-                        map.put("bedroom", pos_rent.getString("bedroom"));
-                        map.put("furnishedtype", pos_rent.getString("furnishedtype"));
-                        map.put("address", pos_rent.getString("address"));
-                        map.put("renttype", pos_rent.getString("renttype"));
-                        map.put("residential", pos_rent.getString("residential"));
-                        map.put("location", pos_rent.getString("location"));
-
-                        JSONArray img_ar = pos_rent.getJSONArray("imageurl");
-
-                        if(img_ar.length()>0){
-
-
-                            for(int i =0;i<img_ar.length();i++){
-
-                                JSONObject img_obj =img_ar.getJSONObject(i);
-
-                                String path = SHOW_IMAGE + img_obj.getString("filename");
-
-                                map.put("path" + i, path);
-                                Log.e("tag","image_location"+path);
-
-
-                            }
-                        }
-
-                        contactList.add(map);
-                        Log.e("tag","<---contactList---->"+  contactList);
-
-
-                    }
-
-                        /*Intent intent = new Intent(getApplicationContext(), SearchHouseFilter.class);
-                        intent.putExtra("location", timeNames);
-                        finish();*/
-                    houseAdapter = new SearchHouseAdapter(getApplicationContext(), contactList);
-                    listView.setAdapter(houseAdapter);
-
-                } else
-                {
-                    TastyToast.makeText(getApplicationContext(), "Your desired House/Apt is not Avalable now", TastyToast.LENGTH_LONG, TastyToast.INFO);
-                    //Toast.makeText(getApplicationContext(),"Your desired house/PG is not available Now..",Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-    }
-
-    private class HistoryRental extends AsyncTask<String,String,String>{
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-
-            String json = "", jsonStr = "";
-            String id = "";
-            try {
-
-
-                JSONObject jsonObject = new JSONObject();
-                json = jsonObject.toString();
-
-                return jsonStr = HttpUtils.makeRequest1(ALL_RENT, json, id, token);
-            } catch (Exception e) {
-                Log.e("InputStream", e.getLocalizedMessage());
-            }
-            return null;
-
-        }
-
-
-        @Override
-        protected void onPostExecute(String jsonStr) {
-            Log.e("tag", "whole data" + jsonStr);
-            progressBar.setVisibility(View.GONE);
+            dialog2.dismiss();
             super.onPostExecute(jsonStr);
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
-                Log.e("tag", "<-----Status----->" + status);
+
                 if (status.equals("true")) {
                     JSONArray data = jo.getJSONArray("message");
-
-                    Log.e("tag","111"+data);
-
-                    Log.e("tag", "<-----data_length----->" + data.length());
 
 
                     if (data.length() > 0)
                     {
-                        Log.e("tag","1");
+
                         for (int i1 = 0; i1 < data.length(); i1++) {
-                            Log.e("tag", "2");
-
-
                             JSONObject jsonObject = data.getJSONObject(i1);
+                            map = new HashMap<String, String>();
 
-                            JSONArray pos_rent_array = jsonObject.getJSONArray("postforrent");
-                            Log.e("tag", "3" + pos_rent_array);
+                            map.put("mobileno", jsonObject.getString("mobileno"));
+                            map.put("monthlyrent", jsonObject.getString("monthlyrent"));
+                            map.put("description", jsonObject.getString("description"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            map.put("bedroom", jsonObject.getString("bedroom"));
+                            map.put("furnishedtype", jsonObject.getString("furnishedtype"));
+                            map.put("address", jsonObject.getString("address"));
+                            map.put("renttype", jsonObject.getString("renttype"));
+                            map.put("residential", jsonObject.getString("residential"));
+                            map.put("location", jsonObject.getString("location"));
 
-                            for (int j = 0; j < pos_rent_array.length(); j++) {
+                            JSONArray userdetails = jsonObject.getJSONArray("userdetails");
 
-
-                                map = new HashMap<String, String>();
-                                JSONObject pos_rent = pos_rent_array.getJSONObject(j);
-
-
-                                map.put("mobileno", jsonObject.getString("mobileno"));
-                                Log.e("tag", "01" + jsonObject.getString("mobileno"));
-                                map.put("email", jsonObject.getString("email"));
-                                Log.e("tag", "02" + jsonObject.getString("email"));
-                                map.put("username", jsonObject.getString("username"));
-                                Log.e("tag", "03" + jsonObject.getString("username"));
-                                map.put("monthlyrent", pos_rent.getString("monthlyrent"));
-                                Log.e("tag", "04" + pos_rent.getString("monthlyrent"));
-                                map.put("description", pos_rent.getString("description"));
-                                Log.e("tag", "05" + pos_rent.getString("description"));
-                                map.put("phone", pos_rent.getString("phone"));
-                                Log.e("tag", "06" + pos_rent.getString("phone"));
-                                map.put("bedroom", pos_rent.getString("bedroom"));
-                                Log.e("tag", "07" + pos_rent.getString("bedroom"));
-                                map.put("furnishedtype", pos_rent.getString("furnishedtype"));
-                                Log.e("tag", "08" + pos_rent.getString("furnishedtype"));
-                                map.put("address", pos_rent.getString("address"));
-                                Log.e("tag", "09" + pos_rent.getString("address"));
-                                map.put("renttype", pos_rent.getString("renttype"));
-                                Log.e("tag", "10" + pos_rent.getString("renttype"));
-                                map.put("residential", pos_rent.getString("residential"));
-                                Log.e("tag", "11" + pos_rent.getString("residential"));
-                                map.put("location", pos_rent.getString("location"));
-                                Log.e("tag", "12" + pos_rent.getString("location"));
-
-
-
-                                JSONArray img_ar = pos_rent.getJSONArray("imageurl");
-
-                                if(img_ar.length()>0){
-
-
-                                    for(int i =0;i<img_ar.length();i++){
-
-                                        JSONObject img_obj =img_ar.getJSONObject(i);
-
-                                        String path = SHOW_IMAGE + img_obj.getString("filename");
-
-                                        map.put("path" + i, path);
-                                        Log.e("tag","image_location"+path);
-
-
-                                    }
-                                }
-
-                                contactList.add(map);
-                                Log.e("tag", "CONTACT_LIST"+contactList1);
-
+                            for(int u =0;u<userdetails.length();u++){
+                                JSONObject user_obj =userdetails.getJSONObject(u);
+                                map.put("email", user_obj.getString("email"));
+                                map.put("username", user_obj.getString("username"));
                             }
+
+                            JSONArray img_ar = jsonObject.getJSONArray("imageurl");
+
+                            if(img_ar.length()>0){
+                                for(int i =0;i<img_ar.length();i++){
+                                    JSONObject img_obj =img_ar.getJSONObject(i);
+                                    String path = SHOW_IMAGE + img_obj.getString("filename");
+                                    map.put("path" + i, path);
+                                }
+                            }
+
+                            contactList.add(map);
                         }
-
-
+                        lnr_empty.setVisibility(View.GONE);
                         houseAdapter = new SearchHouseAdapter(getApplicationContext(), contactList);
                         listView.setAdapter(houseAdapter);
 
                     } else
                     {
-                        TastyToast.makeText(getApplicationContext(), "Sorry, No House/Apt are available Now", TastyToast.LENGTH_LONG, TastyToast.INFO);
-                        //Toast.makeText(getApplicationContext(),"Sorry no one can POST PROPERTY",Toast.LENGTH_SHORT).show();
+                        lnr_empty.setVisibility(View.VISIBLE);
                     }
                 }
             } catch (JSONException e) {

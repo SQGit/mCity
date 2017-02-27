@@ -30,13 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
-
-import org.apache.http.entity.mime.content.FileBody;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,7 +45,6 @@ public class HouseAdapter extends BaseAdapter {
     ArrayList<HashMap<String, String>> data;
     Bitmap b;
     HashMap<String, String> resultp = new HashMap<String, String>();
-
     String enable_status,img1, img2, img3, img4;
     ArrayList<String> loading ;
     String str_cusno, str_owner_no,str_owner_mail,str_username;
@@ -146,6 +139,10 @@ public class HouseAdapter extends BaseAdapter {
         str_cusno = sharedPreferences.getString("mobileno", "");
 
 
+
+
+
+
         Picasso.with(context)
                 .load(resultp.get("path0"))
                 .into(loadimage);
@@ -200,7 +197,7 @@ public class HouseAdapter extends BaseAdapter {
                 }
                 else
                 {
-                    TastyToast.makeText(v.getContext(), "You cant able to make call. Please contact through mail...", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                    Toast.makeText(v.getContext(), "You cant able to make call. Please contact through mail...",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -216,7 +213,7 @@ public class HouseAdapter extends BaseAdapter {
                         "mailto", str_owner_mail, null));
 
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "MCity");
-                emailIntent.putExtra(Intent.EXTRA_TEXT   , "Hi  "+str_username+"\n"+ "   Iam interested in your Property. Please contact me.");
+                emailIntent.putExtra(Intent.EXTRA_TEXT   , "Hi  "+str_username+"\n"+ "   I am interested in your Property. Please contact me.");
                 emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(emailIntent);
 
@@ -227,13 +224,8 @@ public class HouseAdapter extends BaseAdapter {
         loadimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
                 loading = new ArrayList<>();
                 resultp = data.get(position);
-
 
                 for(int i =0;i<4;i++){
                     if(resultp.get("path"+i)!= null){
@@ -241,21 +233,10 @@ public class HouseAdapter extends BaseAdapter {
                     }
                 }
 
-                if (loading.size() > 0) {
-
                 LayoutInflater layoutInflater = LayoutInflater.from(v.getRootView().getContext());
                 View promptView = layoutInflater.inflate(R.layout.zoom_layout1, null);
-                    ImageView close_iv;
-                    close_iv=(ImageView)v.findViewById(R.id.close_iv);
                 final AlertDialog.Builder alertbox = new AlertDialog.Builder(v.getRootView().getContext());
                 alertbox.setCancelable(true);
-
-                   /* close_iv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alertbox.
-                        }
-                    });*/
 
                 ViewPager mViewPager;
                 CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(v.getRootView().getContext(), loading);
@@ -264,10 +245,6 @@ public class HouseAdapter extends BaseAdapter {
                 mCustomPagerAdapter.notifyDataSetChanged();
                 alertbox.setView(promptView);
                 alertbox.show();
-            }
-                else{
-                    TastyToast.makeText(v.getContext(), "no images found", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }
             }
         });
 

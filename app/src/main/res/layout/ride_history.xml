@@ -53,7 +53,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingBottom="@dimen/_50sdp">
 
@@ -65,49 +65,82 @@
                 android:layout_below="@+id/l2"
                 android:layout_marginTop="@dimen/_2sdp">
             </ListView>
+
+
+            <LinearLayout
+                android:id="@+id/lnr_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_60sdp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/lnr_bike"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_65sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:background="@drawable/search_circle">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/search_white"
+                        android:id="@+id/empty" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="FOR SEARCH"/>
+
+
+                <View
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:background="#d8d8d8">
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="!! No Contents to display"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="Please make the search more relevant to"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="get the contents.."
+                    />
+            </LinearLayout>
+
         </LinearLayout>
 
 
 
-
-
-  <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_centerVertical="true"
-            style="?android:attr/progressBarStyle"
-            android:layout_centerHorizontal="true" />
-
-    </LinearLayout>
-
-
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:orientation="vertical"
-        android:layout_marginRight="@dimen/_10sdp">
-
-
-
-
-        <include
-            android:id="@+id/container_header_lyt"
-            layout="@layout/footer_privacyplolicy1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-        </include>
-
-
-
-    </LinearLayout>-->
 
 
 

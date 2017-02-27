@@ -68,7 +68,6 @@ public class MRental extends TabActivity {
 
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         back = (LinearLayout) findViewById(R.id.back_arrow);
-        //postentry_id = (TextView) findViewById(R.id.postentry_id);
         settings_icon = (ImageView) findViewById(R.id.settings_icon);
         slidingimage = (ImageView) findViewById(R.id.iv);
         tabView = createTabView(getApplicationContext(), "Find a House/Apt", R.drawable.house);
@@ -170,8 +169,6 @@ public class MRental extends TabActivity {
         Intent intent = new Intent(this, SearchHouse.class);
         firstTabSpec.setIndicator(tabView).setContent(intent);
 
-
-
         secondTabSpec.setIndicator(tabViewroom).setContent(new Intent(this, SearchPg.class));
         tabHost.addTab(firstTabSpec);
         tabHost.addTab(secondTabSpec);
@@ -179,7 +176,6 @@ public class MRental extends TabActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(), RentalHistory.class);
                 startActivity(intent);
                 finish();
@@ -191,15 +187,8 @@ public class MRental extends TabActivity {
     private void AnimateandSlideShow() {
 
         slidingimage.setImageResource(IMAGE_IDS[currentimageindex % IMAGE_IDS.length]);
-
-
         currentimageindex++;
-
-
-
         Animation rotateimage = AnimationUtils.loadAnimation(this, R.anim.right_left);
-
-
         slidingimage.startAnimation(rotateimage);
     }
 
@@ -293,12 +282,13 @@ public class MRental extends TabActivity {
 
     private View createTabView(Context context, String tabText, int home_icon) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.customlayout, null, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.customlayoutss, null, true);
 
         TextView tv = (TextView) view.findViewById(R.id.tabTitleText1);
         tf = Typeface.createFromAsset(this.getAssets(), "mont.ttf");
         tv.setText(tabText);
         tv.setTypeface(tf);
+        tv.setTextSize(14);
         return view;
     }
 
@@ -309,6 +299,7 @@ public class MRental extends TabActivity {
         tf = Typeface.createFromAsset(this.getAssets(), "mont.ttf");
         tv.setText(tabText);
         tv.setTypeface(tf);
+        tv.setTextSize(14);
         return view;
     }
 

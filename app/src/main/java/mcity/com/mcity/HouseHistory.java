@@ -2,10 +2,12 @@ package mcity.com.mcity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -28,8 +30,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.sdsmdg.tastytoast.TastyToast;
 import com.sloop.fonts.FontsManager;
 
 import org.apache.http.client.HttpClient;
@@ -46,13 +46,16 @@ import java.util.HashMap;
  * Created by Admin on 25-10-2016.
  */
 public class HouseHistory extends Activity {
-    String URL = Data_Service.URL_API + "myrent";
+    String URL = Data_Service.URL_API + "myrentnew";
+    String SHOW_IMAGE = Data_Service.URL_IMG + "rent/";
     String str_token, str_uid;
-    ProgressBar progressBar;
     ArrayList<HashMap<String, String>> rentHistory;
     ListView searchlist;
     MyHouseAdapter myHouseAdapter;
     ListView listView;
+    HashMap<String, String> map;
+    ProgressBar progressBar;
+    Dialog dialog2;
 
     static String mobileno = "mobileno";
     static String email = "email";
@@ -63,7 +66,7 @@ public class HouseHistory extends Activity {
     static String residential="residential";
     static String renttype="renttype";
     static String id_main="id_main";
-    static String id_sub="id_sub";
+    static String _id="_id";
 
 
     @Override
@@ -72,8 +75,14 @@ public class HouseHistory extends Activity {
         setContentView(R.layout.house_history);
 
         searchlist = (ListView) findViewById(R.id.searchlist);
+        dialog2 = new Dialog(HouseHistory.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+
         listView=(ListView)findViewById(R.id.searchlist);
 
         FontsManager.initFormAssets(this, "mont.ttf");
@@ -105,8 +114,9 @@ public class HouseHistory extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
+            dialog2.show();
             Log.e("tag","two");
-            progressBar.setVisibility(View.VISIBLE);
+
 
         }
 
@@ -135,61 +145,76 @@ public class HouseHistory extends Activity {
 
 
         @Override
-        protected void onPostExecute(String jsonstr) {
-            Log.e("tag", "whole data" + jsonstr);
-            progressBar.setVisibility(View.GONE);
-            super.onPostExecute(jsonstr);
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "whole data" + jsonStr);
+            dialog2.dismiss();
+            super.onPostExecute(jsonStr);
             try {
-                JSONObject jo = new JSONObject(jsonstr);
+                JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
                 Log.e("tag", "<-----Status----->" + status);
                 if (status.equals("true")) {
-                    JSONObject data = jo.getJSONObject("message");
+                    JSONArray data = jo.getJSONArray("message");
+
+                    Log.e("tag","111"+data);
 
                     Log.e("tag", "<-----data_length----->" + data.length());
-                    JSONArray data1 = data.getJSONArray("postforrent");
-                    Log.e("tag", "****" + data1);
-                    Log.e("tag", "length" + data1.length());
 
 
-                    if (data1.length() > 0) {
+                    if (data.length() > 0)
+                    {
+                        Log.e("tag","1");
+                        for (int i1 = 0; i1 < data.length(); i1++) {
+                            Log.e("tag", "2");
 
-                        for (int m = 0; m < data1.length(); m++)
-                        {
-                            HashMap<String, String> map = new HashMap<String, String>();
-                            JSONObject pos_rent = data1.getJSONObject(m);
-                            {
 
-                                map.put("mobileno", data.getString("mobileno"));
-                                map.put("email", data.getString("email"));
-                                map.put("id_main", data.getString("_id"));
+                            JSONObject jsonObject = data.getJSONObject(i1);
+                            map = new HashMap<String, String>();
 
-                                map.put("monthlyrent", pos_rent.getString("monthlyrent"));
-                                map.put("description", pos_rent.getString("description"));
-                                map.put("phone", pos_rent.getString("phone"));
-                                map.put("bedroom", pos_rent.getString("bedroom"));
-                                map.put("furnishedtype", pos_rent.getString("furnishedtype"));
-                                map.put("address", pos_rent.getString("address"));
-                                map.put("renttype", pos_rent.getString("renttype"));
-                                map.put("residential", pos_rent.getString("residential"));
-                                map.put("location", pos_rent.getString("location"));
-                                map.put("id_sub", pos_rent.getString("_id"));
+                            map.put("mobileno", jsonObject.getString("mobileno"));
+                            Log.e("tag", "01" + jsonObject.getString("mobileno"));
+                            map.put("monthlyrent", jsonObject.getString("monthlyrent"));
+                            Log.e("tag", "04" + jsonObject.getString("monthlyrent"));
+                            map.put("description", jsonObject.getString("description"));
+                            Log.e("tag", "05" + jsonObject.getString("description"));
+                            map.put("phone", jsonObject.getString("phone"));
+                            Log.e("tag", "06" + jsonObject.getString("phone"));
+                            map.put("bedroom", jsonObject.getString("bedroom"));
+                            Log.e("tag", "07" + jsonObject.getString("bedroom"));
+                            map.put("furnishedtype", jsonObject.getString("furnishedtype"));
+                            Log.e("tag", "08" + jsonObject.getString("furnishedtype"));
+                            map.put("address", jsonObject.getString("address"));
+                            Log.e("tag", "09" + jsonObject.getString("address"));
+                            map.put("renttype", jsonObject.getString("renttype"));
+                            Log.e("tag", "10" + jsonObject.getString("renttype"));
+                            map.put("residential", jsonObject.getString("residential"));
+                            Log.e("tag", "11" + jsonObject.getString("residential"));
+                            map.put("location", jsonObject.getString("location"));
+                            Log.e("tag", "12" + jsonObject.getString("location"));
+                            map.put("_id",jsonObject.getString("_id"));
 
-                                rentHistory.add(map);
+
+
+                            JSONArray img_ar = jsonObject.getJSONArray("imageurl");
+
+                            if(img_ar.length()>0){
+                                for(int i =0;i<img_ar.length();i++){
+                                    JSONObject img_obj =img_ar.getJSONObject(i);
+                                    String path = SHOW_IMAGE + img_obj.getString("filename");
+                                    map.put("path" + i, path);
+                                }
                             }
-
+                            rentHistory.add(map);
                         }
 
 
                         myHouseAdapter = new MyHouseAdapter(HouseHistory.this, rentHistory);
                         listView.setAdapter(myHouseAdapter);
-                    }
 
-
-                    else
+                    } else
                     {
-                        TastyToast.makeText(getApplicationContext(), "You did't Post any House/Apt", TastyToast.LENGTH_LONG, TastyToast.INFO);
-                        //Toast.makeText(getApplicationContext(),"You did't Post any House/Apt",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Sorry, No House/Apt are available Now", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),"Sorry no one can POST PROPERTY",Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (JSONException e) {

@@ -191,7 +191,6 @@ public class AdvancedSearch extends Activity implements AdapterView.OnItemSelect
                 .append(day).append("-").append(month + 1).append("-")
                 .append(year).append(""));
 
-
         lnr_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,8 +219,6 @@ public class AdvancedSearch extends Activity implements AdapterView.OnItemSelect
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-
-
                         switch (id) {
                             case R.id.item1:
                                 aboutUs();
@@ -446,7 +443,8 @@ public class AdvancedSearch extends Activity implements AdapterView.OnItemSelect
         });
 
 
-    } //************* change option menu typeface settings page.
+    }
+    //************* change option menu typeface settings page.
     private void applyFontToMenuItem(MenuItem mi)
     {
         Typeface font = Typeface.createFromAsset(getAssets(), "mont.ttf");

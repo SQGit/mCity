@@ -49,20 +49,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/settings_icon"
                 android:layout_gravity="right|center"/>
-
-
         </LinearLayout>
-
-
-
-      <!--  <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:scaleType="fitXY"
-            android:id="@+id/iv"/>
--->
-
-
 
 
     </LinearLayout>
@@ -88,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Offer Ride"
+            android:textSize="@dimen/_14sdp"
             android:textColor="#000"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_gravity="center"/>
@@ -107,6 +95,7 @@
 
 
         <LinearLayout
+            android:id="@+id/spinner_from_lnr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -120,11 +109,12 @@
                 android:layout_marginLeft="@dimen/_10sdp"/>
 
             <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_220sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:singleLine="true"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
+                android:background="@null"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:drawablePadding="@dimen/_6sdp"
@@ -132,7 +122,11 @@
                 android:id="@+id/search_from" />
 
 
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/down_full"/>
         </LinearLayout>
 
         <View
@@ -141,7 +135,6 @@
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:background="#d8d8d8">
-
         </View>
         <LinearLayout
             android:layout_width="match_parent"
@@ -160,16 +153,26 @@
 
 
         <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_40sdp"
             android:id="@+id/search_go"
+            android:background="@null"
+            android:paddingRight="@dimen/_25sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:textSize="@dimen/_11sdp"
             android:hint="Destination"
             android:drawablePadding="@dimen/_6sdp"
             android:singleLine="true"/>
-            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/down_full"/>
+        </LinearLayout>
+
+
 
         <View
             android:layout_width="match_parent"
@@ -180,7 +183,7 @@
             </View>
 
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/advanced_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,15 +194,15 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:text="Advanced Search"
-            android:autoLink="all"/>
+            android:autoLink="all"/>-->
 
-        <View
+       <!-- <View
             android:layout_width="@dimen/_105sdp"
             android:layout_height="1dp"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/_15sdp"
             android:background="#FF5722">
-        </View>
+        </View>-->
 
 
         <Button
@@ -227,7 +230,7 @@
     </LinearLayout>
 
 
-    <ScrollView
+ <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -237,55 +240,108 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_16sdp"
-            android:paddingLeft="@dimen/_16sdp">
+            android:paddingLeft="@dimen/_5sdp">
 
 
             <ListView
                 android:id="@+id/searchlist"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/l2"
                 android:layout_marginTop="@dimen/_2sdp">
             </ListView>
-        </LinearLayout>
-    </ScrollView>
+
+
+            <LinearLayout
+                android:id="@+id/lnr_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/lnr_bike"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_65sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:background="@drawable/search_circle">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/search_white"
+                        android:id="@+id/empty" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="FOR SEARCH"/>
+
+
+                <View
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:background="#d8d8d8">
+                </View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="!! No Contents to display"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="Please make the search more relevant to"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="get the contents.."
+                    />
+            </LinearLayout>
+</LinearLayout>
+ </ScrollView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_centerVertical="true"
-            style="?android:attr/progressBarStyle"
-            android:layout_centerHorizontal="true" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_45sdp"
         android:orientation="vertical"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_5sdp">
+        android:layout_marginBottom="@dimen/_10sdp">
 
 
         <TextView
             android:id="@+id/morepost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_gravity="center"
             android:textColor="#FF9800"
-            android:text="View more Post"/>
+            android:text="View More Rides"/>
 
 
         <View
@@ -298,6 +354,7 @@
             android:id="@+id/container_header_lyt"
             layout="@layout/footer_privacyplolicy1"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
         </include>

@@ -71,16 +71,6 @@
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
-
-            <!-- <ImageView
-                 android:id="@+id/settings_icon"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_marginRight="@dimen/_10sdp"
-                 android:padding="@dimen/_10sdp"
-                 android:background="@drawable/settings_icon"
-                 android:layout_gravity="right"/>-->
-
         </LinearLayout>-->
 
 
@@ -162,14 +152,21 @@
 
                     <Spinner
                         android:id="@+id/edt_from"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/_215sdp"
                         android:layout_height="40dp"
                         android:singleLine="true"
+                        android:background="@null"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:textSize="@dimen/_11sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_3sdp"
                         android:drawablePadding="@dimen/_6sdp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/down_full"/>
 
             </LinearLayout>
 
@@ -200,15 +197,23 @@
 
 
                 <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/_215sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:singleLine="true"
+                    android:background="@null"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:drawablePadding="@dimen/_6sdp"
                     android:id="@+id/edt_to" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/down_full"/>
 
             </LinearLayout>
 
@@ -387,7 +392,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_12sdp"
-                    android:text="Extra Luggage"/>
+                    android:text="No.Of.Persons"/>
 
                 <LinearLayout
                     android:id="@+id/luggage_layout"
@@ -402,9 +407,9 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/weight_icon"
+                        android:drawableLeft="@drawable/persons_icon"
                         android:drawablePadding="@dimen/_15sdp"
-                        android:hint="No.Of. Luggage"
+                        android:hint="No.Of. Persons"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:imeOptions="actionNext"
                         android:inputType="number|text"
@@ -483,7 +488,7 @@
 
 
 
-            <LinearLayout
+           <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"

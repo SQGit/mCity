@@ -37,27 +37,18 @@
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/_45sdp"/>
+                    android:layout_width="@dimen/_230sdp"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:layout_gravity="center"/>
 
 
-
-
-
-
-                <!-- <AutoCompleteTextView
-                     android:id="@+id/location_et_et"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:drawableLeft="@drawable/location_icon"
-                     android:drawablePadding="@dimen/_5sdp"
-                     android:hint="@string/location"
-                     android:imeOptions="actionNext"
-                     android:paddingBottom="@dimen/_13sdp"
-                     android:inputType="textNoSuggestions"
-                     android:singleLine="true"
-                     android:textSize="@dimen/_12sdp" />
- -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/down_full"/>
 
             </LinearLayout>
 
@@ -83,14 +74,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
                     android:drawableLeft="@drawable/location_icon"
-                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/Landmark"
                     android:background="@null"
+                    android:textColor="#000"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:layout_gravity="center"
                     android:singleLine="true"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
@@ -115,15 +107,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
                     android:drawableLeft="@drawable/location_icon"
-                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/address"
+                    android:textColor="#000"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:background="@null"
                     android:maxLines="3"
                     android:layout_gravity="center"
                     android:singleLine="true"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
@@ -186,7 +179,6 @@
                             android:drawableLeft="@drawable/flat_selector"
                             android:drawablePadding="@dimen/_10sdp"
                             android:padding="@dimen/_5sdp"
-
                             android:text="I am Offering Room"
                             android:textSize="@dimen/_10sdp" />
                     </RadioGroup>
@@ -286,9 +278,10 @@
                     android:hint="@string/Montrhlyamt"
                     android:imeOptions="actionNext"
                     android:background="@null"
+                    android:textColor="#000"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_11sdp" />
             </LinearLayout>
 
 
@@ -318,8 +311,9 @@
                     android:hint="@string/projectdescription"
                     android:imeOptions="actionDone"
                     android:inputType="text"
+                    android:textColor="#000"
                     android:background="@null"
-                    android:paddingBottom="@dimen/_13sdp"
+                    android:paddingBottom="@dimen/_11sdp"
                     android:singleLine="true"
                     android:textSize="@dimen/_13sdp" />
 
@@ -368,14 +362,6 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            style="?android:attr/progressBarStyle"
-            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:id="@+id/submit"

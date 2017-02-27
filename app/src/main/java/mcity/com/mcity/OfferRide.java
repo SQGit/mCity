@@ -45,9 +45,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.sloop.fonts.FontsManager;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -61,7 +59,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -70,7 +67,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
@@ -79,9 +75,10 @@ import me.iwf.photopicker.utils.PhotoPickerIntent;
  * Created by Admin on 27-09-2016.
  */
 public class OfferRide extends Activity {
-    String URL = Data_Service.URL_API + "postforride";
+    String URL = Data_Service.URL_API + "postforridenew";
     String LICENCE = Data_Service.URL_API + "licenceupload";
-    static final int TIME_DIALOG_ID = 4444;
+
+
 
     public static int count = 0;
     private static final int REQUEST_CODE = 1;
@@ -99,9 +96,6 @@ public class OfferRide extends Activity {
     private int day;
     Intent intent;
 
-    private int hour;
-    private int minute;
-
     public ImageView img_license_image,img_settings_icon;
     EditText edt_weight, edt_ticket;
     LinearLayout lnr_triplayout,  lnr_date_layout, lnr_luggage_layout, lnr_backarrow, lnr_time_lin, lnr_date_lin, lnr_submit_linr, lnr_settings_linr;
@@ -113,8 +107,6 @@ public class OfferRide extends Activity {
     List<String> fromadd;
     List<String> toadd;
     Typeface tf;
-
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor edit;
     ArrayList<String> selectedPhotos = new ArrayList<>();
@@ -150,8 +142,6 @@ public class OfferRide extends Activity {
         txt_return_date = (TextView) findViewById(R.id.return_date);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         img_settings_icon = (ImageView) findViewById(R.id.settings_icon);
-
-
         btn_add = (Button) findViewById(R.id.add);
         btn_sub = (Button) findViewById(R.id.sub);
 
@@ -172,13 +162,6 @@ public class OfferRide extends Activity {
         lnr_settings_linr.setVisibility(View.GONE);
         // Get current date by calender
 
-        final Calendar ca = Calendar.getInstance();
-        // Current Hour
-        hour = ca.get(Calendar.HOUR_OF_DAY);
-        // Current Minute
-        minute = ca.get(Calendar.MINUTE);
-
-        updateTime(hour, minute);
 
         fromadd = new ArrayList<String>();
         fromadd.add("Select Location");
@@ -201,6 +184,7 @@ public class OfferRide extends Activity {
         toadd.add("Paranur Station");
 
 
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fromadd);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_from.setAdapter(dataAdapter);
@@ -221,9 +205,7 @@ public class OfferRide extends Activity {
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
         int a = sharedPreferences.getInt("licence_activation", 0);  //get from login class
-
         str_lic_activation = String.valueOf(a);
-
 
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
@@ -236,16 +218,46 @@ public class OfferRide extends Activity {
                 .append(year).append("/").append(month + 1).append("/")
                 .append(day).append(""));
 
+
         txt_go_date.setText(new StringBuilder()
                 .append(year).append("/").append(month + 1).append("/")
                 .append(day).append(""));
 
 
-
         lnr_time_lin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(TIME_DIALOG_ID);
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(OfferRide.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+
+                        int hourInt = selectedHour;
+                        String hourConverted = "" + hourInt;
+                        if (hourInt < 10) {
+                            hourConverted = "0" + hourConverted;
+                        }
+
+
+                        int minuteInt = selectedMinute;
+                        String minuteConverted = "" + minuteInt;
+                        if (minuteInt < 10) {
+                            minuteConverted = "0" + minuteConverted;
+                        }
+
+                        txt_timer.setText(hourConverted + ":" + minuteConverted);
+
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
             }
 
         });
@@ -254,8 +266,6 @@ public class OfferRide extends Activity {
         img_settings_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 PopupMenu popup = new PopupMenu(OfferRide.this, img_settings_icon);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.opt_menu, popup.getMenu());
@@ -435,12 +445,10 @@ public class OfferRide extends Activity {
         img_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 str_from = spn_from.getSelectedItem().toString();
                 str_to = spn_to.getSelectedItem().toString();
                 str_date = txt_date.getText().toString();
                 str_time = txt_timer.getText().toString();
-                Log.e("tag","testing...."+str_time);
                 str_merge = str_date + " T " + str_time;
                 str_price = edt_ticket.getText().toString();
 
@@ -465,7 +473,7 @@ public class OfferRide extends Activity {
 
 
                 if (Util.Operations.isOnline(OfferRide.this)) {
-                    if (!str_from.isEmpty() && !str_to.isEmpty() && !str_date.isEmpty() && !str_time.equals("Time") && !str_price.isEmpty()) {
+                    if (!str_from.isEmpty() && !str_to.isEmpty() && !str_date.isEmpty() && !str_time.isEmpty() && !str_price.isEmpty()) {
 
                         if (!(sharedPreferences.getString("file_generate","").equals(""))) {
                             new PostRideAsync(str_from, str_to, str_merge, str_price, str_midway, str_pho_enable, str_round_godate, str_round_returndate, str_round_luggage).execute();
@@ -738,8 +746,10 @@ public class OfferRide extends Activity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_PICKER_ID:
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, pickerListener1, year, month, day );
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + 100000);
+                return datePickerDialog;
 
-                return new DatePickerDialog(this, pickerListener, year, month, day);
 
             case DATE_PICKER_ID2:
                 return new DatePickerDialog(this, pickerListener1, year, month, day);
@@ -747,13 +757,6 @@ public class OfferRide extends Activity {
 
             case DATE_PICKER_ID3:
                 return new DatePickerDialog(this, pickerListener3, year, month, day);
-
-            case TIME_DIALOG_ID:
-
-                // set time picker as current time
-                return new TimePickerDialog(this, timePickerListener, hour, minute,
-                        false);
-
         }
         return null;
     }
@@ -823,6 +826,7 @@ public class OfferRide extends Activity {
         }
     };
 
+
     private DatePickerDialog.OnDateSetListener pickerListener3 = new DatePickerDialog.OnDateSetListener() {
 
         // when dialog box is closed, below method will be called.
@@ -855,7 +859,6 @@ public class OfferRide extends Activity {
 
         }
     };
-
 
     private class ImageUpload extends AsyncTask<String, String, String> {
         @Override
@@ -1015,7 +1018,7 @@ public class OfferRide extends Activity {
                     spn_from.clearFocus();
                     spn_to.clearFocus();
                     txt_date.setText("");
-                    //txt_timer.setText("");
+                    txt_timer.setText("");
                     edt_ticket.setText("");
                     chk_midway_drop.setChecked(false);
                 }
@@ -1088,7 +1091,6 @@ public class OfferRide extends Activity {
 
         @Override
         protected void onPostExecute(String jsonStr) {
-
             super.onPostExecute(jsonStr);
 
             try {
@@ -1118,71 +1120,6 @@ public class OfferRide extends Activity {
 
 
 
-/*
-    @Override
-    protected Dialog onCreateDialog1(int id) {
-        switch (id) {
-            case TIME_DIALOG_ID:
-
-                // set time picker as current time
-                return new TimePickerDialog(this, timePickerListener, hour, minute,
-                        false);
-
-        }
-        return null;
-    }*/
-
-    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-
-
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
-            // TODO Auto-generated method stub
-            hour   = hourOfDay;
-            minute = minutes;
-
-            updateTime(hour,minute);
-
-        }
-
-    };
-
-    private static String utilTime(int value) {
-
-        if (value < 10)
-            return "0" + String.valueOf(value);
-        else
-            return String.valueOf(value);
-    }
-
-    // Used to convert 24hr format to 12hr format with AM/PM values
-    private void updateTime(int hours, int mins) {
-
-        String timeSet = "";
-        if (hours > 12) {
-            hours -= 12;
-            timeSet = "PM";
-        } else if (hours == 0) {
-            hours += 12;
-            timeSet = "AM";
-        } else if (hours == 12)
-            timeSet = "PM";
-        else
-            timeSet = "AM";
-
-
-        String minutes = "";
-        if (mins < 10)
-            minutes = "0" + mins;
-        else
-            minutes = String.valueOf(mins);
-
-        // Append in a StringBuilder
-        String aTime = new StringBuilder().append(hours).append(':')
-                .append(minutes).append(" ").append(timeSet).toString();
-
-        txt_timer.setText(aTime);
-    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

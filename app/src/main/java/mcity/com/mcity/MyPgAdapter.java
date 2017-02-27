@@ -40,7 +40,7 @@ import java.util.HashMap;
  */
 public class MyPgAdapter extends BaseAdapter {
 
-    String URL = Data_Service.URL_API + "removeroom";
+    String URL = Data_Service.URL_API + "removeroomnew";
     Context context;
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> data;
@@ -118,17 +118,18 @@ public class MyPgAdapter extends BaseAdapter {
         txt_mcity.setTypeface(tf);
         txt_subtype.setTypeface(tf);
         txt_renttv.setTypeface(tf);
-        txt_furnishedtv.setTypeface(tf);
         txt_gender.setTypeface(tf);
         txt_subtv.setTypeface(tf);
+        txt_furnishedtv.setTypeface(tf);
         txt_roomTypeval.setTypeface(tf);
+        txt_delete.setTypeface(tf);
 
         txt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resultp = data.get(position);
                 str_main_id=resultp.get(PGHistory.main_id);
-                str_sub_id=resultp.get(PGHistory.sub_id);
+                str_sub_id=resultp.get(PGHistory._id);
                 deletepg();
             }
         });
@@ -151,7 +152,6 @@ public class MyPgAdapter extends BaseAdapter {
     }
 
     private void deletepg() {
-
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View promptView = layoutInflater.inflate(R.layout.exitdialog, null);
         final android.app.AlertDialog alertD = new android.app.AlertDialog.Builder(context).create();
@@ -165,7 +165,8 @@ public class MyPgAdapter extends BaseAdapter {
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
         head1.setTypeface(tf);
-        head1.setText("Delete Post...");
+        head2.setTypeface(tf);
+        head1.setText("DELETE!");
         head2.setText("Do You want to delete this post?");
 
         yes.setOnClickListener(new View.OnClickListener() {
@@ -191,16 +192,14 @@ public class MyPgAdapter extends BaseAdapter {
     private class DeletePgAsync extends AsyncTask<String, String, String> {
         @Override
 
-
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         protected String doInBackground(String... params) {
 
-            String json = "", jsonStr = "";
-            String id = "";
+            String json = "", jsonStr;
+
             try {
 
                 HttpClient client = new DefaultHttpClient();
@@ -211,7 +210,6 @@ public class MyPgAdapter extends BaseAdapter {
 
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("id1", str_main_id);
                 jsonObject.accumulate("id2", str_sub_id);
                 json = jsonObject.toString();
 

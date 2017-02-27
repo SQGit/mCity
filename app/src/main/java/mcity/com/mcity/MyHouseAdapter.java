@@ -50,7 +50,7 @@ public class MyHouseAdapter extends BaseAdapter {
     HashMap<String, String> resultp = new HashMap<String, String>();
     ArrayList<String> loading ;
     String str_main_id, str_sub_id,str_token,str_userid,str_tokenid,str_fieldid;
-    String URL = Data_Service.URL_API + "removerent";
+    String URL = Data_Service.URL_API + "removerentnew";
 
     public MyHouseAdapter(Context ctx, ArrayList<HashMap<String, String>> arraylist) {
         this.ctx = ctx;
@@ -143,12 +143,10 @@ public class MyHouseAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 resultp = data.get(position);
-
                 str_tokenid=resultp.get(HouseHistory.id_main);
-                str_fieldid=resultp.get(HouseHistory.id_sub);
-
+                str_fieldid=resultp.get(HouseHistory._id);
+                Log.e("tag","checking_id"+str_fieldid);
                 deletehome();
-
             }
         });
 
@@ -179,7 +177,7 @@ public class MyHouseAdapter extends BaseAdapter {
 
         Typeface tf = Typeface.createFromAsset(ctx.getAssets(), "mont.ttf");
         head1.setTypeface(tf);
-        head1.setText("Exit");
+        head1.setText("DELETE!");
         head2.setText("Do You want to Delete Post?");
 
         yes.setOnClickListener(new View.OnClickListener() {
@@ -221,8 +219,7 @@ public class MyHouseAdapter extends BaseAdapter {
 
         protected String doInBackground(String... params) {
 
-            String json = "", jsonStr = "";
-            String id = "";
+            String json = "", jsonStr;
             try {
 
                 HttpClient client = new DefaultHttpClient();
@@ -233,7 +230,6 @@ public class MyHouseAdapter extends BaseAdapter {
 
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("id1", str_tokenid);
                 jsonObject.accumulate("id2", str_fieldid);
                 json = jsonObject.toString();
 
@@ -249,32 +245,21 @@ public class MyHouseAdapter extends BaseAdapter {
         @Override
         protected void onPostExecute(String jsonstr) {
             Log.e("tag", "<-----result---->" + jsonstr);
-            //progress.setVisibility(View.GONE);
             super.onPostExecute(jsonstr);
 
             try {
                 JSONObject jo = new JSONObject(jsonstr);
                 String status = jo.getString("status");
                 String msg = jo.getString("message");
-                Log.e("tag", "<-----Status----->" + status);
-                Log.e("tag", "<-----msg----->" + msg);
 
                 if (status.equals("true")) {
-
-                    Log.e("tag", "success");
                     Intent intent = new Intent(ctx,MPostHistory.class);
                     ctx.startActivity(intent);
-
                     Toast.makeText(ctx,msg,Toast.LENGTH_SHORT).show();
-
-
                 }
 
                 else {
-
-                    Log.e("tag", "error");
                     Toast.makeText(ctx,msg,Toast.LENGTH_SHORT).show();
-
                 }
             } catch (JSONException e) {
                 // TODO Auto-generated catch block

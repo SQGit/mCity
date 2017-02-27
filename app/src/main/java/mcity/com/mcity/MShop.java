@@ -51,7 +51,6 @@ import java.util.List;
  */
 public class MShop extends AppCompatActivity {
 
-
     String LOGOUT = Data_Service.URL_API + "logout";
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -59,7 +58,6 @@ public class MShop extends AppCompatActivity {
     LinearLayout lnr_back_icon;
     String str_uid, str_token;
     Dialog dialog2;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +71,8 @@ public class MShop extends AppCompatActivity {
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
 
-
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
-        dialog2 = new Dialog(MShop.this);
-        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog2.setCancelable(false);
-        dialog2.setContentView(R.layout.test_loader);
-        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
         lnr_back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +92,6 @@ public class MShop extends AppCompatActivity {
                 MenuInflater inflater = popup.getMenuInflater();
                 MenuItem pinMenuItem1 = popup.getMenu().getItem(0);
                 MenuItem pinMenuItem2 = popup.getMenu().getItem(1);
-
                 applyFontToMenuItem(pinMenuItem1);
                 applyFontToMenuItem(pinMenuItem2);
 
@@ -158,7 +148,6 @@ public class MShop extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(MShop.this);
                 SharedPreferences.Editor editor = shared.edit();
-                //editor.putString("check","");
                 editor.putString("login_status", "false");
                 editor.commit();
                 logoutMethod();
@@ -221,10 +210,10 @@ public class MShop extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new OneFragment(), "RESTAURANTS");
-        adapter.addFrag(new TwoFragment(), "RETAIL SHOPPING");
-        adapter.addFrag(new ThreeFragment(), "MOVIES");
-        adapter.addFrag(new FourFragment(), "TRAVEL");
+        adapter.addFrag(new OneFragment(), "Food/Groceries");
+        adapter.addFrag(new TwoFragment(), "Retail Shops");
+        adapter.addFrag(new ThreeFragment(), "Travel");
+        adapter.addFrag(new FourFragment(), "Movie");
         viewPager.setAdapter(adapter);
     }
 
@@ -288,13 +277,10 @@ public class MShop extends AppCompatActivity {
                     JSONObject result1 = new JSONObject(json);
                     String status = result1.getString("status");
 
-
                     if (status.equals("true")) {
-
                     }
                 } else {
                     json = "Error occurred! Http Status Code: " + statusCode;
-
                 }
 
             } catch (Exception e) {
@@ -307,9 +293,7 @@ public class MShop extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String jsonStr) {
-
             super.onPostExecute(jsonStr);
-
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
@@ -321,7 +305,6 @@ public class MShop extends AppCompatActivity {
                     Intent exit = new Intent(getApplicationContext(), Test_L.class);
                     startActivity(exit);
                     finish();
-
                 } else {
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
@@ -332,5 +315,13 @@ public class MShop extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(MShop.this, Dashboard.class);
+        startActivity(i);
+        finish();
+    }
+
 
 }

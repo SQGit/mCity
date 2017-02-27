@@ -3,11 +3,13 @@ package mcity.com.mcity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +49,9 @@ public class RideHistoryAdapter extends BaseAdapter{
     HashMap<String, String> resultp = new HashMap<String, String>();
     String str_id_main,str_id_sub,str_date,mobileno, token, uid;
     SharedPreferences prefs;
-    String URL = Data_Service.URL_API + "removeride";
-    //ProgressBar progress;
+    String URL = Data_Service.URL_API + "removeridenew";
+    ProgressBar progressBar;
+    Dialog dialog2;
 
 
     public RideHistoryAdapter(Context context, ArrayList<HashMap<String, String>> arraylist) {
@@ -76,31 +80,40 @@ public class RideHistoryAdapter extends BaseAdapter{
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         token = sharedPreferences.getString("token", "");
-        Log.e("tag","@@@1"+token);
         uid = sharedPreferences.getString("id","");
-        Log.e("tag","@@@2"+uid);
 
+        dialog2 = new Dialog(context);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.test_loader1);
+        progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
 
-        final TextView fromaddress, toaddress,to, date, open_stmt, mail, time, amount, contact,midway_status,delete_post;
+        final TextView fromaddress, toaddress,to, date, open_stmt, time, amount,midway_status,delete_post,edit_post,date1,date2,date_head;
         final ImageView author_image;
+        final LinearLayout lnr_round_trip;
+        String str_persons,return_date,go_date;
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View itemView = inflater.inflate(R.layout.search_ride_history, parent, false);
         resultp = data.get(position);
 
-        //progress=(ProgressBar)itemView.findViewById(R.id.progressBar);
+
         fromaddress = (TextView) itemView.findViewById(R.id.fromaddress);
         to=(TextView) itemView.findViewById(R.id.to);
         toaddress = (TextView) itemView.findViewById(R.id.toaddress);
         date = (TextView) itemView.findViewById(R.id.date);
         time = (TextView) itemView.findViewById(R.id.timer);
+        //edit_post=(TextView)itemView.findViewById(R.id.edit_post);
         open_stmt= (TextView) itemView.findViewById(R.id.open_stmt);
         amount= (TextView) itemView.findViewById(R.id.amount);
-        mail = (TextView) itemView.findViewById(R.id.mail);
-        contact = (TextView) itemView.findViewById(R.id.contact);
         midway_status=(TextView)itemView.findViewById(R.id.midway_status);
         delete_post=(TextView) itemView.findViewById(R.id.delete_post);
+        date1 = (TextView) itemView.findViewById(R.id.date1);
+        date2 = (TextView) itemView.findViewById(R.id.date2);
+        date_head = (TextView) itemView.findViewById(R.id.round_head);
+        lnr_round_trip=(LinearLayout)itemView.findViewById(R.id.lnr_round_trip);
 
 
         str_date=resultp.get(MyRideHistory.date);
@@ -108,27 +121,31 @@ public class RideHistoryAdapter extends BaseAdapter{
         String datestr=resultp.get(MyRideHistory.date);
         String iii=resultp.get("path");
         String enable_status=resultp.get(MyRideHistory.mobileno);
-        Log.e("tag","please check"+enable_status);
+        return_date=resultp.get(MyRideHistory.returndate);
+        go_date=resultp.get(MyRideHistory.godate);
 
-        String[] splited = datestr.split(" ");
 
+        if(return_date.equals("empty")&&go_date.equals("empty"))
+        {
+            lnr_round_trip.setVisibility(View.GONE);
+        }
+        else
+        {
+            lnr_round_trip.setVisibility(View.VISIBLE);
+            date1.setText(go_date);
+            date2.setText(return_date);
+        }
+        String[] splited = str_date.split(" ");
 
         fromaddress.setText(resultp.get(MyRideHistory.from));
         toaddress.setText(resultp.get(MyRideHistory.to));
-        mail.setText(resultp.get(MyRideHistory.email));
-        contact.setText(resultp.get(MyRideHistory.mobileno));
         midway_status.setText(resultp.get(MyRideHistory.midwaydrop));
-
-        str_id_main = resultp.get(MyRideHistory.id_main);
-        Log.e("tag","id_1  "+str_id_main);
-        str_id_sub=resultp.get(MyRideHistory.id_sub);
-        Log.e("tag","id_2  "+str_id_sub);
-
-
-
+        amount.setText(resultp.get(MyRideHistory.price));
+        str_persons=resultp.get(MyRideHistory.noofpersons);
+        open_stmt.setText(str_persons+" Seat Availabale");
+        str_id_sub=resultp.get("_id");
         date.setText(splited[0]);
-        time.setText(splited[2]);
-
+        time.setText(splited[2]+splited[3]);
 
         fromaddress.setTypeface(tf);
         to.setTypeface(tf);
@@ -137,9 +154,16 @@ public class RideHistoryAdapter extends BaseAdapter{
         time.setTypeface(tf);
         open_stmt.setTypeface(tf);
         amount.setTypeface(tf);
-        mail.setTypeface(tf);
-        contact.setTypeface(tf);
         midway_status.setTypeface(tf);
+        date1.setTypeface(tf);
+        date2.setTypeface(tf);
+        date_head.setTypeface(tf);
+
+       /* edit_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });*/
 
 
         delete_post.setOnClickListener(new View.OnClickListener() {
@@ -147,10 +171,6 @@ public class RideHistoryAdapter extends BaseAdapter{
                 public void onClick(View v)
                 {
                     resultp = data.get(position);
-
-                    str_id_main = resultp.get(MyRideHistory.id_main);
-                    str_id_sub=resultp.get(MyRideHistory.id_sub);
-
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
                     View promptView = layoutInflater.inflate(R.layout.exitdialog, null);
                     final AlertDialog alertD = new AlertDialog.Builder(context).create();
@@ -164,13 +184,14 @@ public class RideHistoryAdapter extends BaseAdapter{
 
                     Typeface tf = Typeface.createFromAsset(context.getAssets(), "mont.ttf");
                     head1.setTypeface(tf);
-                    head1.setText("Exit");
-                    head2.setText("Do You want to Logout?");
+                    head2.setTypeface(tf);
+
+                    head1.setText("DELETE");
+                    head2.setText("Do You want to Delete?");
 
                     yes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             new DeleteRideAsync().execute();
                             alertD.dismiss();
                         }
@@ -186,9 +207,6 @@ public class RideHistoryAdapter extends BaseAdapter{
                     alertD.show();
                 }
             });
-
-
-
         return itemView;
     }
 
@@ -196,16 +214,13 @@ public class RideHistoryAdapter extends BaseAdapter{
     private class DeleteRideAsync extends AsyncTask<String, String, String> {
         @Override
 
-
         protected void onPreExecute() {
+            dialog2.show();
             super.onPreExecute();
-
         }
-
         protected String doInBackground(String... params) {
 
             String json = "", jsonStr = "";
-            String id = "";
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpPost postMethod = new HttpPost();
@@ -213,23 +228,20 @@ public class RideHistoryAdapter extends BaseAdapter{
                 postMethod.addHeader("id", uid);
                 postMethod.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("id1", str_id_main);
                 jsonObject.accumulate("id2", str_id_sub);
                 json = jsonObject.toString();
-
                 return jsonStr = HttpUtils.makeRequest1(URL, json, uid, token);
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
             }
             return null;
-
         }
 
 
         @Override
         protected void onPostExecute(String jsonstr) {
+            dialog2.dismiss();
             super.onPostExecute(jsonstr);
 
             try {
@@ -241,17 +253,11 @@ public class RideHistoryAdapter extends BaseAdapter{
 
                 if (status.equals("true")) {
 
-                    Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
-
-                    Intent i=new Intent(context,RideSearch.class);
-
-
-
+                    Intent i = new Intent(context, MyRideHistory.class);
+                    context.startActivity(i);
 
                 } else {
                     Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
-
-
 
                 }
             } catch (JSONException e) {

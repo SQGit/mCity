@@ -75,7 +75,7 @@ public class AdvancedRideAdapter extends BaseAdapter {
         txt_mail = (TextView) itemView.findViewById(R.id.mail);
         txt_contact = (TextView) itemView.findViewById(R.id.contact);
         txt_midway_status=(TextView)itemView.findViewById(R.id.midway_status);
-        txt_author_image=(TextView) itemView.findViewById(R.id.author_image);
+        txt_author_image=(TextView) itemView.findViewById(R.id.license_image);
 
 
         str_from = resultp.get("from");
