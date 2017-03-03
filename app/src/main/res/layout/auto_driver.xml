@@ -50,8 +50,8 @@ android:orientation="vertical" >
                 android:layout_gravity="right"
                 android:paddingLeft="@dimen/_30sdp"
                 android:paddingRight="@dimen/_15sdp"
-                android:paddingBottom="@dimen/_3sdp"
-                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:layout_alignParentTop="true"
                 android:src="@drawable/grey_cross" />
 

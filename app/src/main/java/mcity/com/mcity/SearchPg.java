@@ -33,10 +33,11 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 	EditText location_et, min_rent_et, max_rent_et;
 	AutoCompleteTextView get_location;
 	String location, minRent, maxRent,spin_val;
-	String str_city,str_resi,str_gender,str_minval,str_maxval,room;
+	String str_city,str_resi,str_gender,str_minval,str_maxval,room,gender;
 	String[] city ={"Sylvan County","Aqualily","Iris Court","Nova"};
 	private RadioGroup radioResidentialGroup,radioGenderGroup;
 	private RadioButton radioResidentalButton,radioGenderButton;
+	int idroom, idgender;
 
 	Spinner spinner;
 	Typeface tf;
@@ -95,50 +96,154 @@ public class SearchPg extends Activity implements AdapterView.OnItemSelectedList
 
 				int selectedId1 = radioResidentialGroup.getCheckedRadioButtonId();
 				int selectedId2 = radioGenderGroup.getCheckedRadioButtonId();
-
 				radioResidentalButton = (RadioButton) findViewById(selectedId1);
 				radioGenderButton = (RadioButton) findViewById(selectedId2);
+
+
 				str_city = spinner.getSelectedItem().toString();
-				str_resi = radioResidentalButton.getText().toString();
-				str_gender = radioGenderButton.getText().toString();
-				str_minval = min_rent_et.getText().toString();
-				str_maxval = max_rent_et.getText().toString();
-
-				if (str_gender.equals("PG/Hostel")) {
-					room = "pg";
-				} else {
-					room = "room";
-				}
 
 
 
-				if(str_city.equals("Select Location"))
-				{
-					Toast.makeText(SearchPg.this, "Please Select Location", Toast.LENGTH_SHORT).show();
+				idroom = radioResidentialGroup.indexOfChild(radioResidentalButton);
+				idgender = radioGenderGroup.indexOfChild(radioGenderButton);
+
+
+				if (idroom > -1) {
+					room = radioResidentalButton.getText().toString();
+					Log.e("tag","residential"+str_resi);
+					if (room.equals("PG/Hostel")) {
+						str_resi = "pg";
+					} else {
+						str_resi = "room";
+					}
+
 				}
 				else
 				{
-					if (!str_resi.isEmpty() && !str_gender.isEmpty() && !str_minval.isEmpty() && !str_maxval.isEmpty()) {
+					Log.e("tag","empty1");
+				}
 
+
+				if (idgender > -1) {
+					str_gender = radioGenderButton.getText().toString();
+					Log.e("tag","gender"+str_gender);
+
+				}
+				else
+				{
+					Log.e("tag","empty2");
+				}
+
+
+				str_minval = min_rent_et.getText().toString();
+				Log.e("tag","11"+str_minval);
+				str_maxval = max_rent_et.getText().toString();
+				Log.e("tag","22"+str_maxval);
+
+
+
+				//////////////////////////////VALIDATION FOE ALL FIELDS/////////////////////////////////////////////////
+				Log.e("tag", "12345" + str_city + str_resi + str_gender + str_minval+str_maxval);
+
+
+
+
+				if(!str_city.equals("Select Location"))
+				{
+					Log.e("tag","g1");
+					if(!str_minval.equals(""))
+					{
+						Log.e("tag","g2");
+						if(str_minval!="0")
+						{
+							Log.e("tag","g3");
+							if((!str_maxval.equals(""))&& str_maxval!="0")
+							{
+								Log.e("tag","g4");
+								Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
+								intent.putExtra("location", str_city);
+								if(str_resi!=null)
+
+									intent.putExtra("room_type", str_resi);
+								if(str_gender!=null)
+
+									intent.putExtra("gender_type", str_gender);
+								intent.putExtra("minRent", str_minval);
+								intent.putExtra("maxRent", str_maxval);
+
+								startActivity(intent);
+							}
+							else
+							{
+								Log.e("tag","g7");
+								Toast.makeText(SearchPg.this, "enter Max Rent", Toast.LENGTH_SHORT).show();
+							}
+						}
+						else
+						{
+							Log.e("tag","g8");
+							Toast.makeText(SearchPg.this, "Enter Value", Toast.LENGTH_SHORT).show();
+						}
+
+					}
+
+
+
+					else if(!str_maxval.equals(""))
+					{
+						Log.e("tag","g10");
+						if(str_maxval!="0")
+						{
+							Log.e("tag","g11");
+							if((!str_minval.equals(""))&& str_minval!="0")
+							{
+								Log.e("tag","g12");
+								Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
+								intent.putExtra("location", str_city);
+								if(str_resi!=null)
+
+									intent.putExtra("room_type", str_resi);
+								if(str_gender!=null)
+
+									intent.putExtra("gender_type", str_gender);
+								intent.putExtra("minRent", str_minval);
+								intent.putExtra("maxRent", str_maxval);
+
+								startActivity(intent);
+							}
+							else
+							{
+								Log.e("tag","g15");
+								Toast.makeText(SearchPg.this, "enter Select Max Rent", Toast.LENGTH_SHORT).show();
+							}
+						}
+						else
+						{
+							Log.e("tag","g16");
+							Toast.makeText(SearchPg.this, "Enter Value", Toast.LENGTH_SHORT).show();
+						}
+
+					}
+					else
+					{
+						Log.e("tag","g17");
 						Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
 						intent.putExtra("location", str_city);
-						intent.putExtra("room_type", room);
+						if(str_resi!=null)
+						intent.putExtra("room_type", str_resi);
+						if(str_gender!=null)
 						intent.putExtra("gender_type", str_gender);
-						intent.putExtra("minRent", str_minval);
-						intent.putExtra("maxRent", str_maxval);
-						startActivity(intent);
-
-					} else {
-
-						Intent intent = new Intent(getApplicationContext(), SearchPGFilter.class);
-						intent.putExtra("location", str_city);
-						intent.putExtra("room_type", room);
-						intent.putExtra("gender_type", str_gender);
-						intent.putExtra("minRent", "100");
-						intent.putExtra("maxRent", "200000");
 						startActivity(intent);
 					}
 				}
+				else
+				{
+					Log.e("tag","g20");
+					Toast.makeText(SearchPg.this, "Select Location", Toast.LENGTH_SHORT).show();
+				}
+
+
+
 
 
 			}

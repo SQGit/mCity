@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ import java.util.HashMap;
  */
 public class OneFragment extends Fragment {
     String SHOP_URL = Data_Service.URL_API + "getrestaurantsnew";
-    TextView tv, tv1, tv2;
+    TextView tv, head1,head2,head3,head4;
     ImageView call;
     String str_token, str_uid,str_shop_path;
     ShopAdapter shopadapter;
@@ -52,6 +53,7 @@ public class OneFragment extends Fragment {
     ProgressBar progressBar;
     Dialog dialog2;
     HashMap<String, String> map;
+    LinearLayout lnr_empty;
 
     static String shopname = "shopname";
     static String address = "address";
@@ -88,8 +90,18 @@ public class OneFragment extends Fragment {
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
         shoplist=(ListView)view.findViewById(R.id.shoplist);
+        lnr_empty=(LinearLayout)view.findViewById(R.id.lnr_empty);
+        head1=(TextView)view.findViewById(R.id.head1);
+        head2=(TextView)view.findViewById(R.id.head2);
+        head3=(TextView)view.findViewById(R.id.head3);
+        head4=(TextView)view.findViewById(R.id.head4);
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "mont.ttf");
+        head1.setTypeface(tf);
+        head2.setTypeface(tf);
+        head3.setTypeface(tf);
+        head4.setTypeface(tf);
         Log.e("tag","check1");
+        lnr_empty.setVisibility(View.GONE);
         shopingService();
         return view;
     }
@@ -137,11 +149,6 @@ public class OneFragment extends Fragment {
             dialog2.dismiss();
             //progressBar.setVisibility(View.GONE);
 
-            if (jsonstr.equals("")) {
-
-                //Toast.makeText(getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
-
-            } else {
 
                 try {
                     JSONObject jo = new JSONObject(jsonstr);
@@ -149,45 +156,57 @@ public class OneFragment extends Fragment {
 
 
                     JSONArray data1 = jo.getJSONArray("message");
-                    {
-                        for (int j = 0; j < data1.length(); j++) {
+                    Log.e("tag","main_test"+data1.length());
+                    if(data1.length() > 0) {
+                        Log.e("tag","sub_test");
+                        {
+                            for (int j = 0; j < data1.length(); j++) {
 
-                            JSONObject dataObj = data1.getJSONObject(j);
-                            map = new HashMap<String, String>();
+                                JSONObject dataObj = data1.getJSONObject(j);
+                                map = new HashMap<String, String>();
 
-                            map.put("_id", dataObj.getString("_id"));
-                            Log.e("tag","1.."+dataObj.getString("_id"));
-                            map.put("shop_category", dataObj.getString("shop_category"));
-                            Log.e("tag","2.."+dataObj.getString("shop_category"));
-                            map.put("shop_name", dataObj.getString("shop_name"));
-                            Log.e("tag","3.."+dataObj.getString("shop_name"));
-                            map.put("shop_address", dataObj.getString("shop_address"));
-                            Log.e("tag","4.."+dataObj.getString("shop_address"));
-                            map.put("time_mon_sat",dataObj.getString("time_mon_sat"));
-                            Log.e("tag","5.."+dataObj.getString("time_mon_sat"));
-                            map.put("shop_logo",dataObj.getString("shop_logo"));
-                            Log.e("tag","7.."+dataObj.getString("shop_logo"));
-                            map.put("time_sun",dataObj.getString("time_sun"));
-                            Log.e("tag","8.."+dataObj.getString("time_sun"));
-                            map.put("demo_shop_id",dataObj.getString("demo_shop_id"));
-                            Log.e("tag","8.."+dataObj.getString("demo_shop_id"));
+                                map.put("_id", dataObj.getString("_id"));
+                                Log.e("tag", "1.." + dataObj.getString("_id"));
+                                map.put("shop_category", dataObj.getString("shop_category"));
+                                Log.e("tag", "2.." + dataObj.getString("shop_category"));
+                                map.put("shop_name", dataObj.getString("shop_name"));
+                                Log.e("tag", "3.." + dataObj.getString("shop_name"));
+                                map.put("shop_address", dataObj.getString("shop_address"));
+                                Log.e("tag", "4.." + dataObj.getString("shop_address"));
+                                map.put("time_mon_sat", dataObj.getString("time_mon_sat"));
+                                Log.e("tag", "5.." + dataObj.getString("time_mon_sat"));
+                                map.put("shop_logo", dataObj.getString("shop_logo"));
+                                Log.e("tag", "7.." + dataObj.getString("shop_logo"));
+                                map.put("time_sun", dataObj.getString("time_sun"));
+                                Log.e("tag", "8.." + dataObj.getString("time_sun"));
+                                map.put("demo_shop_id", dataObj.getString("demo_shop_id"));
+                                Log.e("tag", "8.." + dataObj.getString("demo_shop_id"));
+                                map.put("mobile_no", dataObj.getString("mobile_no"));
+                                Log.e("tag", "phone.." + dataObj.getString("mobile_no"));
+                                map.put("is_sunday", dataObj.getString("is_sunday"));
+                                Log.e("tag", "phone.." + dataObj.getString("is_sunday"));
 
+                                JSONArray data2 = dataObj.getJSONArray("images");
+                                for (int k = 0; k < data2.length(); k++) {
 
-                            JSONArray data2= dataObj.getJSONArray("images");
-                            for (int k = 0; k < data2.length(); k++) {
+                                    JSONObject path = data2.getJSONObject(k);
+                                    map.put("_id", path.getString("_id"));
+                                    Log.e("tag", "9.." + path.getString("_id"));
+                                    map.put("image", path.getString("image"));
+                                    Log.e("tag", "10.." + path.getString("image"));
+                                }
 
-                                JSONObject path = data2.getJSONObject(k);
-                                map.put("_id", path.getString("_id"));
-                                Log.e("tag","9.."+path.getString("_id"));
-                                map.put("image", path.getString("image"));
-                                Log.e("tag","10.."+path.getString("image"));
+                                shoparraylist.add(map);
                             }
 
-                            shoparraylist.add(map);
                         }
 
                     }
-
+                    else
+                    {
+                        Log.e("tag","sub_test2");
+                        lnr_empty.setVisibility(View.VISIBLE);
+                    }
 
                     shopadapter = new ShopAdapter(getActivity(), shoparraylist);
                     shoplist.setAdapter(shopadapter);
@@ -200,7 +219,7 @@ public class OneFragment extends Fragment {
 
         }
         }
-    }
+
 
 
 

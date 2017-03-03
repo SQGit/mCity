@@ -37,7 +37,7 @@ import java.util.HashMap;
 public class CouponAdapter extends BaseAdapter {
 
     Context context;
-    String IMAGE_UPLOAD = Data_Service.URL_IMG + "coupons/";
+    String IMAGE_UPLOAD = Data_Service.URL_IMG + "shop_logo/";
     String str_token, str_uid, str_shop_id, str_shop_path;
     ArrayList<HashMap<String, String>> data;
     LayoutInflater inflater;
@@ -89,11 +89,22 @@ public class CouponAdapter extends BaseAdapter {
         txt_expiredval1=(TextView)itemView.findViewById(R.id.txt_date1);
 
         str_shop_path = IMAGE_UPLOAD + resultp.get("shop_logo");
+        Log.e("tag","GUNA"+str_shop_path);
 
+        if(str_shop_path.equals("http://104.197.80.225:3000/mcity/shop_logo/"))
+        {
+            Picasso.with(context)
+                    .load(R.drawable.no_image)
+                    .into(shop_logo);
 
-        Picasso.with(context)
-                .load(str_shop_path)
-                .into(shop_logo);
+        }
+                else
+        {
+            Picasso.with(context)
+                    .load(str_shop_path)
+                    .into(shop_logo);
+
+        }
 
 
         txt_shopname.setTypeface(tf);
@@ -117,6 +128,7 @@ public class CouponAdapter extends BaseAdapter {
                 resultp = data.get(position);
                 str_shop_id=resultp.get("_id");
                 str_shop_path=IMAGE_UPLOAD + resultp.get("shop_logo");
+                Log.e("tag","testing........"+str_shop_path);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 dialog.setContentView(R.layout.coupon_generate);
@@ -132,9 +144,22 @@ public class CouponAdapter extends BaseAdapter {
                 shop_name1.setText(resultp.get("shop_name"));
                 description1.setText(resultp.get("coupon_desc"));
 
-                Picasso.with(context)
-                        .load(str_shop_path)
-                        .into(logo);
+
+                if(str_shop_path.equals("http://104.197.80.225:3000/mcity/shop_logo/"))
+                {
+                    Picasso.with(context)
+                            .load(R.drawable.no_image)
+                            .into(logo);
+
+                }
+                else
+                {
+                    Picasso.with(context)
+                            .load(str_shop_path)
+                            .into(logo);
+
+                }
+
 
 
                 Typeface tt = Typeface.createFromAsset(context.getAssets(), "mont.ttf");

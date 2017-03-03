@@ -21,7 +21,7 @@
             android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:text="Pickup"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_11sdp"
             android:id="@+id/txt_pickup"
             android:layout_marginLeft="@dimen/_10sdp"
             android:textColor="#FFF"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Drop"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_11sdp"
             android:id="@+id/txt_drop"
             android:layout_weight="1"
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="Rate Rs."
             android:layout_marginLeft="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_11sdp"
             android:id="@+id/txt_rates"
             android:textColor="#FFF"
             android:layout_weight="1"
@@ -57,10 +57,9 @@
             android:layout_height="wrap_content"
             android:text="Extn."
             android:layout_marginLeft="@dimen/_20sdp"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_11sdp"
             android:id="@+id/txt_extn"
             android:layout_weight="1"
-
             android:textColor="#FFF"
             android:layout_gravity="center"/>
 
@@ -71,7 +70,7 @@
             android:text="Persons"
             android:layout_marginLeft="@dimen/_15sdp"
          android:paddingRight="@dimen/_5sdp"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_11sdp"
             android:id="@+id/txt_person"
             android:textColor="#FFF"
             android:layout_weight="1"

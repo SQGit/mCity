@@ -24,18 +24,20 @@
             <LinearLayout
                 android:id="@+id/imagelin"
                 android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_115sdp">
+                android:background="#EBEBEB"
+                android:layout_height="@dimen/_110sdp">
 
                 <ImageView
                     android:id="@+id/img_shop_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_115sdp"/>
+                    android:layout_height="@dimen/_110sdp"/>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_115sdp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_marginLeft="@dimen/_1sdp"
                 android:orientation="vertical"
                 android:background="#EBEBEB">
 
@@ -195,8 +197,7 @@
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_marginLeft="@dimen/_2sdp"
                                 android:id="@+id/txt_coupon"
-                                android:gravity="center"
-                                android:layout_marginTop="@dimen/_7sdp"
+                                android:gravity="right"
                                 android:singleLine="false"
                                 android:textColor="#E51C39"
                                 android:layout_gravity="left" />
@@ -204,7 +205,7 @@
                             <View
                                 android:layout_width="@dimen/_63sdp"
                                 android:layout_height="@dimen/_1sdp"
-                                android:layout_marginLeft="@dimen/_53sdp"
+                                android:layout_marginLeft="@dimen/_97sdp"
                                 android:background="#E51C39"/>
 
                         </LinearLayout>

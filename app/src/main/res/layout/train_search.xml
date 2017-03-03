@@ -24,7 +24,7 @@
                 android:id="@+id/back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_3sdp">
+                android:padding="@dimen/_7sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -124,6 +124,18 @@
                     android:gravity="center"
                     android:layout_gravity="center"/>
 
+
+                <TextView
+                    android:id="@+id/txt_am_pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AM"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    android:textColor="#FF9800"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
             </LinearLayout>
             </LinearLayout>
 

@@ -15,18 +15,73 @@
         android:divider="@null">
     </ListView>
 
-
     <LinearLayout
+        android:id="@+id/lnr_empty"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <!-- <include
-             android:id="@+id/c"
-             layout="@layout/footer_privacyplolicy"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center">
-         </include>
-         -->
+        <LinearLayout
+            android:id="@+id/lnr_bike"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="@dimen/_65sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/exit_icon"
+                android:id="@+id/empty"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/head1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="FOR RETAIL SHOPS"/>
+
+        <View
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:background="#d8d8d8">
+        </View>
+
+        <TextView
+            android:id="@+id/head2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:text="!! No Contents to display"/>
+
+        <TextView
+            android:id="@+id/head3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="Till Not get the proper Retail Shops for " />
+
+        <TextView
+            android:id="@+id/head4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="the Selected Category..."
+            />
     </LinearLayout>
+
+
 </LinearLayout>

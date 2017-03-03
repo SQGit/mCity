@@ -24,7 +24,7 @@
             android:id="@+id/head1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exit"
+            android:text=""
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="@dimen/_20sdp"/>
@@ -34,7 +34,7 @@
             android:id="@+id/head2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Do You Want to Exit?"
+            android:text=""
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
@@ -46,6 +46,7 @@
             android:layout_height="0.5dp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="#000000"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,13 +61,13 @@
                 android:gravity="right"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/no"
+                <TextView
+                    android:id="@+id/not_now"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_25sdp"
-                    android:background="@drawable/cross" />
+                    android:text="NOT NOW"
+                    android:layout_marginRight="@dimen/_25sdp" />
 
             </LinearLayout>
 
@@ -75,18 +76,17 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/yes"
+                <TextView
+                    android:id="@+id/update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_25sdp"
                     android:padding="@dimen/_10sdp"
-                    android:background="@drawable/tick" />
+                    android:text="UPDATE"
+                  />
             </LinearLayout>
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>

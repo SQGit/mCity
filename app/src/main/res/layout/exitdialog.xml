@@ -65,7 +65,7 @@
                     android:id="@+id/no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_5sdp"
+                    android:padding="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_25sdp"
                     android:background="@drawable/cross" />
 
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_25sdp"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_10sdp"
                 android:background="@drawable/tick" />
                 </LinearLayout>
 

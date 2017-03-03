@@ -1,8 +1,10 @@
 package mcity.com.mcity;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -56,7 +59,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -68,6 +74,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Dashboard extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS =124 ;
     String LOGOUT = Data_Service.URL_API + "logout";
     LinearLayout lin_mcoupon,lin_shop,lin_auto,lin_train,lin_rental,lin_ride,lin_garage,lin_beauty,lin_order;
     ImageView img_settings_icon,imv_coupon,img_shop,img_auto;
@@ -75,6 +82,8 @@ public class Dashboard extends AppCompatActivity {
     String str_token, str_uid;
     Intent intent;
     Typeface tf;
+
+
 
 
     @Override
@@ -108,9 +117,15 @@ public class Dashboard extends AppCompatActivity {
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
+        
+
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");
+
+
+        insertDummyContactWrapper();
 
         lin_mcoupon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,6 +282,90 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
+    private void insertDummyContactWrapper() {
+
+        List<String> permissionsNeeded = new ArrayList<String>();
+
+        final List<String> permissionsList = new ArrayList<>();
+        if (addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsNeeded.add("GPS");
+        if (addPermission(permissionsList, Manifest.permission.CAMERA))
+            permissionsNeeded.add("Read Contacts");
+        if (addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Write Contacts");
+
+        if (permissionsList.size() > 0) {
+            if (permissionsNeeded.size() > 0) {
+                // Need Rationale
+                String message = "You need to grant access to " + permissionsNeeded.get(0);
+                for (int i = 1; i < permissionsNeeded.size(); i++)
+                    message = message + ", " + permissionsNeeded.get(i);
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                            REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+                }
+
+
+                return;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+            }
+        }
+
+
+    }
+
+    private boolean addPermission(List<String> permissionsList, String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsList.add(permission);
+                if (!shouldShowRequestPermissionRationale(permission))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+
+            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS : {
+                Map<String, Integer> perms = new HashMap<String, Integer>();
+
+                perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+
+                for (int i = 0; i < permissions.length; i++)
+                    perms.put(permissions[i], grantResults[i]);
+                if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+
+
+                } else {
+                    insertDummyContactWrapper();
+                    Toast.makeText(Dashboard.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+            break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+
+    }
+
 
     //************* change option menu typeface settings page.
     private void applyFontToMenuItem(MenuItem mi) {
@@ -359,7 +458,7 @@ public class Dashboard extends AppCompatActivity {
 
     private void exitIcon() {
 
-        LayoutInflater layoutInflater = LayoutInflater.from(Dashboard.this);
+       LayoutInflater layoutInflater = LayoutInflater.from(Dashboard.this);
         View promptView = layoutInflater.inflate(R.layout.exitdialog, null);
         final AlertDialog alertD = new AlertDialog.Builder(Dashboard.this).create();
         alertD.setCancelable(false);

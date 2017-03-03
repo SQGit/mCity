@@ -112,6 +112,7 @@ public class SearchHouse extends Activity implements AdapterView.OnItemSelectedL
         withbar1.setVisibility(View.GONE);
         withbar2.setVisibility(View.GONE);
         others.setVisibility(View.GONE);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (this, android.R.layout.select_dialog_item, city);
 
@@ -445,7 +446,7 @@ public class SearchHouse extends Activity implements AdapterView.OnItemSelectedL
                     Log.e("tag", "12345" + spin_val + root1 + root2 + root3);
 
 
-                    if(root2==null&&root3==null&root1==null)
+                    if(root2==null&&root3==null&&root1==null)
                     {
                         Log.e("tag","C1");
                         Intent intent = new Intent(getApplicationContext(), SearchHouseFilter.class);
@@ -686,6 +687,7 @@ public class SearchHouse extends Activity implements AdapterView.OnItemSelectedL
             withbar2.setVisibility(View.GONE);
             withoutbar.setVisibility(View.GONE);
             others.setVisibility(View.VISIBLE);
+
         } else if (spin_val.equals("Aqualily")) {
             restrict1.setVisibility(View.VISIBLE);
             restrict2.setVisibility(View.GONE);
@@ -716,7 +718,22 @@ public class SearchHouse extends Activity implements AdapterView.OnItemSelectedL
                     others.setVisibility(View.GONE);
 
 
-                } else {
+                }
+
+                else if(spin_val.equals("Select Location"))
+                {
+
+                    restrict1.setVisibility(View.VISIBLE);
+                    restrict2.setVisibility(View.GONE);
+                    restrict3.setVisibility(View.GONE);
+                    withbar1.setVisibility(View.GONE);
+                    withbar2.setVisibility(View.GONE);
+                    withoutbar.setVisibility(View.VISIBLE);
+                    others.setVisibility(View.GONE);
+                }
+
+
+                else {
 
                     restrict1.setVisibility(View.GONE);
                     restrict2.setVisibility(View.GONE);

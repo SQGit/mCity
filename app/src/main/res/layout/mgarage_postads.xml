@@ -23,7 +23,7 @@
                 android:id="@+id/back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_3sdp">
+                android:padding="@dimen/_7sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -375,10 +375,11 @@
                     android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+
                         android:orientation="vertical">
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -392,10 +393,11 @@
                                 android:background="@drawable/price" />
 
                             <EditText
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="Price"
+                                android:selectAllOnFocus="false"
                                 android:id="@+id/editText_price1"
                                 android:maxLines="1"
                                 android:inputType="number"
@@ -435,7 +437,7 @@
                     android:background="@drawable/pro_icon" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_60sdp"
                     android:background="@null"
                     android:hint="Ad Description"

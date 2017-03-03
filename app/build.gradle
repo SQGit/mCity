@@ -16,8 +16,8 @@ android {
         applicationId "mcity.com.mcity"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 7
-        versionName "2.5"
+        versionCode 8
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
         multiDexEnabled true

@@ -605,17 +605,27 @@ public class OfferRideNew extends Activity implements AdapterView.OnItemSelected
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_PICKER_ID:
+
+                year =0;
+                month =0;
+                day =0;
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, pickerListener1, year, month, day );
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + 100000);
                 return datePickerDialog;
 
 
             case DATE_PICKER_ID2:
+                year =0;
+                month =0;
+                day =0;
                 DatePickerDialog datePickerDialog2 = new DatePickerDialog(this, pickerListener2, year, month, day );
                 datePickerDialog2.getDatePicker().setMinDate(System.currentTimeMillis() + 100000);
                 return datePickerDialog2;
 
            case DATE_PICKER_ID3:
+               year =0;
+               month =0;
+               day =0;
                DatePickerDialog datePickerDialog3 = new DatePickerDialog(this, pickerListener3, year, month, day );
                datePickerDialog3.getDatePicker().setMinDate(System.currentTimeMillis() + 100000);
 
@@ -630,7 +640,7 @@ public class OfferRideNew extends Activity implements AdapterView.OnItemSelected
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            Log.e("tag","5*");
+
 
             year = selectedYear;
             month = selectedMonth;
@@ -1238,7 +1248,7 @@ public class OfferRideNew extends Activity implements AdapterView.OnItemSelected
         head2.setTypeface(tf);
         yes.setTypeface(tf);
         head1.setText("SUCCESS");
-        head2.setText("Your Post has been added Succesfully");
+        head2.setText("Your Post has been added \nSuccesfully");
 
 
         yes.setOnClickListener(new View.OnClickListener() {

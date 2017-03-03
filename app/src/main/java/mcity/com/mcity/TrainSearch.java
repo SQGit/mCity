@@ -62,9 +62,10 @@ public class TrainSearch extends Activity {
     ImageView get_train,train_menu;
     String dayOfTheWeek, time;
     Dialog dialog2;
+    int mytime;
     ProgressBar progressBar;
     String token, uid,more_train;
-    TextView txt_time;
+    TextView txt_time,txt_am_pm;
     String URL_NORMAL = Data_Service.URL_API + "trainsearch";
     String URL_SUNDAY = Data_Service.URL_API + "trainsearchsun";
     String URL_NORMAL_REV = Data_Service.URL_API + "parche";
@@ -96,6 +97,8 @@ public class TrainSearch extends Activity {
         train_menu=(ImageView)findViewById(R.id.train_menu);
         txt_sou_des=(TextView)findViewById(R.id.txt_sou_des);
         txt_time=(TextView)findViewById(R.id.txt_time);
+        txt_am_pm=(TextView)findViewById(R.id.txt_am_pm);
+
         searchlist=(ListView)findViewById(R.id.searchlist);
         settings_icon = (ImageView) findViewById(R.id.settings_icon);
 
@@ -129,6 +132,22 @@ public class TrainSearch extends Activity {
         DateFormat df = new SimpleDateFormat("HH:mm");
         time = df.format(Calendar.getInstance().getTime());
         txt_time.setText(time);
+
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        if(hour < 12 && hour >= 0)
+        {
+            txt_am_pm.setText(" AM");
+        }
+        else {
+            hour -= 12;
+            if(hour == 0)
+            {
+                hour = 12;
+            }
+            txt_am_pm.setText(" PM");
+        }
+
 
 
         if(train_status.equals("pcb"))

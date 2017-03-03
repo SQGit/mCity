@@ -65,6 +65,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
 
 /**
  * Created by Admin on 22-11-2016.
@@ -437,7 +439,8 @@ public class MGarage_PostAds extends Activity implements AdapterView.OnItemSelec
 
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        category_details = sharedPreferences.getString("category_details", "");
+        category_details = sharedPreferences.getString("cat_det", "");
+        getApplicationContext().getSharedPreferences(TAG, Context.MODE_PRIVATE).edit().remove("cat_det").commit();
         Log.e("Tag12", "aaa" + category_details);
 
         if(!category_details.equals(""))
@@ -539,7 +542,7 @@ public class MGarage_PostAds extends Activity implements AdapterView.OnItemSelec
                 }
                 SharedPreferences s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor edit = s_pref.edit();
-                edit.putString("category_details", str_category_main);
+                edit.putString("cat_det", str_category_main);
                 edit.commit();
             }
         });
@@ -566,6 +569,7 @@ public class MGarage_PostAds extends Activity implements AdapterView.OnItemSelec
         garage_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                radioGroup.clearCheck();
                 if (str_category_main == null) {
                     Toast.makeText(MGarage_PostAds.this, "Please select any Category", Toast.LENGTH_LONG).show();
                 } else if (str_category_main.equals("Bikes, Bike Spares, Accessories")) {

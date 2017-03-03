@@ -81,7 +81,7 @@ public class MPostHistory extends TabActivity {
         lnr_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                Intent intent = new Intent(getApplicationContext(), RentalHistory.class);
                 startActivity(intent);
                 finish();
             }
@@ -324,7 +324,7 @@ public class MPostHistory extends TabActivity {
     @Override
     public void onBackPressed()
     {
-        Intent i = new Intent(MPostHistory.this,Dashboard.class);
+        Intent i = new Intent(MPostHistory.this,RentalHistory.class);
         startActivity(i);
         finish();
     }

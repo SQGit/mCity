@@ -31,14 +31,14 @@ import java.util.HashMap;
  */
 public class CouponCall extends BaseAdapter{
     Context context1;
-    String IMAGE_UPLOAD = Data_Service.URL_IMG + "coupons/";
+    String IMAGE_UPLOAD = Data_Service.URL_IMG + "shop_logo/";
     String str_token, str_uid,str_shop_id,str_shop_path;
     ArrayList<HashMap<String, String>> data;
     LayoutInflater inflater;
     TextView txt_tokencode;
     HashMap<String, String> resultp = new HashMap<String, String>();
     Activity activity;
-    Dialog dialog1;
+    Dialog dialog2;
     Button generate_code;
     TextView shop_name1,description1;
     ImageView logo,img_cross;
@@ -109,18 +109,18 @@ public class CouponCall extends BaseAdapter{
         txt_expiredval1.setText(resultp.get("coupon_expiry_date"));
 
 
-        dialog1 = new Dialog(activity);
-        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        dialog1.setContentView(R.layout.coupon_generate);
+        dialog2 = new Dialog(activity);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        dialog2.setContentView(R.layout.coupon_generate);
 
 
-        img_cross = (ImageView) dialog1.findViewById(R.id.img_cross);
-        logo = (ImageView) dialog1.findViewById(R.id.logo);
-        shop_name1 = (TextView) dialog1.findViewById(R.id.shop_name);
-        description1 = (TextView) dialog1.findViewById(R.id.description);
-        txt_tokencode = (TextView) dialog1.findViewById(R.id.token_code);
-        generate_code = (Button) dialog1.findViewById(R.id.generate_code);
+        img_cross = (ImageView) dialog2.findViewById(R.id.img_cross);
+        logo = (ImageView) dialog2.findViewById(R.id.logo);
+        shop_name1 = (TextView) dialog2.findViewById(R.id.shop_name);
+        description1 = (TextView) dialog2.findViewById(R.id.description);
+        txt_tokencode = (TextView) dialog2.findViewById(R.id.token_code);
+        generate_code = (Button) dialog2.findViewById(R.id.generate_code);
 
         Typeface tt = Typeface.createFromAsset(context1.getAssets(), "mont.ttf");
         shop_name1.setTypeface(tt);
@@ -129,17 +129,17 @@ public class CouponCall extends BaseAdapter{
 
 
 
-            dot_background.setOnClickListener(new View.OnClickListener() {
+           dot_background.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.e("tag","11");
 
-                    dialog1.show();
+                    dialog2.show();
 
                     resultp = data.get(position);
                     str_shop_id=resultp.get("_id");
                     str_shop_path=IMAGE_UPLOAD + resultp.get("shop_logo");
-
+                    Log.e("tag","22");
 
                     shop_name1.setText(resultp.get("shop_name"));
                     description1.setText(resultp.get("coupon_desc"));
@@ -148,33 +148,29 @@ public class CouponCall extends BaseAdapter{
                             .load(str_shop_path)
                             .into(logo);
 
-
+                    Log.e("tag","33");
 
                    txt_tokencode.setText(resultp.get("coupon_code"));
 
                     img_cross.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            dialog1.dismiss();
+                            dialog2.dismiss();
 
                         }
                     });
 
-
+                    Log.e("tag","44");
                     generate_code.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent iii=new Intent(activity,MShop.class);
                             activity.startActivity(iii);
-
                         }
                     });
-                    dialog1.dismiss();
+
                 }
             });
-
-
-
 
 
 

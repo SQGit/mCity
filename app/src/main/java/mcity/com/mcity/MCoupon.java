@@ -60,7 +60,7 @@ public class MCoupon extends Activity {
     ListView couponlist;
     ImageView img_settings_icon,img_slidingimage;
     ArrayList<HashMap<String, String>> couponarraylist;
-    LinearLayout lnr_back_arrow;
+    LinearLayout lnr_back_arrow,lnr_empty;
     public int currentimageindex = 0;
     Dialog dialog2;
     ProgressBar progressBar;
@@ -84,15 +84,18 @@ public class MCoupon extends Activity {
         img_settings_icon=(ImageView)findViewById(R.id.settings_icon);
         lnr_back_arrow=(LinearLayout)findViewById(R.id.back_arrow);
         img_slidingimage = (ImageView) findViewById(R.id.iv);
-
+        lnr_empty=(LinearLayout)findViewById(R.id.lnr_empty);
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
+
 
         dialog2 = new Dialog(MCoupon.this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.test_loader);
+
+        lnr_empty.setVisibility(View.GONE);
         progressBar = (ProgressBar) dialog2.findViewById(R.id.loading_spinner);
         txt_loading=(TextView)dialog2.findViewById(R.id.txt_loading);
 
@@ -306,39 +309,43 @@ public class MCoupon extends Activity {
         protected void onPostExecute(String jsonstr) {
             super.onPostExecute(jsonstr);
             dialog2.dismiss();
-            if (jsonstr.equals("")) {
 
-                Toast.makeText(getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
-
-            } else {
 
                 try {
                     JSONObject jo = new JSONObject(jsonstr);
                     String status = jo.getString("status");
 
                     JSONArray data1 = jo.getJSONArray("message");
-                    {
-                        for (int j = 0; j < data1.length(); j++) {
 
-                            JSONObject dataObj = data1.getJSONObject(j);
-                            map = new HashMap<String, String>();
-                            map.put("_id", dataObj.getString("_id"));
-                            map.put("coupon_code", dataObj.getString("coupon_code"));
-                            map.put("coupon_expiry_date", dataObj.getString("coupon_expiry_date"));
-                            map.put("coupon_desc", dataObj.getString("coupon_desc"));
-                            map.put("coupon_expiry_date",dataObj.getString("coupon_expiry_date"));
+                    if(data1.length() > 0) {
+                        {
+                            for (int j = 0; j < data1.length(); j++) {
 
-                            JSONArray data2= dataObj.getJSONArray("shopdetails");
-                            for (int k = 0; k < data2.length(); k++) {
+                                JSONObject dataObj = data1.getJSONObject(j);
+                                map = new HashMap<String, String>();
+                                map.put("_id", dataObj.getString("_id"));
+                                map.put("coupon_code", dataObj.getString("coupon_code"));
+                                map.put("coupon_expiry_date", dataObj.getString("coupon_expiry_date"));
+                                map.put("coupon_desc", dataObj.getString("coupon_desc"));
+                                map.put("coupon_expiry_date", dataObj.getString("coupon_expiry_date"));
 
-                                JSONObject path = data2.getJSONObject(k);
-                                map.put("shop_name", path.getString("shop_name"));
-                                map.put("shop_logo", path.getString("shop_logo"));
+                                JSONArray data2 = dataObj.getJSONArray("shopdetails");
+                                for (int k = 0; k < data2.length(); k++) {
+
+                                    JSONObject path = data2.getJSONObject(k);
+                                    map.put("shop_name", path.getString("shop_name"));
+                                    map.put("shop_logo", path.getString("shop_logo"));
+                                    Log.e("tag", "test" + path.getString("shop_logo"));
+                                }
+
+                                couponarraylist.add(map);
                             }
 
-                            couponarraylist.add(map);
                         }
-
+                    }
+                    else
+                    {
+                        lnr_empty.setVisibility(View.VISIBLE);
                     }
 
                     couponadapter = new CouponAdapter(MCoupon.this, couponarraylist);
@@ -349,7 +356,7 @@ public class MCoupon extends Activity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            }
+
 
         }
     }

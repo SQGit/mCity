@@ -157,8 +157,6 @@ public class MGarage_History  extends Activity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-
-
                         switch (id) {
                             case R.id.item1:
                                 aboutUs();
@@ -178,7 +176,6 @@ public class MGarage_History  extends Activity {
                     }
 
                 });
-
                 popup.show();
             }
         });
@@ -188,7 +185,6 @@ public class MGarage_History  extends Activity {
     }
 
     private void searchCategory() {
-
             LayoutInflater layoutInflater = LayoutInflater.from(MGarage_History.this);
             View promptView = layoutInflater.inflate(R.layout.search_category_list, null);
             final android.support.v7.app.AlertDialog alertD1 = new android.support.v7.app.AlertDialog.Builder(MGarage_History.this).create();
