@@ -69,7 +69,7 @@ public class MgarageAdapter extends BaseAdapter {
 
         TextView txt_category, txt_model, txt_price, txt_color,  txt_kms,description;
         TextView txt_model_h,txt_price_h,txt_color_h,txt_kms_h;
-        TextView txt_send_mail,txt_makecall;
+        final TextView txt_send_mail,txt_makecall;
         String str_model,str_color,str_km;
 
         SharedPreferences sharedPreferences;
@@ -185,6 +185,51 @@ public class MgarageAdapter extends BaseAdapter {
 
         txt_makecall.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View view) {
+                resultp_garage = data.get(position);
+                str_owner_number=resultp_garage.get("mobileno");
+                enable_status=resultp_garage.get("phone");
+                Log.e("tag","@@@"+str_owner_number+enable_status);
+
+                if(enable_status.equals("enabled"))
+                {
+                    int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
+                    if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                    } else {
+
+                        Log.e("tag","we"+str_owner_number);
+                        Intent phoneIntent = new Intent(Intent.ACTION_CALL);
+                        phoneIntent.setData(Uri.parse("tel:"+str_owner_number));
+
+                        try {
+                            view.getContext().startActivity(phoneIntent);
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(view.getContext(), "yourActivity is not founded", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }
+                else if(enable_status.equals("Hidden Contact"))
+                {
+                    txt_makecall.setText("hidden");
+                    txt_makecall.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(v.getContext(),"You can't able to make call. Please contact through mail...",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+
+
+
+            }
+        });
+
+
+       /* txt_makecall.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
           if(enable_status.equals("enabled")) {
               resultp_garage = data.get(position);
@@ -208,7 +253,7 @@ public class MgarageAdapter extends BaseAdapter {
               }
           }
             }
-        });
+        });*/
        loadimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

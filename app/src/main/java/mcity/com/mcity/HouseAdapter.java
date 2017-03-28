@@ -171,31 +171,31 @@ public class HouseAdapter extends BaseAdapter {
         txt_make_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(enable_status.equals("enabled"))
-                {
-                    resultp = data.get(position);
-                    str_owner_no = resultp.get("mobileno");
-                    Log.e("tag","check_phoneno"+str_owner_no);
-                    Log.e("tag","check_enable"+enable_status);
+                resultp = data.get(position);
+                str_owner_no = resultp.get("mobileno");
+                Log.e("tag", "check_phoneno" + str_owner_no);
+                Log.e("tag", "check_enable" + enable_status);
+                if(enable_status.equals("enabled")) {
+
+
                     int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
                     if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                     } else {
 
-
+                        Log.e("tag","we"+str_owner_no);
                         Intent phoneIntent = new Intent(Intent.ACTION_CALL);
                         phoneIntent.setData(Uri.parse("tel:"+str_owner_no));
-                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         try {
                             v.getContext().startActivity(phoneIntent);
-
                         } catch (android.content.ActivityNotFoundException ex) {
                             Toast.makeText(v.getContext(), "yourActivity is not founded", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }
-                else
+                    else
                 {
                     Toast.makeText(v.getContext(), "You cant able to make call. Please contact through mail...",Toast.LENGTH_LONG).show();
                 }

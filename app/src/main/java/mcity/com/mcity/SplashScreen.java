@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
 
 
         version = BuildConfig.VERSION_NAME;
-        Log.e("tag","gggg"+version);
+        Log.e("tag","get_version_status"+version);
 
         if (Util.Operations.isOnline(SplashScreen.this)) {
 
@@ -63,20 +63,24 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashScreen.this);
         str_check = sharedPreferences.getString("login_status", "");
         str_version= sharedPreferences.getString("version_status","");
-        Log.e("tag","version_status"+str_version);
 
 
-        if (str_version.equals("true")) {
+
+       /* if (str_version.equals("true")) {
+            Log.e("tag","guna11");
+
             if (str_check.equals("true")) {
+                Log.e("tag", "111");
                 IntentLauncher launcher = new IntentLauncher();
                 launcher.start();
-
-                Log.e("tag", "111");
                 Intent intent = new Intent(SplashScreen.this, Dashboard.class);
                 SplashScreen.this.startActivity(intent);
                 SplashScreen.this.finish();
+
             } else if (str_check.equals("false")) {
                 Log.e("tag", "222");
+                IntentLauncher launcher = new IntentLauncher();
+                launcher.start();
                 Intent intent = new Intent(SplashScreen.this, Test_L.class);
                 SplashScreen.this.startActivity(intent);
                 SplashScreen.this.finish();
@@ -97,6 +101,8 @@ public class SplashScreen extends AppCompatActivity {
         }
         else
         {
+            Log.e("tag","guna22");
+
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);
 
@@ -122,18 +128,18 @@ public class SplashScreen extends AppCompatActivity {
                                 IntentLauncher launcher = new IntentLauncher();
                                 launcher.start();
 
-                                Log.e("tag", "111");
+
                                 Intent intent = new Intent(SplashScreen.this, Dashboard.class);
                                 SplashScreen.this.startActivity(intent);
                                 SplashScreen.this.finish();
                             } else if (str_check.equals("false")) {
-                                Log.e("tag", "222");
+                                IntentLauncher launcher = new IntentLauncher();
+                                launcher.start();
                                 Intent intent = new Intent(SplashScreen.this, Test_L.class);
                                 SplashScreen.this.startActivity(intent);
                                 SplashScreen.this.finish();
 
                             } else {
-                                Log.e("tag", "333");
                                 db.addContact(new PlaceDetails("Paranur Railway Station", "12.729674", "79.985543", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "8883070913", "9788891120", "9659108191", "S.ARUL", "N.SATHAM UZEN", "V.LOGU"));
                                 db.addContact(new PlaceDetails("Canopy", "12.731442", "80.000516", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "9840357483", "9940100332", "9578616872", "VINAYAKAM", "MANI", "SHANMUGAM"));
                                 db.addContact(new PlaceDetails("Capegemini", "12.736314", "80.007350", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "7094345321", "9962183068", "952404293", "BALAJI", "SEKAR", "MAGESH"));
@@ -156,10 +162,7 @@ public class SplashScreen extends AppCompatActivity {
         }
 
 
-
-
-     IntentLauncher launcher = new IntentLauncher();
-        launcher.start();
+*/
 
     }
 
@@ -215,6 +218,7 @@ public class SplashScreen extends AppCompatActivity {
                 try {
                     JSONObject jo = new JSONObject(jsonStr);
                     String status = jo.getString("status");
+                    Log.e("tag","get_service_ststus"+status);
 
                     s_pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     edit = s_pref.edit();
@@ -224,11 +228,15 @@ public class SplashScreen extends AppCompatActivity {
                     if (status.equals("true")) {
                         Log.e("tag","ggggg1");
 
+
+                        trueMethod();
+
                         //Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
 
 
                     } else {
                         Log.e("tag","ggggg2");
+                        falseMethod();
 
                         //Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
 
@@ -240,8 +248,107 @@ public class SplashScreen extends AppCompatActivity {
             }
         }
 
+    private void falseMethod() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Hello, please update the app to continue")
+                .setCancelable(false)
+                .setPositiveButton("UPDATE",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                        Intent browserIntent =
+                                new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=mcity.com.mcity"));
+                        startActivity(browserIntent);
+                        finish();
+
+                    }
+                })
+                .setNegativeButton("NOT NOW",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        if (str_check.equals("true")) {
+                            IntentLauncher launcher = new IntentLauncher();
+                            launcher.start();
+
+
+                            Intent intent = new Intent(SplashScreen.this, Dashboard.class);
+                            SplashScreen.this.startActivity(intent);
+                            SplashScreen.this.finish();
+                        } else if (str_check.equals("false")) {
+                            IntentLauncher launcher = new IntentLauncher();
+                            launcher.start();
+                            Intent intent = new Intent(SplashScreen.this, Test_L.class);
+                            SplashScreen.this.startActivity(intent);
+                            SplashScreen.this.finish();
+
+                        } else {
+                            db.addContact(new PlaceDetails("Paranur Railway Station", "12.729674", "79.985543", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "8883070913", "9788891120", "9659108191", "S.ARUL", "N.SATHAM UZEN", "V.LOGU"));
+                            db.addContact(new PlaceDetails("Canopy", "12.731442", "80.000516", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "9840357483", "9940100332", "9578616872", "VINAYAKAM", "MANI", "SHANMUGAM"));
+                            db.addContact(new PlaceDetails("Capegemini", "12.736314", "80.007350", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "7094345321", "9962183068", "952404293", "BALAJI", "SEKAR", "MAGESH"));
+                            db.addContact(new PlaceDetails("Aqualily", "12.728183", "80.006341", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "hidden", "hidden", "hidden", "hidden", "hidden", "hidden"));
+                            db.addContact(new PlaceDetails("Zeropoint", "12.742677", "72.992280", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "7094345321", "9962183068", "952404293", "BALAJI", "SEKAR", "MAGESH"));
+                            Intent intent = new Intent(SplashScreen.this, Test_L.class);
+                            SplashScreen.this.startActivity(intent);
+                            SplashScreen.this.finish();
+                        }
+
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+
+
+
+
+    private void trueMethod() {
+
+
+
+            if (str_check.equals("true")) {
+                Log.e("tag", "111");
+                IntentLauncher launcher = new IntentLauncher();
+                launcher.start();
+                Intent intent = new Intent(SplashScreen.this, Dashboard.class);
+                SplashScreen.this.startActivity(intent);
+                SplashScreen.this.finish();
+
+            } else if (str_check.equals("false")) {
+                Log.e("tag", "222");
+                IntentLauncher launcher = new IntentLauncher();
+                launcher.start();
+                Intent intent = new Intent(SplashScreen.this, Test_L.class);
+                SplashScreen.this.startActivity(intent);
+                SplashScreen.this.finish();
+
+            } else {
+                Log.e("tag", "333");
+                db.addContact(new PlaceDetails("Paranur Railway Station", "12.729674", "79.985543", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "8883070913", "9788891120", "9659108191", "S.ARUL", "N.SATHAM UZEN", "V.LOGU"));
+                db.addContact(new PlaceDetails("Canopy", "12.731442", "80.000516", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "9840357483", "9940100332", "9578616872", "VINAYAKAM", "MANI", "SHANMUGAM"));
+                db.addContact(new PlaceDetails("Capegemini", "12.736314", "80.007350", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "7094345321", "9962183068", "952404293", "BALAJI", "SEKAR", "MAGESH"));
+                db.addContact(new PlaceDetails("Aqualily", "12.728183", "80.006341", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "hidden", "hidden", "hidden", "hidden", "hidden", "hidden"));
+                db.addContact(new PlaceDetails("Zeropoint", "12.742677", "72.992280", "AutoStand, MahindraWorldCity, Chengalpattu.", "8AM to 10PM pickups", "7094345321", "9962183068", "952404293", "BALAJI", "SEKAR", "MAGESH"));
+                Intent intent = new Intent(SplashScreen.this, Test_L.class);
+                SplashScreen.this.startActivity(intent);
+                SplashScreen.this.finish();
+            }
+
+
+        }
 
     }
+
+
 
 
 

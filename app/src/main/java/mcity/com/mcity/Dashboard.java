@@ -117,9 +117,6 @@ public class Dashboard extends AppCompatActivity {
         FontsManager.initFormAssets(this, "mont.ttf");
         FontsManager.changeFonts(this);
 
-        
-
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_token = sharedPreferences.getString("token", "");
         str_uid = sharedPreferences.getString("id", "");

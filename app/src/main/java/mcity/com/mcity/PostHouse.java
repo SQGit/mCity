@@ -185,10 +185,8 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
 
         // Creating adapter for spinner
         ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
-
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
         setSpinner1();
@@ -739,11 +737,6 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
                     Intent back_service=new Intent(getApplicationContext(),RentalHistory.class);
                     startActivity(back_service);
                     finish();
-                   /* lanmark_et.setText("");
-                    address_et.setText("");
-                    rentamount_et.setText("");
-                    depositamount_et.setText("");
-                    description_et.setText("");*/
 
                 } else {
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
@@ -770,10 +763,6 @@ public class PostHouse extends Activity implements AdapterView.OnItemSelectedLis
         startActivity(i);
         finish();
     }
-
-
-
-
 }
 
 

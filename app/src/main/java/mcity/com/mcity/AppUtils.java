@@ -8,6 +8,8 @@ import android.text.TextUtils;
 
 public class AppUtils {
 
+    //
+
     public class LocationConstants {
         public static final int SUCCESS_RESULT = 0;
 

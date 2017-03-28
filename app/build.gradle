@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "mcity.com.mcity"
@@ -62,5 +62,4 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
-
 }
